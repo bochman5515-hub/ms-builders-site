@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Постройки — MS Builders</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+    }
+    header {
+      padding: 20px;
+      background: #020617;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      color: #38bdf8;
+    }
+    nav {
+      background: #020617;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding-bottom: 15px;
+    }
+    nav a {
+      color: #e5e7eb;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #38bdf8;
+    }
+    section {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .build-card {
+      background: #020617;
+      border-radius: 12px;
+      padding: 15px;
+    }
+    .build-card h3 {
+      margin-top: 0;
+      color: #38bdf8;
+    }
+    .tag {
+      display: inline-block;
+      background: #0f172a;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      margin-right: 5px;
+      color: #9ca3af;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #020617;
+      font-size: 14px;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Постройки MS Builders</h1>
+  <p>Лучшие проекты и архитектура сервера</p>
+</header>
+
+<nav>
+  <a href="index.html">Главная</a>
+  <a href="join.html">Как зайти</a>
+  <a href="news.html">Новости</a>
+  <a href="builds.html">Постройки</a>
+</nav>
+
+<section>
+
+  <div class="build-card">
+    <h3>🏰 Столица сервера</h3>
+    <p>Главный город с торговой площадью и порталом.</p>
+    <span class="tag">Город</span>
+    <span class="tag">Сюжет</span>
+  </div>
+
+  <div class="build-card">
+    <h3>⛏️ Шахтёрский аванпост</h3>
+    <p>Промышленная зона добычи ресурсов.</p>
+    <span class="tag">Индастриал</span>
+  </div>
+
+  <div class="build-card">
+    <h3>🌲 Лесная деревня</h3>
+    <p>RP-поселение в стиле фэнтези.</p>
+    <span class="tag">RP</span>
+    <span class="tag">Фэнтези</span>
+  </div>
+
+</section>
+
+<footer>
+  © MS Builders • Постройки сервера
+</footer>
+
+</body>
+</html>

@@ -223,85 +223,16 @@
     }
 
     /* НИЖНИЕ ИКОНКИ (НАЧАЛО ИГРЫ / ПРАВИЛА / КАСТОМНЫЕ / ЧАРЫ...) */
-    .icon-grid {
-      <div class="icon-grid">
-  <!-- НАЧАЛО ИГРЫ -->
-  <a class="icon-link" href="join.html">
-    <div class="icon-card">
-      <img src="icon-start.png" alt="Начало игры" />
-      <div class="icon-title">НАЧАЛО ИГРЫ</div>
-      <div class="icon-text">
-        Гайд по входу, спавну и первым шагам на сервере.
-      </div>
-    </div>
-  </a>
+    /* НИЖНИЕ ИКОНКИ (НАЧАЛО ИГРЫ / ПРАВИЛА / КАСТОМНЫЕ / ЧАРЫ...) */
+.icon-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;   /* чтобы вторая строка с 2 блоками была по центру */
+  margin-top: 8px;
+}
 
-  <!-- ПРАВИЛА (страницу rules.html сделаете позже) -->
-  <a class="icon-link" href="rules.html">
-    <div class="icon-card">
-      <img src="icon-rules.png" alt="Правила" />
-      <div class="icon-title">ПРАВИЛА</div>
-      <div class="icon-text">
-        Основные правила сервера и поведения в комьюнити.
-      </div>
-    </div>
-  </a>
-
-  <!-- КАСТОМНЫЕ ПРЕДМЕТЫ = КРАФТЫ -->
-  <a class="icon-link" href="crafts.html">
-    <div class="icon-card">
-      <img src="icon-custom-items.png" alt="Кастомные предметы" />
-      <div class="icon-title">КАСТОМНЫЕ ПРЕДМЕТЫ</div>
-      <div class="icon-text">
-        Уникальные крафты и блоки, доступные только на MS Builders.
-      </div>
-    </div>
-  </a>
-
-  <!-- НОВЫЕ ЧАРЫ -->
-  <a class="icon-link" href="enchants.html">
-    <div class="icon-card">
-      <img src="icon-enchants.png" alt="Новые чары" />
-      <div class="icon-title">НОВЫЕ ЧАРЫ</div>
-      <div class="icon-text">
-        Особые зачарования для строителей и исследователей.
-      </div>
-    </div>
-  </a>
-
-  <!-- СЮЖЕТ -->
-  <a class="icon-link" href="story.html">
-    <div class="icon-card">
-      <img src="icon-story.png" alt="Сюжет" />
-      <div class="icon-title">СЮЖЕТ</div>
-      <div class="icon-text">
-        История мира по главам: лор, фракции и ключевые события.
-      </div>
-    </div>
-  </a>
-
-  <!-- НАШИ ПРОЕКТЫ -->
-  <a class="icon-link" href="projects.html">
-    <div class="icon-card">
-      <img src="icon-projects.png" alt="Наши проекты" />
-      <div class="icon-title">НАШИ ПРОЕКТЫ</div>
-      <div class="icon-text">
-        Галерея лучших билдов и масштабных архитектурных работ.
-      </div>
-    </div>
-  </a>
-</div>
-
-    }
-
-    .icon-card {
-      background: rgba(15,23,42,0.9);
-      border-radius: 18px;
-      padding: 16px 14px 18px;
-      text-align: center;
-      border: 1px solid rgba(148,163,184,0.3);
-      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s;
-    } /* ССЫЛКА-ОБЁРТКА ДЛЯ КАРТОЧЕК */
+/* ССЫЛКА-ОБЁРТКА ДЛЯ КАРТОЧЕК */
 .icon-link {
   display: block;
   text-decoration: none;
@@ -314,39 +245,49 @@
 
 /* Изменение цвета текста при наведении */
 .icon-link:hover .icon-title {
-  color: #38bdf8; /* голубой, как у остальных */
+  color: #38bdf8;      /* голубой, как у других ссылок */
 }
 
 .icon-link:hover .icon-text {
   color: #e0f2fe;
-} .icon-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 14px 26px rgba(15,23,42,0.8);
-      border-color: #22d3ee;
-    }
+}
 
-    .icon-card img {
-      width: 72px;
-      height: 72px;
-      image-rendering: pixelated;
-      object-fit: contain;
-      margin-bottom: 10px;
-    }
+.icon-card {
+  background: rgba(15,23,42,0.9);
+  border-radius: 18px;
+  padding: 16px 14px 18px;
+  text-align: center;
+  border: 1px solid rgba(148,163,184,0.3);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s;
+}
 
-    .icon-title {
-      font-family: "Press Start 2P", system-ui;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 6px;
-    }
+.icon-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 26px rgba(15,23,42,0.8);
+  border-color: #22d3ee;
+}
 
-    .icon-text {
-      font-size: 13px;
-      color: #cbd5f5;
-    }
+.icon-card img {
+  width: 72px;
+  height: 72px;
+  image-rendering: pixelated;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
 
-    /* АДАПТИВ */
+.icon-title {
+  font-family: "Press Start 2P", system-ui;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+
+.icon-text {
+  font-size: 13px;
+  color: #cbd5f5;
+}
+
     @media (max-width: 900px) {
       .layout {
         flex-direction: column;
@@ -467,35 +408,76 @@
     <section class="page-section">
       <h2 class="section-title">ЧТО ТУТ У НАС</h2>
 
-      <div class="icon-grid">
-        <div class="icon-card">
-          <!-- пиксельный костёр / огонь -->
-          <img src="icon-start.png" alt="Начало игры" />
-          <div class="icon-title">НАЧАЛО ИГРЫ</div>
-          <div class="icon-text">Гайд по входу, спавну и первым шагам на сервере.</div>
-        </div>
+      <section class="page-section">
+  <h2 class="section-title">ЧТО ТУТ У НАС</h2>
 
-        <div class="icon-card">
-          <!-- пиксельный свиток / книжка -->
-          <img src="icon-rules.png" alt="Правила" />
-          <div class="icon-title">ПРАВИЛА</div>
-          <div class="icon-text">Чёткие, честные правила, чтобы всем было комфортно.</div>
-        </div>
-
-        <div class="icon-card">
-          <!-- кастомный предмет / меч / блок -->
-          <img src="icon-custom-items.png" alt="Кастомные предметы" />
-          <div class="icon-title">КАСТОМНЫЕ ПРЕДМЕТЫ</div>
-          <div class="icon-text">Особые блоки и механики, которых нет в ванильном Minecraft.</div>
-        </div>
-
-        <div class="icon-card">
-          <!-- стол чар / книга -->
-          <img src="icon-enchants.png" alt="Новые чары" />
-          <div class="icon-title">НОВЫЕ ЧАРЫ</div>
-          <div class="icon-text">Уникальные зачарования для строителей и исследователей.</div>
+  <div class="icon-grid">
+    <!-- 1. НАЧАЛО ИГРЫ -->
+    <a class="icon-link" href="join.html">
+      <div class="icon-card">
+        <img src="icon-start.png" alt="Начало игры" />
+        <div class="icon-title">НАЧАЛО ИГРЫ</div>
+        <div class="icon-text">
+          Гайд по входу, спавну и первым шагам на сервере.
         </div>
       </div>
+    </a>
+
+    <!-- 2. ПРАВИЛА (страницу rules.html сделаете позже) -->
+    <a class="icon-link" href="rules.html">
+      <div class="icon-card">
+        <img src="icon-rules.png" alt="Правила" />
+        <div class="icon-title">ПРАВИЛА</div>
+        <div class="icon-text">
+          Основные правила сервера и поведения в комьюнити.
+        </div>
+      </div>
+    </a>
+
+    <!-- 3. КАСТОМНЫЕ ПРЕДМЕТЫ = КРАФТЫ -->
+    <a class="icon-link" href="crafts.html">
+      <div class="icon-card">
+        <img src="icon-custom-items.png" alt="Кастомные предметы" />
+        <div class="icon-title">КАСТОМНЫЕ ПРЕДМЕТЫ</div>
+        <div class="icon-text">
+          Уникальные крафты и блоки, доступные только на MS Builders.
+        </div>
+      </div>
+    </a>
+
+    <!-- 4. НОВЫЕ ЧАРЫ -->
+    <a class="icon-link" href="enchants.html">
+      <div class="icon-card">
+        <img src="icon-enchants.png" alt="Новые чары" />
+        <div class="icon-title">НОВЫЕ ЧАРЫ</div>
+        <div class="icon-text">
+          Особые зачарования для строителей и исследователей.
+        </div>
+      </div>
+    </a>
+
+    <!-- 5. СЮЖЕТ -->
+    <a class="icon-link" href="story.html">
+      <div class="icon-card">
+        <img src="icon-story.png" alt="Сюжет" />
+        <div class="icon-title">СЮЖЕТ</div>
+        <div class="icon-text">
+          История мира по главам: лор, фракции и ключевые события.
+        </div>
+      </div>
+    </a>
+
+    <!-- 6. НАШИ ПРОЕКТЫ -->
+    <a class="icon-link" href="projects.html">
+      <div class="icon-card">
+        <img src="icon-projects.png" alt="Наши проекты" />
+        <div class="icon-title">НАШИ ПРОЕКТЫ</div>
+        <div class="icon-text">
+          Галерея лучших билдов и масштабных архитектурных работ.
+        </div>
+      </div>
+    </a>
+  </div>
     </section>
 
   </main>

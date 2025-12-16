@@ -224,10 +224,74 @@
 
     /* НИЖНИЕ ИКОНКИ (НАЧАЛО ИГРЫ / ПРАВИЛА / КАСТОМНЫЕ / ЧАРЫ...) */
     .icon-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 20px;
-      margin-top: 8px;
+      <div class="icon-grid">
+  <!-- НАЧАЛО ИГРЫ -->
+  <a class="icon-link" href="join.html">
+    <div class="icon-card">
+      <img src="icon-start.png" alt="Начало игры" />
+      <div class="icon-title">НАЧАЛО ИГРЫ</div>
+      <div class="icon-text">
+        Гайд по входу, спавну и первым шагам на сервере.
+      </div>
+    </div>
+  </a>
+
+  <!-- ПРАВИЛА (страницу rules.html сделаете позже) -->
+  <a class="icon-link" href="rules.html">
+    <div class="icon-card">
+      <img src="icon-rules.png" alt="Правила" />
+      <div class="icon-title">ПРАВИЛА</div>
+      <div class="icon-text">
+        Основные правила сервера и поведения в комьюнити.
+      </div>
+    </div>
+  </a>
+
+  <!-- КАСТОМНЫЕ ПРЕДМЕТЫ = КРАФТЫ -->
+  <a class="icon-link" href="crafts.html">
+    <div class="icon-card">
+      <img src="icon-custom-items.png" alt="Кастомные предметы" />
+      <div class="icon-title">КАСТОМНЫЕ ПРЕДМЕТЫ</div>
+      <div class="icon-text">
+        Уникальные крафты и блоки, доступные только на MS Builders.
+      </div>
+    </div>
+  </a>
+
+  <!-- НОВЫЕ ЧАРЫ -->
+  <a class="icon-link" href="enchants.html">
+    <div class="icon-card">
+      <img src="icon-enchants.png" alt="Новые чары" />
+      <div class="icon-title">НОВЫЕ ЧАРЫ</div>
+      <div class="icon-text">
+        Особые зачарования для строителей и исследователей.
+      </div>
+    </div>
+  </a>
+
+  <!-- СЮЖЕТ -->
+  <a class="icon-link" href="story.html">
+    <div class="icon-card">
+      <img src="icon-story.png" alt="Сюжет" />
+      <div class="icon-title">СЮЖЕТ</div>
+      <div class="icon-text">
+        История мира по главам: лор, фракции и ключевые события.
+      </div>
+    </div>
+  </a>
+
+  <!-- НАШИ ПРОЕКТЫ -->
+  <a class="icon-link" href="projects.html">
+    <div class="icon-card">
+      <img src="icon-projects.png" alt="Наши проекты" />
+      <div class="icon-title">НАШИ ПРОЕКТЫ</div>
+      <div class="icon-text">
+        Галерея лучших билдов и масштабных архитектурных работ.
+      </div>
+    </div>
+  </a>
+</div>
+
     }
 
     .icon-card {

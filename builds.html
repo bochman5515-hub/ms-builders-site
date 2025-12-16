@@ -26,6 +26,7 @@
       justify-content: center;
       gap: 20px;
       padding-bottom: 15px;
+      flex-wrap: wrap;
     }
     nav a {
       color: #e5e7eb;
@@ -52,6 +53,14 @@
       margin-top: 0;
       color: #38bdf8;
     }
+    .build-card img {
+      width: 100%;
+      max-height: 250px;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+      margin: 10px 0;
+    }
     .tag {
       display: inline-block;
       background: #0f172a;
@@ -68,36 +77,33 @@
       font-size: 14px;
       color: #9ca3af;
     }
+
+    /* Модальное окно для увеличения картинок */
     #imgModal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
-    justify-content: center;
-    align-items: center;
-  }
-
-  #imgModal img {
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: 12px;
-    box-shadow: 0 0 20px #000;
-  }
-
-  #imgModal.close-area {
-    cursor: pointer;
-  }
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+    }
+    #imgModal img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #000;
+    }
+    #imgModal.close-area {
+      cursor: pointer;
+    }
   </style>
 </head>
-
 <body>
-
 <header>
   <h1>Постройки MS Builders</h1>
   <p>Лучшие проекты и архитектура сервера</p>
 </header>
-
 <nav>
   <a href="index.html">Главная</a>
   <a href="join.html">Как зайти</a>
@@ -108,9 +114,7 @@
   <a href="story.html">Сюжет</a>
   <a href="extra.html">Доп. контент</a>
 </nav>
-
 <section>
-
   <div class="build-card">
     <h3>🏰 Столица сервера</h3>
     <img src="project1.jpg" class="preview">
@@ -128,34 +132,33 @@
 
   <div class="build-card">
     <h3>🌲 Лесная деревня</h3>
+    <img src="project1.jpg" class="preview">
     <p>RP-поселение в стиле фэнтези.</p>
     <span class="tag">RP</span>
     <span class="tag">Фэнтези</span>
   </div>
-
 </section>
 
 <footer>
   © MS Builders • Постройки сервера
 </footer>
-  <div id="imgModal" class="close-area">
-    <img id="modalImg" src="">
-  </div>
+
+<div id="imgModal" class="close-area">
+  <img id="modalImg" src="">
+</div>
+
 <script>
   const modal = document.getElementById("imgModal");
   const modalImg = document.getElementById("modalImg");
-
   document.querySelectorAll(".preview").forEach(img => {
     img.addEventListener("click", () => {
       modal.style.display = "flex";
       modalImg.src = img.src;
     });
   });
-
   modal.addEventListener("click", () => {
     modal.style.display = "none";
   });
 </script>
-
 </body>
 </html>

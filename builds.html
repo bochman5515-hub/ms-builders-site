@@ -68,6 +68,26 @@
       font-size: 14px;
       color: #9ca3af;
     }
+    #imgModal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+  }
+
+  #imgModal img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 12px;
+    box-shadow: 0 0 20px #000;
+  }
+
+  #imgModal.close-area {
+    cursor: pointer;
+  }
   </style>
 </head>
 
@@ -116,6 +136,24 @@
 <footer>
   © MS Builders • Постройки сервера
 </footer>
+  <div id="imgModal" class="close-area">
+    <img id="modalImg" src="">
+  </div>
+<script>
+  const modal = document.getElementById("imgModal");
+  const modalImg = document.getElementById("modalImg");
+
+  document.querySelectorAll(".preview").forEach(img => {
+    img.addEventListener("click", () => {
+      modal.style.display = "flex";
+      modalImg.src = img.src;
+    });
+  });
+
+  modal.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+</script>
 
 </body>
 </html>

@@ -90,6 +90,17 @@
 <footer>
   © MS Builders • Minecraft Server
 </footer>
-
+<script>
+  // подставляем меню из nav.html во все страницы
+  fetch('nav.html')
+    .then(response => response.text())
+    .then(html => {
+      const container = document.getElementById('nav-placeholder');
+      if (container) {
+        container.innerHTML = html;
+      }
+    })
+    .catch(err => console.error('Не удалось загрузить меню', err));
+</script>
 </body>
 </html>

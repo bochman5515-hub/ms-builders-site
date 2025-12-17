@@ -1,110 +1,499 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Чары — MS Builders</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Шрифты как на главной -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
+      font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #0b0f19;
       color: #e5e7eb;
     }
-    header {
-      padding: 20px;
-      background: #020617;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      color: #38bdf8;
-    }
-    nav {
-      background: #020617;
+
+    .layout {
       display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding-bottom: 15px;
-      flex-wrap: wrap;
+      min-height: 100vh;
     }
-    nav a {
+
+    /* ЛЕВАЯ ПАНЕЛЬ */
+    .sidebar {
+      width: 260px;
+      background: #020617;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .logo-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-box img {
+      width: 96px;
+      height: 96px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .sidebar-title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .sidebar-title span {
+      display: block;
+      font-size: 12px;
+      color: #9ca3af;
+      font-weight: 400;
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .sidebar-nav a {
       color: #e5e7eb;
       text-decoration: none;
-      font-weight: bold;
-    }
-    nav a:hover {
-      color: #38bdf8;
-    }
-    section {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-    .enchant-card {
-      background: #020617;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-    .enchant-card h3 {
-      margin-top: 0;
-      color: #38bdf8;
-    }
-    .source {
       font-size: 14px;
+      padding: 6px 0;
+      border-left: 3px solid transparent;
+      padding-left: 10px;
+      transition: 0.15s;
+    }
+
+    .sidebar-nav a:hover {
+      color: #38bdf8;
+      border-color: #38bdf8;
+    }
+
+    .sidebar-nav a.active {
+      color: #38bdf8;
+      border-color: #38bdf8;
+      font-weight: 600;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      font-size: 12px;
       color: #9ca3af;
     }
-    footer {
+
+    .sidebar-footer .ip {
+      font-weight: 600;
+      color: #e5e7eb;
+    }
+
+    /* ПРАВАЯ ЧАСТЬ */
+    .content {
+      flex: 1;
+      background:
+        linear-gradient(to bottom, rgba(15,23,42,0.9), rgba(15,23,42,1)),
+        url("bg-stone.png");
+      background-size: auto, 128px 128px;
+      background-repeat: repeat;
+      padding-bottom: 40px;
+    }
+
+    .hero {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(15,23,42,0.7), transparent);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 40px;
+      gap: 10px;
+    }
+
+    .hero-title {
+      font-family: "Press Start 2P", system-ui;
+      font-size: 18px;
+      text-transform: uppercase;
+      color: #f9fafb;
+      text-shadow: 0 0 10px rgba(15,23,42,0.9);
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      max-width: 420px;
+      color: #e5e7eb;
+    }
+
+    .page-section {
+      margin: 32px auto 0;
+      max-width: 1200px;
+      padding: 0 24px;
+    }
+
+    .section-title {
+      font-family: "Press Start 2P", system-ui;
+      font-size: 16px;
+      text-transform: uppercase;
       text-align: center;
-      padding: 20px;
+      padding: 12px 16px;
+      margin: 0 0 24px;
+      background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+      color: #0b1120;
+      border-radius: 999px;
+      letter-spacing: 0.08em;
+    }
+
+    /* ПАНЕЛЬ ФИЛЬТРА */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .filter-bar label {
+      font-size: 13px;
+      color: #cbd5f5;
+    }
+
+    .filter-input,
+    .filter-select {
       background: #020617;
-      font-size: 14px;
+      border: 1px solid rgba(148,163,184,0.5);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: #e5e7eb;
+      font-size: 13px;
+      outline: none;
+      min-width: 200px;
+    }
+
+    .filter-input::placeholder {
+      color: #6b7280;
+    }
+
+    .filter-input:focus,
+    .filter-select:focus {
+      border-color: #38bdf8;
+    }
+
+    /* СЕТКА ЧАР */
+    .enchant-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .enchant-card {
+      background: rgba(15,23,42,0.95);
+      border-radius: 16px;
+      padding: 14px 14px 16px;
+      border: 1px solid rgba(148,163,184,0.4);
+      box-shadow: 0 10px 24px rgba(15,23,42,0.7);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s;
+    }
+
+    .enchant-card:hover {
+      transform: translateY(-3px);
+      border-color: #38bdf8;
+      box-shadow: 0 16px 30px rgba(15,23,42,0.9);
+    }
+
+    .enchant-name {
+      font-family: "Press Start 2P", system-ui;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      color: #38bdf8;
+    }
+
+    .enchant-items {
+      font-size: 12px;
       color: #9ca3af;
+      margin-bottom: 6px;
+    }
+
+    .enchant-effect {
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .enchant-source {
+      font-size: 12px;
+      color: #a5b4fc;
+    }
+
+    /* АДАПТИВ */
+    @media (max-width: 900px) {
+      .layout {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px;
+      }
+
+      .sidebar-nav {
+        flex-direction: row;
+        gap: 12px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+
+      .sidebar-footer {
+        display: none;
+      }
+
+      .hero-overlay {
+        padding-left: 20px;
+      }
+
+      .hero-title {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
-
 <body>
 
-<header>
-  <h1>Чары MS Builders</h1>
-  <p>Уникальные зачарования сервера</p>
-</header>
+<div class="layout">
+  <!-- ЛЕВАЯ ПАНЕЛЬ -->
+  <aside class="sidebar">
+    <div class="logo-box">
+      <img src="logo.png" alt="Логотип MS Builders" />
+      <div class="sidebar-title">
+        MS Builders
+        <span>Minecraft сервер</span>
+      </div>
+    </div>
 
-<div id="nav-placeholder"></div>
+    <nav class="sidebar-nav">
+      <a href="index.html">Главная</a>
+      <a href="extra.html">Плагины и датапаки</a>
+      <a href="enchants.html" class="active">Чары</a>
+      <a href="builds.html">Постройки</a>
+      <a href="crafts.html">Крафты</a>
+      <a href="story.html">Сюжет</a>
+    </nav>
 
+    <div class="sidebar-footer">
+      IP: <span class="ip">play.msbuilders2.ru</span><br />
+      Версия: 1.21.8
+    </div>
+  </aside>
 
-<section>
+  <!-- ПРАВАЯ ЧАСТЬ -->
+  <main class="content">
+    <!-- БАННЕР ДЛЯ ЧАР -->
+    <section class="hero">
+      <!-- Замените enchants-banner.png на красивый скрин с чарами/столом чар -->
+      <img src="enchants-banner.png" alt="Чары MS Builders" />
+      <div class="hero-overlay">
+        <div class="hero-title">чары ms builders</div>
+        <div class="hero-subtitle">
+          Уникальные зачарования для строителей, исследователей и игроков,
+          которые хотят больше, чем ванильный Minecraft.
+        </div>
+      </div>
+    </section>
 
-  <div class="enchant-card">
-    <h3>✨ Мастер строительства</h3>
-    <p>Увеличивает скорость установки блоков.</p>
-    <p class="source">Получение: ивенты, торговцы</p>
-  </div>
+    <!-- СПИСОК ЧАР -->
+    <section class="page-section">
+      <h2 class="section-title">ЧАРЫ СЕРВЕРА</h2>
 
-  <div class="enchant-card">
-    <h3>🔥 Огненная устойчивость</h3>
-    <p>Снижает урон от лавы и огня.</p>
-    <p class="source">Получение: редкие книги</p>
-  </div>
+      <!-- ПАНЕЛЬ ПОИСКА И ФИЛЬТРА -->
+      <div class="filter-bar">
+        <label>
+          Поиск:
+          <input
+            id="enchant-search"
+            class="filter-input"
+            type="text"
+            placeholder="Введите название чара или предмет..."
+          />
+        </label>
 
-</section>
+        <label>
+          Тип предмета:
+          <select id="enchant-type" class="filter-select">
+            <option value="all">Все</option>
+            <option value="sword">Меч</option>
+            <option value="armor">Броня</option>
+            <option value="tool">Инструменты</option>
+            <option value="bow">Лук / арбалет</option>
+            <option value="other">Прочее</option>
+          </select>
+        </label>
+      </div>
 
-<footer>
-  © MS Builders • Чары сервера
-</footer>
+      <!-- КАРТОЧКИ ЧАР (ПРИМЕРЫ, МОЖНО РЕДАКТИРОВАТЬ) -->
+      <div class="enchant-grid" id="enchant-grid">
+
+        <div
+          class="enchant-card"
+          data-type="sword"
+          data-name="мастер клинка"
+          data-items="меч,топор"
+        >
+          <div class="enchant-name">МАСТЕР КЛИНКА</div>
+          <div class="enchant-items">Предметы: мечи, топоры</div>
+          <div class="enchant-effect">
+            Увеличивает урон по мобам и игрокам, усиливая критические удары.
+          </div>
+          <div class="enchant-source">
+            Получение: награда за ивенты, редкий лут в данжах.
+          </div>
+        </div>
+
+        <div
+          class="enchant-card"
+          data-type="armor"
+          data-name="каменная кожа"
+          data-items="нагрудник,броня"
+        >
+          <div class="enchant-name">КАМЕННАЯ КОЖА</div>
+          <div class="enchant-items">Предметы: нагрудник, сет брони</div>
+          <div class="enchant-effect">
+            Снижает входящий урон от падений и взрывов.
+          </div>
+          <div class="enchant-source">
+            Получение: торговцы, книги в крепости.
+          </div>
+        </div>
+
+        <div
+          class="enchant-card"
+          data-type="tool"
+          data-name="архитектор"
+          data-items="кирка,топор,лопата"
+        >
+          <div class="enchant-name">АРХИТЕКТОР</div>
+          <div class="enchant-items">Предметы: инструменты строителя</div>
+          <div class="enchant-effect">
+            Ускоряет добычу блоков и даёт шанс не потратить прочность при
+            установке декоративных блоков.
+          </div>
+          <div class="enchant-source">
+            Получение: квесты строителей, редкий датапак‑дроп.
+          </div>
+        </div>
+
+        <div
+          class="enchant-card"
+          data-type="bow"
+          data-name="штурмовой залп"
+          data-items="лук,арбалет"
+        >
+          <div class="enchant-name">ШТУРМОВОЙ ЗАЛП</div>
+          <div class="enchant-items">Предметы: лук, арбалет</div>
+          <div class="enchant-effect">
+            Увеличивает скорострельность и даёт шанс выпустить дополнительную стрелу.
+          </div>
+          <div class="enchant-source">
+            Получение: лут с ивентов, сундуки в энд‑локациях.
+          </div>
+        </div>
+
+        <div
+          class="enchant-card"
+          data-type="armor"
+          data-name="строительная защита"
+          data-items="ботинки,шлем"
+        >
+          <div class="enchant-name">СТРОИТЕЛЬНАЯ ЗАЩИТА</div>
+          <div class="enchant-items">Предметы: ботинки, шлем</div>
+          <div class="enchant-effect">
+            Уменьшает урон при падении с высоты и даёт устойчивость к огню.
+          </div>
+          <div class="enchant-source">
+            Получение: специальные ивенты для строителей.
+          </div>
+        </div>
+
+        <div
+          class="enchant-card"
+          data-type="other"
+          data-name="мастер порталов"
+          data-items="трезубец,щит"
+        >
+          <div class="enchant-name">МАСТЕР ПОРТАЛОВ</div>
+          <div class="enchant-items">Предметы: трезубец, щит, особые артефакты</div>
+          <div class="enchant-effect">
+            Даёт бонусы при путешествиях между мирами и около порталов.
+          </div>
+          <div class="enchant-source">
+            Получение: сюжетные цепочки, финальные квесты.
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+</div>
+
 <script>
-  // подставляем меню из nav.html во все страницы
-  fetch('nav.html')
-    .then(response => response.text())
-    .then(html => {
-      const container = document.getElementById('nav-placeholder');
-      if (container) {
-        container.innerHTML = html;
+  // Простая фильтрация по названию и типу предмета
+  const searchInput = document.getElementById("enchant-search");
+  const typeSelect = document.getElementById("enchant-type");
+  const cards = Array.from(document.querySelectorAll(".enchant-card"));
+
+  function updateEnchantFilter() {
+    const q = searchInput.value.trim().toLowerCase();
+    const type = typeSelect.value;
+
+    cards.forEach((card) => {
+      const name = (card.dataset.name || "").toLowerCase();
+      const items = (card.dataset.items || "").toLowerCase();
+      const cardType = card.dataset.type || "all";
+
+      let ok = true;
+
+      if (q && !name.includes(q) && !items.includes(q)) {
+        ok = false;
       }
-    })
-    .catch(err => console.error('Не удалось загрузить меню', err));
+
+      if (type !== "all" && cardType !== type) {
+        ok = false;
+      }
+
+      card.style.display = ok ? "block" : "none";
+    });
+  }
+
+  searchInput.addEventListener("input", updateEnchantFilter);
+  typeSelect.addEventListener("change", updateEnchantFilter);
 </script>
 
 </body>

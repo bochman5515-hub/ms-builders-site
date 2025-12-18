@@ -123,7 +123,17 @@
       object-fit: cover;
       display: block;
     }
-
+            
+    .hero-wave {
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 140px;
+      display: block;
+      pointer-events: none;
+    } 
+    
     .hero-overlay {
       position: absolute;
       inset: 0;
@@ -365,24 +375,42 @@
 
   <!-- ПРАВАЯ ЧАСТЬ -->
   <main class="content">
-    <!-- БОЛЬШОЙ БАННЕР -->
-    <section class="hero">
-      <!-- Замените hero-banner.png на широкий баннер из игры/арт сервера -->
-      <img src="hero-banner.png" alt="MS Builders баннер" />
-      <div class="hero-overlay">
-        <div class="hero-title">что такое ms builders?</div>
-        <div class="hero-subtitle">
-          Строительный Minecraft‑сервер с архитектурой, городами, ивентами
-          и продуманным сюжетом. Здесь создают проекты, а не просто выживают.
-        </div>
-        <div class="hero-tags">
-          <span class="hero-tag">Архитектура</span>
-          <span class="hero-tag">Ивенты</span>
-          <span class="hero-tag">Лор</span>
-          <span class="hero-tag">Комьюнити</span>
-        </div>
-      </div>
-    </section>
+<!-- БОЛЬШОЙ БАННЕР -->
+<section class="hero">
+  <img src="hero-banner.png" alt="MS Builders баннер" />
+
+  <div class="hero-overlay">
+    <div class="hero-title">что такое ms builders?</div>
+    <div class="hero-subtitle">
+      Строительный Minecraft-сервер с архитектурой, городами, ивентами
+      и продуманным сюжетом. Здесь создают проекты, а не просто выживают.
+    </div>
+    <div class="hero-tags">
+      <span class="hero-tag">Архитектура</span>
+      <span class="hero-tag">Ивенты</span>
+      <span class="hero-tag">Лор</span>
+      <span class="hero-tag">Комьюнити</span>
+    </div>
+  </div>
+
+  <!-- ПОЛУПРОЗРАЧНАЯ ВОЛНА -->
+  <svg class="hero-wave" viewBox="0 0 1440 140" preserveAspectRatio="none">
+    <path
+      d="M0,60 C180,100 360,100 540,70
+         720,40 900,40 1080,60
+         1260,80 1440,60 1440,60
+         L1440,140 L0,140 Z"
+      fill="rgba(255,255,255,0.25)"
+    />
+    <path
+      d="M0,80 C200,120 400,120 600,90
+         800,60 1000,60 1200,80
+         1320,90 1440,80 1440,80
+         L1440,140 L0,140 Z"
+      fill="#0b0f19"
+    />
+  </svg>
+</section>
 
     <!-- БЛОК: ЧТО ТАКОЕ MS BUILDERS -->
     <section class="page-section">

@@ -447,6 +447,56 @@
       .hero-overlay { padding-left: 20px; }
       .hero-title { font-size: 14px; }
     }
+        /* ===== IP/Версия под картинкой логотипа + копирование ===== */
+    .server-copy {
+      margin-top: 8px;
+      width: 100%;
+      text-align: left;
+      border: 1px solid rgba(148,163,184,0.22);
+      background: rgba(15,23,42,0.55);
+      color: #e5e7eb;
+      border-radius: 14px;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: 0.15s;
+      position: relative;
+    }
+
+    .server-copy:hover {
+      border-color: #38bdf8;
+      background: rgba(15,23,42,0.7);
+    }
+
+    .server-ip {
+      display: block;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .server-ver {
+      display: block;
+      margin-top: 2px;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .server-tip {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-size: 11px;
+      color: #a5b4fc;
+      opacity: 0;
+      transform: translateY(-2px);
+      transition: 0.18s;
+      pointer-events: none;
+    }
+
+    .server-copy.copied .server-tip {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
   </style>
 </head>
 
@@ -510,13 +560,15 @@
           <div class="sidebar-title">
             MS Builders
             <span>Minecraft сервер</span>
-
-            <div class="server-meta">
-              IP: <span class="ip">play.msbuilders2.ru</span><br />
-              Версия: 1.21.8
-            </div>
           </div>
         </div>
+
+        <button class="server-copy" id="copyIp" type="button" title="Нажмите, чтобы скопировать IP">
+          <span class="server-ip">play.msbuilders2.ru</span>
+          <span class="server-ver">Версия: 1.21.8</span>
+          <span class="server-tip" id="copyTip">Скопировано!</span>
+        </button>
+
       </div>
 
       <nav class="sidebar-nav">
@@ -611,6 +663,61 @@
           </a>
         </div>
       </section>
+            <!-- БЛОК: ЧТО ТУТ У НАС -->
+      <section class="page-section">
+        <h2 class="section-title">ЧТО ТУТ У НАС</h2>
+
+        <div class="icon-grid">
+          <a class="icon-link" href="join.html">
+            <div class="icon-card">
+              <img src="icon-start.png" alt="Начало игры" />
+              <div class="icon-title">НАЧАЛО ИГРЫ</div>
+              <div class="icon-text">Гайд по входу, спавну и первым шагам на сервере.</div>
+            </div>
+          </a>
+
+          <a class="icon-link" href="rules.html">
+            <div class="icon-card">
+              <img src="icon-rules.png" alt="Правила" />
+              <div class="icon-title">ПРАВИЛА</div>
+              <div class="icon-text">Основные правила сервера и поведения в комьюнити.</div>
+            </div>
+          </a>
+
+          <a class="icon-link" href="crafts.html">
+            <div class="icon-card">
+              <img src="icon-custom-items.png" alt="Кастомные предметы" />
+              <div class="icon-title">КАСТОМНЫЕ ПРЕДМЕТЫ</div>
+              <div class="icon-text">Уникальные крафты и блоки, доступные только на MS Builders.</div>
+            </div>
+          </a>
+
+          <a class="icon-link" href="enchants.html">
+            <div class="icon-card">
+              <img src="icon-enchants.png" alt="Новые чары" />
+              <div class="icon-title">НОВЫЕ ЧАРЫ</div>
+              <div class="icon-text">Особые зачарования для строителей и исследователей.</div>
+            </div>
+          </a>
+
+          <a class="icon-link" href="story.html">
+            <div class="icon-card">
+              <img src="icon-story.png" alt="Сюжет" />
+              <div class="icon-title">СЮЖЕТ</div>
+              <div class="icon-text">История мира по главам: лор, фракции и ключевые события.</div>
+            </div>
+          </a>
+
+          <a class="icon-link" href="projects.html">
+            <div class="icon-card">
+              <img src="icon-projects.png" alt="Наши проекты" />
+              <div class="icon-title">НАШИ ПРОЕКТЫ</div>
+              <div class="icon-text">Галерея лучших билдов и масштабных архитектурных работ.</div>
+            </div>
+          </a>
+        </div>
+      </section>
+
     </main>
   </div>
 
@@ -620,6 +727,29 @@
     const btnSidebar = document.getElementById("toggleSidebar");
     const sidebarIcon = document.getElementById("sidebarIcon");
     const btnGarland = document.getElementById("toggleGarland");
+        // копирование IP по клику
+    const copyBtn = document.getElementById("copyIp");
+    if (copyBtn) {
+      copyBtn.addEventListener("click", async () => {
+        const ip = "play.msbuilders2.ru";
+        try {
+          await navigator.clipboard.writeText(ip);
+          copyBtn.classList.add("copied");
+          setTimeout(() => copyBtn.classList.remove("copied"), 1200);
+        } catch (e) {
+          // запасной вариант, если clipboard недоступен
+          const ta = document.createElement("textarea");
+          ta.value = ip;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          document.body.removeChild(ta);
+          copyBtn.classList.add("copied");
+          setTimeout(() => copyBtn.classList.remove("copied"), 1200);
+        }
+      });
+    }
+
 
     const sidebarOff = localStorage.getItem("ms_sidebar") === "off";
     const garlandOff = localStorage.getItem("ms_garland") === "off";

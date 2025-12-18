@@ -1,124 +1,600 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Новости — MS Builders</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Шрифты как на сайте -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #e5e7eb;
+    * { box-sizing: border-box; }
+
+    body{
+      margin:0;
+      font-family:"Montserrat",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+      background-color:#0b0f19;
+      color:#e5e7eb;
     }
-    header {
-      padding: 20px;
-      background: #020617;
-      text-align: center;
+
+    .layout{
+      display:flex;
+      min-height:100vh;
     }
-    header h1 {
-      margin: 0;
-      color: #38bdf8;
+
+    /* ===== ЛЕВАЯ ПАНЕЛЬ ===== */
+    .sidebar{
+      width:260px;
+      background:#020617;
+      padding:24px 20px;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      transition:width .2s ease,padding .2s ease;
+      border-right:1px solid rgba(148,163,184,.12);
+      overflow:hidden;
     }
-    nav {
-      background: #020617;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding-bottom: 15px;
+
+    .logo-box{
+      display:flex;
+      align-items:center;
+      gap:12px;
     }
-    nav a {
-      color: #e5e7eb;
-      text-decoration: none;
-      font-weight: bold;
+
+    .logo-box img{
+      width:96px;
+      height:96px;
+      border-radius:10px;
+      object-fit:cover;
     }
-    nav a:hover {
-      color: #38bdf8;
+
+    .sidebar-title{
+      font-size:16px;
+      font-weight:600;
+      line-height:1.3;
     }
-    section {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
+
+    .sidebar-title span{
+      display:block;
+      font-size:12px;
+      color:#9ca3af;
+      font-weight:400;
     }
-    .news-card {
-      background: #020617;
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 20px;
+
+    .server-copy{
+      margin-top:8px;
+      width:100%;
+      text-align:left;
+      border:1px solid rgba(148,163,184,.22);
+      background:rgba(15,23,42,.55);
+      color:#e5e7eb;
+      border-radius:14px;
+      padding:10px 12px;
+      cursor:pointer;
+      transition:.15s;
+      position:relative;
     }
-    .news-card h2 {
-      margin-top: 0;
-      color: #38bdf8;
+
+    .server-copy:hover{
+      border-color:#38bdf8;
+      background:rgba(15,23,42,.7);
     }
-    .date {
-      font-size: 14px;
-      color: #9ca3af;
-      margin-bottom: 10px;
+
+    .server-ip{
+      display:block;
+      font-weight:700;
+      letter-spacing:.02em;
     }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #020617;
-      font-size: 14px;
-      color: #9ca3af;
+
+    .server-ver{
+      display:block;
+      margin-top:2px;
+      font-size:12px;
+      color:#9ca3af;
+    }
+
+    .server-tip{
+      position:absolute;
+      right:10px;
+      top:10px;
+      font-size:11px;
+      color:#a5b4fc;
+      opacity:0;
+      transform:translateY(-2px);
+      transition:.18s;
+      pointer-events:none;
+    }
+
+    .server-copy.copied .server-tip{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .sidebar-nav{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-top:6px;
+    }
+
+    .sidebar-nav a{
+      color:#e5e7eb;
+      text-decoration:none;
+      font-size:14px;
+      padding:6px 0;
+      border-left:3px solid transparent;
+      padding-left:10px;
+      transition:.15s;
+    }
+
+    .sidebar-nav a:hover{
+      color:#38bdf8;
+      border-color:#38bdf8;
+    }
+
+    .sidebar-nav a.active{
+      color:#38bdf8;
+      border-color:#38bdf8;
+      font-weight:600;
+    }
+
+    .sidebar-collapsed .sidebar{
+      width:0;
+      padding:0;
+      border-right:none;
+    }
+
+    /* ===== ПРАВАЯ ЧАСТЬ ===== */
+    .content{
+      flex:1;
+      background:
+        linear-gradient(to bottom, rgba(15,23,42,0.9), rgba(15,23,42,1)),
+        url("bg-stone.png");
+      background-size:auto,128px 128px;
+      background-repeat:repeat;
+      padding-bottom:40px;
+    }
+
+    /* ===== БАННЕР ===== */
+    .hero{
+      position:relative;
+      height:240px;
+      overflow:hidden;
+    }
+
+    .hero img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .hero-overlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to right, rgba(15,23,42,0.7), transparent);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      padding-left:40px;
+      gap:10px;
+    }
+
+    .hero-title{
+      font-family:"Press Start 2P",system-ui;
+      font-size:18px;
+      text-transform:uppercase;
+      color:#f9fafb;
+      text-shadow:0 0 10px rgba(15,23,42,0.9);
+    }
+
+    .hero-subtitle{
+      font-size:14px;
+      max-width:560px;
+      color:#e5e7eb;
+    }
+
+    .hero-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:6px;
+    }
+
+    .hero-tag{
+      font-size:11px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.7);
+      border:1px solid rgba(148,163,184,0.4);
+    }
+
+    .page-section{
+      margin:32px auto 0;
+      max-width:1200px;
+      padding:0 24px;
+    }
+
+    .section-title{
+      font-family:"Press Start 2P",system-ui;
+      font-size:16px;
+      text-transform:uppercase;
+      text-align:center;
+      padding:12px 16px;
+      margin:0 0 18px;
+      background:linear-gradient(90deg,#7c3aed,#ec4899);
+      color:#0b1120;
+      border-radius:999px;
+      letter-spacing:.08em;
+    }
+
+    /* ===== ПАНЕЛЬ ФИЛЬТРА ===== */
+    .filter-bar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:18px;
+    }
+
+    .filter-bar label{
+      font-size:13px;
+      color:#cbd5f5;
+    }
+
+    .filter-input, .filter-select{
+      background:#020617;
+      border:1px solid rgba(148,163,184,0.5);
+      border-radius:999px;
+      padding:8px 12px;
+      color:#e5e7eb;
+      font-size:13px;
+      outline:none;
+      min-width:240px;
+    }
+
+    .filter-input::placeholder{ color:#6b7280; }
+
+    .filter-input:focus, .filter-select:focus{
+      border-color:#38bdf8;
+    }
+
+    /* ===== СЕТКА НОВОСТЕЙ ===== */
+    .news-grid{
+      display:grid;
+      gap:18px;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+    }
+
+    @media (max-width: 900px){
+      .news-grid{ grid-template-columns:1fr; }
+      .hero-overlay{ padding-left:20px; }
+      .hero-title{ font-size:14px; }
+      .hero{ height:220px; }
+      .filter-input, .filter-select{ min-width: 100%; }
+    }
+
+    .news-card{
+      background:rgba(15,23,42,0.9);
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid rgba(148,163,184,0.35);
+      box-shadow:0 10px 24px rgba(15,23,42,0.55);
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s;
+    }
+
+    .news-card:hover{
+      transform:translateY(-4px);
+      border-color:#38bdf8;
+      box-shadow:0 18px 35px rgba(15,23,42,0.8);
+    }
+
+    .news-head{
+      padding:14px 16px 0;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .news-date{
+      font-size:12px;
+      color:#9ca3af;
+    }
+
+    .news-badge{
+      font-size:11px;
+      padding:4px 10px;
+      border-radius:999px;
+      background:rgba(2,6,23,0.65);
+      border:1px solid rgba(148,163,184,0.25);
+      color:#a5b4fc;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      white-space:nowrap;
+    }
+
+    .news-body{
+      padding:12px 16px 16px;
+    }
+
+    .news-title{
+      margin:0 0 10px;
+      font-family:"Press Start 2P",system-ui;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:#e0f2fe;
+      line-height:1.45;
+    }
+
+    .news-text{
+      margin:0;
+      font-size:13px;
+      color:#cbd5f5;
+      line-height:1.45;
+    }
+
+    .news-links{
+      margin-top:12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .link-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 12px;
+      border-radius:999px;
+      text-decoration:none;
+      color:#0b1120;
+      background:linear-gradient(90deg,#0ea5e9,#38bdf8);
+      border:1px solid rgba(148,163,184,0.25);
+      font-weight:700;
+      font-size:13px;
+      transition:.15s;
+    }
+
+    .link-btn:hover{
+      filter:brightness(1.05);
+      transform:translateY(-1px);
+    }
+
+    /* ===== КНОПКА < > СНИЗУ СЛЕВА ===== */
+    .sidebar-fab{
+      position:fixed;
+      left:14px;
+      bottom:14px;
+      z-index:95;
+      width:44px;
+      height:44px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.35);
+      background:rgba(2,6,23,0.78);
+      backdrop-filter:blur(8px);
+      color:#e5e7eb;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      transition:.15s;
+      box-shadow:0 10px 22px rgba(0,0,0,0.25);
+    }
+
+    .sidebar-fab:hover{
+      border-color:#38bdf8;
+      color:#e0f2fe;
+    }
+
+    .sidebar-fab span{
+      font-size:18px;
+      line-height:1;
+      transform:translateY(-1px);
+    }
+
+    /* ===== АДАПТИВ (мобилка) ===== */
+    @media (max-width:900px){
+      .layout{ flex-direction:column; }
+      .sidebar-fab{ display:none; }
     }
   </style>
 </head>
 
 <body>
+  <button class="sidebar-fab" id="toggleSidebar" type="button" aria-label="Показать/скрыть панель">
+    <span id="sidebarIcon">&lt;</span>
+  </button>
 
-<header>
-  <h1>Новости MS Builders</h1>
-  <p>Все обновления и события сервера</p>
-</header>
+  <div class="layout">
+    <!-- ЛЕВАЯ ПАНЕЛЬ -->
+    <aside class="sidebar">
+      <div>
+        <div class="logo-box">
+          <img src="logo.png" alt="Логотип MS Builders" />
+          <div class="sidebar-title">
+            MS Builders
+            <span>Minecraft сервер</span>
+          </div>
+        </div>
 
-<div id="nav-placeholder"></div>
+        <button class="server-copy" id="copyIp" type="button" title="Нажмите, чтобы скопировать IP">
+          <span class="server-ip">play.msbuilders2.ru</span>
+          <span class="server-ver">Версия: 1.21.8</span>
+          <span class="server-tip">Скопировано!</span>
+        </button>
+      </div>
 
+      <nav class="sidebar-nav">
+        <a href="index.html">Главная</a>
+        <a href="news.html" class="active">Новости</a>
+        <a href="extra.html">Плагины и датапаки</a>
+        <a href="enchants.html">Чары</a>
+        <a href="projects.html">Наши проекты</a>
+        <a href="builds.html">Постройки</a>
+        <a href="crafts.html">Крафты</a>
+        <a href="story.html">Сюжет</a>
+      </nav>
+    </aside>
 
-<section>
+    <!-- ПРАВАЯ ЧАСТЬ -->
+    <main class="content">
+      <!-- БАННЕР -->
+      <section class="hero">
+        <!-- можешь заменить на свой баннер новостей -->
+        <img src="news-banner.png" alt="Новости MS Builders" />
 
-  <div class="news-card">
-    <div class="date">16 декабря 2025</div>
-    <h2>🚀 Запуск сайта MS Builders</h2>
-    <p>
-      Мы запустили официальный сайт сервера!
-      Здесь будут публиковаться новости, обновления,
-      ивенты и важная информация.
-    </p>
+        <div class="hero-overlay">
+          <div class="hero-title">новости ms builders</div>
+          <div class="hero-subtitle">
+            Обновления сайта, события сервера и важные объявления. Следи за новостями, чтобы ничего не пропустить.
+          </div>
+
+          <div class="hero-tags">
+            <span class="hero-tag">Обновления</span>
+            <span class="hero-tag">Ивенты</span>
+            <span class="hero-tag">Сервер</span>
+            <span class="hero-tag">Сайт</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section">
+        <h2 class="section-title">ЛЕНТА НОВОСТЕЙ</h2>
+
+        <!-- ФИЛЬТР -->
+        <div class="filter-bar">
+          <label>
+            Поиск:
+            <input id="news-search" class="filter-input" type="text" placeholder="Введите слово из заголовка или текста..." />
+          </label>
+
+          <label>
+            Категория:
+            <select id="news-type" class="filter-select">
+              <option value="all">Все</option>
+              <option value="site">Сайт</option>
+              <option value="server">Сервер</option>
+              <option value="events">Ивенты</option>
+            </select>
+          </label>
+        </div>
+
+        <!-- НОВОСТИ -->
+        <div class="news-grid" id="newsGrid">
+
+          <!-- НОВАЯ СТАТЬЯ ПРО САЙТ -->
+          <article class="news-card" data-type="site" data-title="обновление сайта ms builders" data-text="на сайте появились новые разделы чары крафты постройки и проекты появилась удобная панель навигации и копирование ip">
+            <div class="news-head">
+              <div class="news-date">19 декабря 2025</div>
+              <div class="news-badge">сайт</div>
+            </div>
+
+            <div class="news-body">
+              <h3 class="news-title">🚀 Обновление сайта MS Builders</h3>
+              <p class="news-text">
+                Мы серьёзно прокачали официальный сайт MS Builders. Теперь здесь есть удобная навигация слева,
+                копирование IP в один клик, отдельные страницы с <b>чарами</b>, <b>крафтами</b>, <b>постройками игроков</b>
+                и <b>портфолио наших проектов</b>. В новостях будем писать про обновления сервера, ивенты и изменения на сайте.
+                <br /><br />
+                Если хочешь быть в курсе и общаться с нами — заходи в Discord:
+              </p>
+
+              <div class="news-links">
+                <a class="link-btn" href="https://discord.com/invite/Wj8jWS736f" target="_blank" rel="noopener">💬 Discord сервера</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- ПРИМЕРЫ (можешь удалить/заменить) -->
+          <article class="news-card" data-type="server" data-title="старт нового сезона" data-text="новый сезон открыт обновлённый мир новые крафты сюжет и масштабные проекты">
+            <div class="news-head">
+              <div class="news-date">15 декабря 2025</div>
+              <div class="news-badge">сервер</div>
+            </div>
+
+            <div class="news-body">
+              <h3 class="news-title">🏗️ Старт нового сезона</h3>
+              <p class="news-text">
+                Новый сезон открыт! Обновлённый мир, новые крафты, сюжет и масштабные проекты.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </section>
+    </main>
   </div>
 
-  <div class="news-card">
-    <div class="date">15 декабря 2025</div>
-    <h2>🏗️ Старт нового сезона</h2>
-    <p>
-      Новый сезон открыт! Обновлённый мир,
-      новые крафты, сюжет и масштабные проекты.
-    </p>
-  </div>
-  
-  <div class="news-card">
-    <div class="date">16 декабря 2025</div>
-    <h2>🚀 Запуск сайта MS Builders</h2>
-    <p>Мы запустили официальный сайт сервера! ...</p>
-  </div>
+  <script>
+    const root = document.documentElement;
 
-</section>
+    // ===== САЙДБАР < > =====
+    const btnSidebar = document.getElementById("toggleSidebar");
+    const sidebarIcon = document.getElementById("sidebarIcon");
 
-<footer>
-  © MS Builders • Новости сервера
-</footer>
-<script>
-  // подставляем меню из nav.html во все страницы
-  fetch('nav.html')
-    .then(response => response.text())
-    .then(html => {
-      const container = document.getElementById('nav-placeholder');
-      if (container) {
-        container.innerHTML = html;
-      }
-    })
-    .catch(err => console.error('Не удалось загрузить меню', err));
-</script>
+    const sidebarOff = localStorage.getItem("ms_sidebar") === "off";
+    if (sidebarOff) root.classList.add("sidebar-collapsed");
 
+    function syncSidebarIcon(){
+      sidebarIcon.textContent = root.classList.contains("sidebar-collapsed") ? ">" : "<";
+    }
+    syncSidebarIcon();
+
+    btnSidebar.addEventListener("click", () => {
+      root.classList.toggle("sidebar-collapsed");
+      localStorage.setItem("ms_sidebar", root.classList.contains("sidebar-collapsed") ? "off" : "on");
+      syncSidebarIcon();
+    });
+
+    // ===== КОПИРОВАНИЕ IP =====
+    const copyBtn = document.getElementById("copyIp");
+    if (copyBtn){
+      copyBtn.addEventListener("click", async () => {
+        const ip = "play.msbuilders2.ru";
+        try{
+          await navigator.clipboard.writeText(ip);
+        }catch(e){
+          const ta = document.createElement("textarea");
+          ta.value = ip;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          document.body.removeChild(ta);
+        }
+        copyBtn.classList.add("copied");
+        setTimeout(() => copyBtn.classList.remove("copied"), 1200);
+      });
+    }
+
+    // ===== ФИЛЬТР НОВОСТЕЙ =====
+    const searchInput = document.getElementById("news-search");
+    const typeSelect = document.getElementById("news-type");
+    const cards = Array.from(document.querySelectorAll(".news-card"));
+
+    function updateNewsFilter(){
+      const q = (searchInput.value || "").trim().toLowerCase();
+      const type = typeSelect.value;
+
+      cards.forEach((card) => {
+        const t = (card.dataset.type || "all");
+        const title = (card.dataset.title || "").toLowerCase();
+        const text = (card.dataset.text || "").toLowerCase();
+
+        let ok = true;
+
+        if (type !== "all" && t !== type) ok = false;
+        if (q && !title.includes(q) && !text.includes(q)) ok = false;
+
+        card.style.display = ok ? "block" : "none";
+      });
+    }
+
+    searchInput.addEventListener("input", updateNewsFilter);
+    typeSelect.addEventListener("change", updateNewsFilter);
+  </script>
 </body>
 </html>

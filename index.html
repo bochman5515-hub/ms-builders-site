@@ -408,30 +408,48 @@
   </div>
 
 <svg class="hero-wave" viewBox="0 0 1440 90" preserveAspectRatio="none">
+  <defs>
+    <pattern
+      id="stonePattern"
+      patternUnits="userSpaceOnUse"
+      width="128"
+      height="128"
+    >
+      <image
+        href="bg-stone.png"
+        x="0"
+        y="0"
+        width="128"
+        height="128"
+      />
+    </pattern>
+  </defs>
+
   <path
-    class="layer-1"
     d="M0,40 C180,65 360,65 540,45
        720,25 900,25 1080,40
        1260,55 1440,40 1440,40
        L1440,90 L0,90 Z"
+    fill="rgba(124, 58, 237, 0.35)"
   />
 
   <path
-    class="layer-2"
     d="M0,50 C200,75 400,75 600,55
        800,35 1000,35 1200,50
        1320,60 1440,50 1440,50
        L1440,90 L0,90 Z"
+    fill="rgba(236, 72, 153, 0.25)"
   />
 
   <path
-    class="layer-3"
     d="M0,60 C220,80 440,80 660,65
        880,50 1100,50 1320,60
        1440,65 1440,65 1440,65
        L1440,90 L0,90 Z"
+    fill="url(#stonePattern)"
   />
 </svg>
+
 </section>
 
     <!-- БЛОК: ЧТО ТАКОЕ MS BUILDERS -->

@@ -284,6 +284,54 @@
         font-size: 14px;
       }
     }
+    /* ===== ЦВЕТА РАМОК ПО РЕДКОСТИ ===== */
+
+/* Вечные — золотой */
+.enchant-card[data-rarity="eternal"] {
+  border-color: #facc15;
+  box-shadow: 0 0 18px rgba(250, 204, 21, 0.35);
+}
+
+/* Образцовые — фиолетовый */
+.enchant-card[data-rarity="exemplary"] {
+  border-color: #a855f7;
+  box-shadow: 0 0 18px rgba(168, 85, 247, 0.35);
+}
+
+/* Ситуативные — голубой */
+.enchant-card[data-rarity="situational"] {
+  border-color: #38bdf8;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.35);
+}
+
+/* Распространённые (Uncommon) — бежевый */
+.enchant-card[data-rarity="common"] {
+  border-color: #e7d3a1;
+  box-shadow: 0 0 14px rgba(231, 211, 161, 0.25);
+}
+
+/* Обычные (если вдруг будут отдельно) — белый */
+.enchant-card[data-rarity="ordinary"],
+.enchant-card[data-rarity="default"] {
+  border-color: #e5e7eb;
+  box-shadow: 0 0 10px rgba(229, 231, 235, 0.2);
+}
+
+/* Проклятые — бордовый */
+.enchant-card[data-rarity="cursed"] {
+  border-color: #7f1d1d;
+  box-shadow: 0 0 20px rgba(127, 29, 29, 0.45);
+}
+
+/* Проклятия — красный */
+.enchant-card[data-rarity="curse"] {
+  border-color: #dc2626;
+  box-shadow: 0 0 22px rgba(220, 38, 38, 0.5);
+}
+.enchant-card:hover {
+  filter: brightness(1.08);
+}
+
   </style>
 </head>
 <body>

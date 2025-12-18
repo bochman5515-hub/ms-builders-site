@@ -129,11 +129,24 @@
       bottom: -1px;
       left: 0;
       width: 100%;
-      height: 140px;
-      display: block;
+      height: 90px; /* волна ниже */
       pointer-events: none;
-    } 
-    
+    }
+
+    .hero-wave path.layer-1 {
+      fill: rgba(255, 255, 255, 0.18);
+    }
+
+    .hero-wave path.layer-2 {
+      fill: rgba(255, 255, 255, 0.08);
+      transform: translateY(6px);
+    }
+
+    .hero-wave path.layer-3 {
+      fill: #0b0f19; /* цвет сайта */
+      transform: translateY(14px);
+    }
+
     .hero-overlay {
       position: absolute;
       inset: 0;
@@ -393,23 +406,31 @@
     </div>
   </div>
 
-  <!-- ПОЛУПРОЗРАЧНАЯ ВОЛНА -->
-  <svg class="hero-wave" viewBox="0 0 1440 140" preserveAspectRatio="none">
-    <path
-      d="M0,60 C180,100 360,100 540,70
-         720,40 900,40 1080,60
-         1260,80 1440,60 1440,60
-         L1440,140 L0,140 Z"
-      fill="rgba(255,255,255,0.25)"
-    />
-    <path
-      d="M0,80 C200,120 400,120 600,90
-         800,60 1000,60 1200,80
-         1320,90 1440,80 1440,80
-         L1440,140 L0,140 Z"
-      fill="#0b0f19"
-    />
-  </svg>
+<svg class="hero-wave" viewBox="0 0 1440 90" preserveAspectRatio="none">
+  <path
+    class="layer-1"
+    d="M0,40 C180,65 360,65 540,45
+       720,25 900,25 1080,40
+       1260,55 1440,40 1440,40
+       L1440,90 L0,90 Z"
+  />
+
+  <path
+    class="layer-2"
+    d="M0,50 C200,75 400,75 600,55
+       800,35 1000,35 1200,50
+       1320,60 1440,50 1440,50
+       L1440,90 L0,90 Z"
+  />
+
+  <path
+    class="layer-3"
+    d="M0,60 C220,80 440,80 660,65
+       880,50 1100,50 1320,60
+       1440,65 1440,65 1440,65
+       L1440,90 L0,90 Z"
+  />
+</svg>
 </section>
 
     <!-- БЛОК: ЧТО ТАКОЕ MS BUILDERS -->

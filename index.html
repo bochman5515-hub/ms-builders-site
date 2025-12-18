@@ -29,7 +29,7 @@
       padding: 24px 20px;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 18px;
       transition: width 0.2s ease, padding 0.2s ease;
       border-right: 1px solid rgba(148,163,184,0.12);
       overflow: hidden;
@@ -61,11 +61,24 @@
       font-weight: 400;
     }
 
+    /* IP/Версия под названием */
+    .server-meta {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #9ca3af;
+      line-height: 1.5;
+    }
+    .server-meta .ip {
+      font-weight: 700;
+      color: #e5e7eb;
+      letter-spacing: 0.02em;
+    }
+
     .sidebar-nav {
       display: flex;
       flex-direction: column;
       gap: 8px;
-      margin-top: 8px;
+      margin-top: 6px;
     }
 
     .sidebar-nav a {
@@ -89,15 +102,12 @@
       font-weight: 600;
     }
 
+    /* низ сайдбара теперь пустой */
     .sidebar-footer {
       margin-top: auto;
       font-size: 12px;
       color: #9ca3af;
-    }
-
-    .sidebar-footer .ip {
-      font-weight: 600;
-      color: #e5e7eb;
+      display: none;
     }
 
     /* ===== СВЕРНУТЫЙ САЙДБАР ===== */
@@ -179,6 +189,17 @@
       border-radius: 999px;
       background: rgba(15,23,42,0.7);
       border: 1px solid rgba(148,163,184,0.4);
+      color: inherit;
+    }
+
+    /* Ссылка "Комьюнити" как кнопка */
+    a.hero-tag {
+      text-decoration: none;
+      transition: 0.15s;
+    }
+    a.hero-tag:hover {
+      border-color: #38bdf8;
+      color: #e0f2fe;
     }
 
     .page-section {
@@ -296,13 +317,13 @@
 
     .icon-text { font-size: 13px; color: #cbd5f5; }
 
-    /* ===== ГИРЛЯНДА В УПОР К ВЕРХНЕЙ ГРАНИЦЕ ===== */
+    /* ===== ГИРЛЯНДА ===== */
     .garland-top {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 38px;     /* низкая, как у тебя на примере */
+      height: 38px;
       z-index: 80;
       pointer-events: none;
       opacity: 1;
@@ -341,10 +362,10 @@
       100% { opacity: 0.35; filter: brightness(0.85); }
     }
 
-    /* ===== КНОПКА ГИРЛЯНДЫ СПРАВА (НЕ МЕШАЕТ) ===== */
+    /* Кнопка гирлянды справа */
     .garland-toggle {
       position: fixed;
-      top: 44px; /* ниже гирлянды */
+      top: 44px;
       right: 14px;
       z-index: 90;
       pointer-events: auto;
@@ -368,7 +389,7 @@
       color: #e0f2fe;
     }
 
-    /* ===== СТРЕЛОЧКА < > В КРУГЕ СНИЗУ СЛЕВА ===== */
+    /* ===== КНОПКА < > (СНИЗУ СЛЕВА) ===== */
     .sidebar-fab {
       position: fixed;
       left: 14px;
@@ -399,11 +420,6 @@
       transform: translateY(-1px);
     }
 
-    /* когда свернуто — показываем ">" */
-    .sidebar-collapsed .sidebar-fab span {
-      content: ">";
-    }
-
     /* ===== АДАПТИВ ===== */
     @media (max-width: 900px) {
       .layout { flex-direction: column; }
@@ -414,6 +430,7 @@
         align-items: center;
         justify-content: space-between;
         padding: 12px 16px;
+        gap: 12px;
       }
 
       .sidebar-nav {
@@ -423,24 +440,21 @@
         padding-bottom: 4px;
       }
 
-      .sidebar-footer { display: none; }
+      /* на мобилках не прячем верхнюю панель (иначе сломается) */
+      .sidebar-collapsed .sidebar { width: 100%; padding: 12px 16px; border-right: 0; }
+      .sidebar-fab { display: none; }
 
       .hero-overlay { padding-left: 20px; }
       .hero-title { font-size: 14px; }
-
-      /* на мобилках боковую панель мы не "прячем в 0", там верхняя шапка */
-      .sidebar-collapsed .sidebar { width: 100%; padding: 12px 16px; border-right: 0; }
-      .sidebar-fab { display: none; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- ГИРЛЯНДА СВЕРХУ (ПЛОТНЕЕ) -->
+  <!-- ГИРЛЯНДА -->
   <div class="garland-top" aria-hidden="true">
     <svg viewBox="0 0 1440 38" preserveAspectRatio="none">
-      <!-- провод -->
       <path class="garland-wire"
         d="M0,16
            C90,6 180,26 270,16
@@ -449,9 +463,7 @@
            C900,6 990,26 1080,16
            C1170,6 1260,26 1440,16" />
 
-      <!-- лампы: чаще (каждые ~60px) -->
       <g>
-        <!-- шаблон: hanger y=16->22, bulb y=28 -->
         <line class="bulb-hanger" x1="30"  y1="16" x2="30"  y2="22" /><circle class="bulb" cx="30"  cy="28" r="5.5" fill="#ef4444"/>
         <line class="bulb-hanger" x1="90"  y1="14" x2="90"  y2="22" /><circle class="bulb" cx="90"  cy="28" r="5.5" fill="#22c55e"/>
         <line class="bulb-hanger" x1="150" y1="18" x2="150" y2="22" /><circle class="bulb" cx="150" cy="28" r="5.5" fill="#38bdf8"/>
@@ -484,37 +496,39 @@
     </svg>
   </div>
 
-  <!-- КНОПКА ВКЛ/ВЫКЛ ГИРЛЯНДЫ (СПРАВА) -->
   <button class="garland-toggle" id="toggleGarland" type="button">🎄 Гирлянда</button>
 
-  <!-- КНОПКА < > (СНИЗУ СЛЕВА) -->
   <button class="sidebar-fab" id="toggleSidebar" type="button" aria-label="Показать/скрыть панель">
     <span id="sidebarIcon">&lt;</span>
   </button>
 
   <div class="layout">
     <aside class="sidebar">
-      <div class="logo-box">
-        <img src="logo.png" alt="Логотип MS Builders" />
-        <div class="sidebar-title">
-          MS Builders
-          <span>Minecraft сервер</span>
+      <div>
+        <div class="logo-box">
+          <img src="logo.png" alt="Логотип MS Builders" />
+          <div class="sidebar-title">
+            MS Builders
+            <span>Minecraft сервер</span>
+
+            <div class="server-meta">
+              IP: <span class="ip">play.msbuilders2.ru</span><br />
+              Версия: 1.21.8
+            </div>
+          </div>
         </div>
       </div>
 
       <nav class="sidebar-nav">
         <a href="index.html" class="active">Главная</a>
+        <a href="news.html">Новости</a>
         <a href="extra.html">Плагины и датапаки</a>
         <a href="enchants.html">Чары</a>
+        <a href="projects.html">Наши проекты</a>
         <a href="builds.html">Постройки</a>
         <a href="crafts.html">Крафты</a>
         <a href="story.html">Сюжет</a>
       </nav>
-
-      <div class="sidebar-footer">
-        IP: <span class="ip">play.msbuilders2.ru</span><br />
-        Версия: 1.21.8
-      </div>
     </aside>
 
     <main class="content">
@@ -527,11 +541,15 @@
             Строительный Minecraft-сервер с архитектурой, городами, ивентами
             и продуманным сюжетом. Здесь создают проекты, а не просто выживают.
           </div>
+
           <div class="hero-tags">
             <span class="hero-tag">Архитектура</span>
             <span class="hero-tag">Ивенты</span>
             <span class="hero-tag">Лор</span>
-            <span class="hero-tag">Комьюнити</span>
+
+            <a class="hero-tag" href="https://discord.com/invite/Wj8jWS736f" target="_blank" rel="noopener noreferrer">
+              Комьюнити (Discord)
+            </a>
           </div>
         </div>
 
@@ -567,7 +585,7 @@
         </svg>
       </section>
 
-      <!-- Твой контент дальше без изменений -->
+      <!-- Дальше твой контент без изменений -->
       <section class="page-section">
         <h2 class="section-title">ЧТО ТАКОЕ MS BUILDERS</h2>
 
@@ -593,60 +611,6 @@
           </a>
         </div>
       </section>
-
-      <section class="page-section">
-        <h2 class="section-title">ЧТО ТУТ У НАС</h2>
-
-        <div class="icon-grid">
-          <a class="icon-link" href="join.html">
-            <div class="icon-card">
-              <img src="icon-start.png" alt="Начало игры" />
-              <div class="icon-title">НАЧАЛО ИГРЫ</div>
-              <div class="icon-text">Гайд по входу, спавну и первым шагам на сервере.</div>
-            </div>
-          </a>
-
-          <a class="icon-link" href="rules.html">
-            <div class="icon-card">
-              <img src="icon-rules.png" alt="Правила" />
-              <div class="icon-title">ПРАВИЛА</div>
-              <div class="icon-text">Основные правила сервера и поведения в комьюнити.</div>
-            </div>
-          </a>
-
-          <a class="icon-link" href="crafts.html">
-            <div class="icon-card">
-              <img src="icon-custom-items.png" alt="Кастомные предметы" />
-              <div class="icon-title">КАСТОМНЫЕ ПРЕДМЕТЫ</div>
-              <div class="icon-text">Уникальные крафты и блоки, доступные только на MS Builders.</div>
-            </div>
-          </a>
-
-          <a class="icon-link" href="enchants.html">
-            <div class="icon-card">
-              <img src="icon-enchants.png" alt="Новые чары" />
-              <div class="icon-title">НОВЫЕ ЧАРЫ</div>
-              <div class="icon-text">Особые зачарования для строителей и исследователей.</div>
-            </div>
-          </a>
-
-          <a class="icon-link" href="story.html">
-            <div class="icon-card">
-              <img src="icon-story.png" alt="Сюжет" />
-              <div class="icon-title">СЮЖЕТ</div>
-              <div class="icon-text">История мира по главам: лор, фракции и ключевые события.</div>
-            </div>
-          </a>
-
-          <a class="icon-link" href="projects.html">
-            <div class="icon-card">
-              <img src="icon-projects.png" alt="Наши проекты" />
-              <div class="icon-title">НАШИ ПРОЕКТЫ</div>
-              <div class="icon-text">Галерея лучших билдов и масштабных архитектурных работ.</div>
-            </div>
-          </a>
-        </div>
-      </section>
     </main>
   </div>
 
@@ -657,7 +621,6 @@
     const sidebarIcon = document.getElementById("sidebarIcon");
     const btnGarland = document.getElementById("toggleGarland");
 
-    // восстановление из памяти
     const sidebarOff = localStorage.getItem("ms_sidebar") === "off";
     const garlandOff = localStorage.getItem("ms_garland") === "off";
 
@@ -667,7 +630,6 @@
     function syncSidebarIcon() {
       sidebarIcon.textContent = root.classList.contains("sidebar-collapsed") ? ">" : "<";
     }
-
     syncSidebarIcon();
 
     btnSidebar.addEventListener("click", () => {

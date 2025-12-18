@@ -415,86 +415,44 @@
       border-right: 1px solid rgba(148,163,184,0.12);
     }
 
-    /* ====== ГИРЛЯНДА (ВЕРХ/НИЗ) ====== */
-    .garland {
+        /* ====== ВОЛНИСТАЯ ГИРЛЯНДА СВЕРХУ (С ПРОВОДОМ) ====== */
+    .garland-top {
       position: fixed;
+      top: 0;
       left: 0;
       width: 100%;
-      height: 46px;
-      z-index: 60;
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      height: 70px;
+      z-index: 80;
+      pointer-events: none; /* чтобы не мешала кликам */
       opacity: 1;
       transition: opacity 0.2s ease;
     }
 
-    .garland.top { top: 0; }
-    .garland.bottom { bottom: 0; transform: rotate(180deg); }
+    /* скрытие гирлянды */
+    .garland-off .garland-top { opacity: 0; }
 
-    /* чтобы верхняя гирлянда не перекрывала контролы */
-    .garland.top { margin-top: 0; }
-
-    .garland .wire {
-      width: min(1400px, 100%);
-      height: 46px;
-      position: relative;
+    .garland-top svg {
+      width: 100%;
+      height: 70px;
+      display: block;
+      overflow: visible;
     }
 
-    .garland .wire::before {
-      content: "";
-      position: absolute;
-      left: -2%;
-      right: -2%;
-      top: 14px;
-      height: 22px;
-      border-bottom: 3px solid rgba(148,163,184,0.35);
-      border-radius: 0 0 1200px 1200px;
+    /* провод */
+    .garland-wire {
+      stroke: rgba(34, 197, 94, 0.95);
+      stroke-width: 3.5;
+      fill: none;
       filter: drop-shadow(0 2px 0 rgba(0,0,0,0.35));
     }
 
-    .garland .bulbs {
-      position: absolute;
-      left: -2%;
-      right: -2%;
-      top: 10px;
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      padding: 0 14px;
-    }
-
+    /* лампочки */
     .bulb {
-      width: 12px;
-      height: 18px;
-      border-radius: 7px;
-      position: relative;
-      filter: drop-shadow(0 2px 0 rgba(0,0,0,0.35));
       opacity: 0.95;
+      filter: drop-shadow(0 2px 0 rgba(0,0,0,0.35));
       animation: blink 1.6s infinite steps(2, end);
     }
 
-    .bulb::before {
-      content: "";
-      position: absolute;
-      top: -6px;
-      left: 2px;
-      width: 8px;
-      height: 6px;
-      border-radius: 2px 2px 0 0;
-      background: rgba(148,163,184,0.6);
-      border: 1px solid rgba(2,6,23,0.6);
-    }
-
-    /* цвета лампочек */
-    .bulb.red { background: #ef4444; box-shadow: 0 0 12px rgba(239,68,68,0.7); }
-    .bulb.green { background: #22c55e; box-shadow: 0 0 12px rgba(34,197,94,0.7); }
-    .bulb.blue { background: #38bdf8; box-shadow: 0 0 12px rgba(56,189,248,0.7); }
-    .bulb.yellow { background: #fbbf24; box-shadow: 0 0 12px rgba(251,191,36,0.7); }
-    .bulb.purple { background: #a855f7; box-shadow: 0 0 12px rgba(168,85,247,0.7); }
-
-    /* смещение мигания, чтобы не мигали одинаково */
     .bulb:nth-child(2n) { animation-delay: 0.2s; }
     .bulb:nth-child(3n) { animation-delay: 0.4s; }
     .bulb:nth-child(5n) { animation-delay: 0.6s; }
@@ -505,52 +463,166 @@
       100% { opacity: 0.35; filter: brightness(0.8); }
     }
 
-    /* отключение гирлянды */
-    .garland-off .garland { opacity: 0; }
+    /* КНОПКА "Гирлянда" — висит справа */
+    .garland-toggle {
+      position: fixed;
+      top: 42px;            /* визуально "висит" ниже провода */
+      right: 14px;
+      z-index: 90;
+      pointer-events: auto; /* кнопка кликабельна */
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(2,6,23,0.72);
+      backdrop-filter: blur(8px);
+      color: #e5e7eb;
+      font-size: 12px;
+      cursor: pointer;
+      transition: 0.15s;
+    }
 
-    /* чтобы нижняя гирлянда не перекрывала контент */
+    .garland-toggle:hover {
+      border-color: #38bdf8;
+      color: #e0f2fe;
+    }
+
+    /* тонкая "верёвочка", будто кнопка подвешена */
+    .garland-toggle::before {
+      content: "";
+      position: absolute;
+      top: -26px;
+      right: 22px;
+      width: 2px;
+      height: 26px;
+      background: rgba(34, 197, 94, 0.75);
+      filter: drop-shadow(0 2px 0 rgba(0,0,0,0.35));
+      border-radius: 2px;
+    }
+
+    /* ====== КНОПКА СВОРАЧИВАНИЯ САЙДБАРА (СТРЕЛКА ВНИЗУ) ====== */
+    .sidebar {
+      position: relative;
+      transition: width 0.2s ease, padding 0.2s ease;
+      border-right: 1px solid rgba(148,163,184,0.12);
+    }
+
+    .sidebar-toggle {
+      position: absolute;
+      left: 10px;
+      bottom: 12px;
+      z-index: 5;
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(15,23,42,0.85);
+      color: #e5e7eb;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: 0.15s;
+    }
+
+    .sidebar-toggle:hover {
+      border-color: #38bdf8;
+      color: #e0f2fe;
+    }
+
+    .sidebar-toggle span {
+      display: inline-block;
+      font-size: 18px;
+      line-height: 1;
+      transform: translateX(-1px);
+    }
+
+    /* свернуто */
+    .sidebar-collapsed .sidebar {
+      width: 0;
+      padding: 0;
+      overflow: hidden;
+      border-right: none;
+    }
+
+    /* чтобы кнопка была доступна даже в свернутом виде */
+    .sidebar-collapsed .sidebar-toggle {
+      position: fixed;
+      left: 10px;
+      bottom: 12px;
+      z-index: 95;
+    }
+
+    /* стрелка меняется */
+    .sidebar-collapsed .sidebar-toggle span {
+      transform: rotate(180deg);
+    }
+
+    /* ====== ЧТОБЫ ГИРЛЯНДА НАЕЗЖАЛА НА БАННЕР, НО НЕ ЛОМАЛА ВЁРСТКУ ====== */
     .content {
-      padding-top: 56px;   /* место под верхнюю гирлянду/контролы */
-      padding-bottom: 80px;/* место под нижнюю гирлянду */
+      padding-top: 0;      /* убрали место под верхнюю панель */
+      padding-bottom: 40px;
     }
 
-    /* На мобилках: чуть меньше */
+    /* на мобилке сделаем чуть ниже кнопку гирлянды */
     @media (max-width: 900px) {
-      .top-controls { justify-content: space-between; }
-      .btn { padding: 7px 10px; font-size: 11px; }
-      .garland { height: 40px; }
-      .garland .wire { height: 40px; }
-      .bulb { width: 10px; height: 16px; }
-      .content { padding-top: 56px; padding-bottom: 70px; }
+      .garland-top { height: 60px; }
+      .garland-top svg { height: 60px; }
+      .garland-toggle { top: 36px; right: 10px; padding: 7px 10px; }
+      .garland-toggle::before { top: -22px; height: 22px; right: 18px; }
     }
+
   </style>
 </head>
 <body>
-<!-- ГИРЛЯНДА СВЕРХУ -->
-<div class="garland top" id="garlandTop" aria-hidden="true">
-  <div class="wire">
-    <div class="bulbs">
-      <span class="bulb red"></span><span class="bulb green"></span><span class="bulb blue"></span><span class="bulb yellow"></span><span class="bulb purple"></span>
-      <span class="bulb red"></span><span class="bulb green"></span><span class="bulb blue"></span><span class="bulb yellow"></span><span class="bulb purple"></span>
-      <span class="bulb red"></span><span class="bulb green"></span><span class="bulb blue"></span><span class="bulb yellow"></span><span class="bulb purple"></span>
-      <span class="bulb red"></span><span class="bulb green"></span><span class="bulb blue"></span><span class="bulb yellow"></span><span class="bulb purple"></span>
-      <span class="bulb red"></span><span class="bulb green"></span><span class="bulb blue"></span><span class="bulb yellow"></span><span class="bulb purple"></span>
-    </div>
-  </div>
+  
+<!-- ВОЛНИСТАЯ ГИРЛЯНДА СВЕРХУ -->
+<div class="garland-top" aria-hidden="true">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none">
+    <!-- Провод (волна) -->
+    <path class="garland-wire"
+      d="M0,30
+         C120,10 240,50 360,30
+         C480,10 600,50 720,30
+         C840,10 960,50 1080,30
+         C1200,10 1320,50 1440,30" />
+
+    <!-- Лампочки (равномерно по проводу) -->
+    <!-- Можно добавлять/убирать, это просто точки -->
+    <g>
+      <circle class="bulb" cx="70"  cy="22" r="7" fill="#ef4444"/>
+      <circle class="bulb" cx="140" cy="36" r="7" fill="#22c55e"/>
+      <circle class="bulb" cx="210" cy="24" r="7" fill="#38bdf8"/>
+      <circle class="bulb" cx="280" cy="38" r="7" fill="#fbbf24"/>
+      <circle class="bulb" cx="350" cy="22" r="7" fill="#a855f7"/>
+
+      <circle class="bulb" cx="420" cy="36" r="7" fill="#ef4444"/>
+      <circle class="bulb" cx="490" cy="24" r="7" fill="#22c55e"/>
+      <circle class="bulb" cx="560" cy="38" r="7" fill="#38bdf8"/>
+      <circle class="bulb" cx="630" cy="22" r="7" fill="#fbbf24"/>
+      <circle class="bulb" cx="700" cy="36" r="7" fill="#a855f7"/>
+
+      <circle class="bulb" cx="770" cy="24" r="7" fill="#ef4444"/>
+      <circle class="bulb" cx="840" cy="38" r="7" fill="#22c55e"/>
+      <circle class="bulb" cx="910" cy="22" r="7" fill="#38bdf8"/>
+      <circle class="bulb" cx="980" cy="36" r="7" fill="#fbbf24"/>
+      <circle class="bulb" cx="1050" cy="24" r="7" fill="#a855f7"/>
+
+      <circle class="bulb" cx="1120" cy="38" r="7" fill="#ef4444"/>
+      <circle class="bulb" cx="1190" cy="22" r="7" fill="#22c55e"/>
+      <circle class="bulb" cx="1260" cy="36" r="7" fill="#38bdf8"/>
+      <circle class="bulb" cx="1330" cy="24" r="7" fill="#fbbf24"/>
+      <circle class="bulb" cx="1400" cy="38" r="7" fill="#a855f7"/>
+    </g>
+  </svg>
 </div>
 
-<!-- ГИРЛЯНДА СНИЗУ -->
-<div class="garland bottom" id="garlandBottom" aria-hidden="true">
-  <div class="wire">
-    <div class="bulbs">
-      <span class="bulb red"></span><span class="bulb green"></span><span class="bulb blue"></span><span class="bulb yellow"></span><span class="bulb purple"></span>
-      <span class="bulb red"></span><span class="bulb green"></span><span class="bulb blue"></span><span class="bulb yellow"></span><span class="bulb purple"></span>
-      <span class="bulb red"></span><span class="bulb green"></span><span class="bulb blue"></span><span class="bulb yellow"></span><span class="bulb purple"></span>
-      <span class="bulb red"></span><span class="bulb green"></span><span class="bulb blue"></span><span class="bulb yellow"></span><span class="bulb purple"></span>
-      <span class="bulb red"></span><span class="bulb green"></span><span class="bulb blue"></span><span class="bulb yellow"></span><span class="bulb purple"></span>
-    </div>
-  </div>
-</div>
+<!-- КНОПКА ВКЛ/ВЫКЛ ГИРЛЯНДЫ (ВИСИТ НА КОНЧИКЕ) -->
+<button class="garland-toggle" id="toggleGarland" type="button">🎄 Гирлянда</button>
+
+
+
 
 <div class="layout">
   <!-- ЛЕВАЯ ПАНЕЛЬ -->
@@ -577,14 +649,14 @@
       IP: <span class="ip">play.msbuilders2.ru</span><br />
       Версия: 1.21.8
     </div>
+        <button class="sidebar-toggle" id="toggleSidebar" type="button" aria-label="Свернуть/развернуть панель">
+      <span>‹</span>
+    </button>
+
   </aside>
 
   <!-- ПРАВАЯ ЧАСТЬ -->
   <main class="content">
-    <div class="top-controls">
-      <button class="btn" id="toggleSidebar" type="button">☰ <small>Панель</small></button>
-      <button class="btn" id="toggleGarland" type="button">🎄 <small>Гирлянда</small></button>
-    </div>
 
 <!-- БОЛЬШОЙ БАННЕР -->
 <section class="hero">
@@ -745,6 +817,29 @@
 
   </main>
 </div>
+<script>
+  const root = document.documentElement;
+
+  const btnSidebar = document.getElementById("toggleSidebar");
+  const btnGarland = document.getElementById("toggleGarland");
+
+  // восстановление из памяти
+  const sidebarOff = localStorage.getItem("ms_sidebar") === "off";
+  const garlandOff = localStorage.getItem("ms_garland") === "off";
+
+  if (sidebarOff) root.classList.add("sidebar-collapsed");
+  if (garlandOff) root.classList.add("garland-off");
+
+  btnSidebar.addEventListener("click", () => {
+    root.classList.toggle("sidebar-collapsed");
+    localStorage.setItem("ms_sidebar", root.classList.contains("sidebar-collapsed") ? "off" : "on");
+  });
+
+  btnGarland.addEventListener("click", () => {
+    root.classList.toggle("garland-off");
+    localStorage.setItem("ms_garland", root.classList.contains("garland-off") ? "off" : "on");
+  });
+</script>
 <script>
   const root = document.documentElement;
 

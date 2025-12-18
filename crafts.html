@@ -1,122 +1,369 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Крафты — MS Builders</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Шрифты как на главной -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+
   <style>
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
+      font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #0b0f19;
       color: #e5e7eb;
     }
-    header {
-      padding: 20px;
+
+    .layout { display: flex; min-height: 100vh; }
+
+    /* ЛЕВАЯ ПАНЕЛЬ */
+    .sidebar {
+      width: 260px;
       background: #020617;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      color: #38bdf8;
-    }
-    nav {
-      background: #020617;
+      padding: 24px 20px;
       display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding-bottom: 15px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 24px;
     }
-    nav a {
+
+    .logo-box { display: flex; align-items: center; gap: 12px; }
+
+    .logo-box img {
+      width: 96px;
+      height: 96px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .sidebar-title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .sidebar-title span {
+      display: block;
+      font-size: 12px;
+      color: #9ca3af;
+      font-weight: 400;
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .sidebar-nav a {
       color: #e5e7eb;
       text-decoration: none;
-      font-weight: bold;
-    }
-    nav a:hover {
-      color: #38bdf8;
-    }
-    section {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 0 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-    }
-    .craft-card {
-      background: #020617;
-      border-radius: 12px;
-      padding: 15px;
-    }
-    .craft-card h3 {
-      margin-top: 0;
-      color: #38bdf8;
-    }
-    .recipe {
-      background: #0f172a;
-      padding: 10px;
-      border-radius: 8px;
       font-size: 14px;
+      padding: 6px 0;
+      border-left: 3px solid transparent;
+      padding-left: 10px;
+      transition: 0.15s;
     }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #020617;
-      font-size: 14px;
+
+    .sidebar-nav a:hover { color: #38bdf8; border-color: #38bdf8; }
+
+    .sidebar-nav a.active {
+      color: #38bdf8;
+      border-color: #38bdf8;
+      font-weight: 600;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      font-size: 12px;
       color: #9ca3af;
+    }
+
+    .sidebar-footer .ip { font-weight: 600; color: #e5e7eb; }
+
+    /* ПРАВАЯ ЧАСТЬ */
+    .content {
+      flex: 1;
+      background:
+        linear-gradient(to bottom, rgba(15,23,42,0.9), rgba(15,23,42,1)),
+        url("bg-stone.png");
+      background-size: auto, 128px 128px;
+      background-repeat: repeat;
+      padding-bottom: 40px;
+    }
+
+    .hero { position: relative; height: 220px; overflow: hidden; }
+    .hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(15,23,42,0.7), transparent);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 40px;
+      gap: 10px;
+    }
+
+    .hero-title {
+      font-family: "Press Start 2P", system-ui;
+      font-size: 18px;
+      text-transform: uppercase;
+      color: #f9fafb;
+      text-shadow: 0 0 10px rgba(15,23,42,0.9);
+    }
+
+    .hero-subtitle { font-size: 14px; max-width: 520px; color: #e5e7eb; }
+
+    .page-section { margin: 32px auto 0; max-width: 1200px; padding: 0 24px; }
+
+    .section-title {
+      font-family: "Press Start 2P", system-ui;
+      font-size: 16px;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 12px 16px;
+      margin: 0 0 24px;
+      background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+      color: #0b1120;
+      border-radius: 999px;
+      letter-spacing: 0.08em;
+    }
+
+    /* ПАНЕЛЬ ФИЛЬТРА */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+      align-items: center;
+      justify-content: flex-end; /* только один фильтр — красиво справа */
+    }
+
+    .filter-bar label { font-size: 13px; color: #cbd5f5; }
+
+    .filter-select {
+      background: #020617;
+      border: 1px solid rgba(148,163,184,0.5);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: #e5e7eb;
+      font-size: 13px;
+      outline: none;
+      min-width: 220px;
+    }
+
+    .filter-select:focus { border-color: #38bdf8; }
+
+    /* СЕТКА КРАФТОВ */
+    .craft-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .craft-card {
+      background: rgba(15,23,42,0.95);
+      border-radius: 16px;
+      padding: 14px;
+      border: 1px solid rgba(148,163,184,0.4);
+      box-shadow: 0 10px 24px rgba(15,23,42,0.7);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s;
+      overflow: hidden;
+    }
+
+    .craft-card:hover {
+      transform: translateY(-3px);
+      border-color: #38bdf8;
+      box-shadow: 0 16px 30px rgba(15,23,42,0.9);
+    }
+
+    .craft-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: rgba(2,6,23,0.6);
+      border-radius: 12px;
+      border: 1px solid rgba(148,163,184,0.35);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .craft-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* чтобы крафт-таблица не обрезалась */
+      image-rendering: pixelated; /* приятнее для майна */
+    }
+
+    .craft-name {
+      font-family: "Press Start 2P", system-ui;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      color: #38bdf8;
+    }
+
+    .craft-desc { font-size: 13px; margin-bottom: 8px; color: #e5e7eb; }
+    .craft-obtain { font-size: 12px; color: #a5b4fc; }
+
+    /* АДАПТИВ */
+    @media (max-width: 900px) {
+      .layout { flex-direction: column; }
+
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px;
+      }
+
+      .sidebar-nav {
+        flex-direction: row;
+        gap: 12px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+
+      .sidebar-footer { display: none; }
+
+      .hero-overlay { padding-left: 20px; }
+      .hero-title { font-size: 14px; }
     }
   </style>
 </head>
-
 <body>
 
-<header>
-  <h1>Крафты MS Builders</h1>
-  <p>Уникальные рецепты сервера</p>
-</header>
-
-<div id="nav-placeholder"></div>
-
-
-<section>
-
-  <div class="craft-card">
-    <h3>🔮 Усиленный маяк</h3>
-    <p>Даёт расширенный радиус эффектов.</p>
-    <div class="recipe">
-      🧱 Незеритовый блок<br>
-      💎 Алмазный маяк<br>
-      🌀 Сердце края
+<div class="layout">
+  <!-- ЛЕВАЯ ПАНЕЛЬ -->
+  <aside class="sidebar">
+    <div class="logo-box">
+      <img src="logo.png" alt="Логотип MS Builders" />
+      <div class="sidebar-title">
+        MS Builders
+        <span>Minecraft сервер</span>
+      </div>
     </div>
-  </div>
 
-  <div class="craft-card">
-    <h3>⚙️ Механический блок</h3>
-    <p>Используется в продвинутых механизмах.</p>
-    <div class="recipe">
-      🔩 Железный блок<br>
-      🧠 Редстоун-блок<br>
-      🔋 Энергетическое ядро
+    <nav class="sidebar-nav">
+      <a href="index.html">Главная</a>
+      <a href="extra.html">Плагины и датапаки</a>
+      <a href="enchants.html">Чары</a>
+      <a href="builds.html">Постройки</a>
+      <a href="crafts.html" class="active">Крафты</a>
+      <a href="story.html">Сюжет</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      IP: <span class="ip">play.msbuilders2.ru</span><br />
+      Версия: 1.21.8
     </div>
-  </div>
+  </aside>
 
-</section>
+  <!-- ПРАВАЯ ЧАСТЬ -->
+  <main class="content">
+    <!-- БАННЕР -->
+    <section class="hero">
+      <img src="crafts-banner.png" alt="Крафты MS Builders" />
+      <div class="hero-overlay">
+        <div class="hero-title">крафты ms builders</div>
+        <div class="hero-subtitle">
+          Рецепты сервера: еда, инструменты, предметы и блоки. Всё в удобных карточках.
+        </div>
+      </div>
+    </section>
 
-<footer>
-  © MS Builders • Крафты сервера
-</footer>
+    <section class="page-section">
+      <h2 class="section-title">КРАФТЫ ПРЕДМЕТОВ</h2>
+
+      <!-- ФИЛЬТР -->
+      <div class="filter-bar">
+        <label>
+          Категория:
+          <select id="craft-type" class="filter-select">
+            <option value="all">Все</option>
+            <option value="food">Еда</option>
+            <option value="tool">Инструменты</option>
+            <option value="item">Предмет</option>
+            <option value="block">Блок</option>
+          </select>
+        </label>
+      </div>
+
+      <!-- КАРТОЧКИ КРАФТОВ -->
+      <div class="craft-grid" id="craft-grid">
+
+        <!-- Пример 1 -->
+        <div class="craft-card" data-type="item" data-name="пример предмета">
+          <div class="craft-img">
+            <img src="Crafting_Grid.png" alt="Крафт: пример предмета" />
+          </div>
+          <div class="craft-name">ПРИМЕР ПРЕДМЕТА</div>
+          <div class="craft-desc">Короткое описание рецепта и зачем он нужен.</div>
+          <div class="craft-obtain">Где получить: крафт на верстаке / квест / торговец.</div>
+        </div>
+
+        <!-- Пример 2 -->
+        <div class="craft-card" data-type="food" data-name="пример еды">
+          <div class="craft-img">
+            <img src="Crafting_Grid.png" alt="Крафт: пример еды" />
+          </div>
+          <div class="craft-name">ПРИМЕР ЕДЫ</div>
+          <div class="craft-desc">Еда с бонусами, вкусно и полезно.</div>
+          <div class="craft-obtain">Где получить: крафт / ферма / событие.</div>
+        </div>
+
+        <!-- Пример 3 -->
+        <div class="craft-card" data-type="tool" data-name="пример инструмента">
+          <div class="craft-img">
+            <img src="Crafting_Grid.png" alt="Крафт: пример инструмента" />
+          </div>
+          <div class="craft-name">ПРИМЕР ИНСТРУМЕНТА</div>
+          <div class="craft-desc">Инструмент для строителя, ускоряет процесс.</div>
+          <div class="craft-obtain">Где получить: крафт / покупка.</div>
+        </div>
+
+        <!-- Пример 4 -->
+        <div class="craft-card" data-type="block" data-name="пример блока">
+          <div class="craft-img">
+            <img src="Crafting_Grid.png" alt="Крафт: пример блока" />
+          </div>
+          <div class="craft-name">ПРИМЕР БЛОКА</div>
+          <div class="craft-desc">Декоративный блок для красивых построек.</div>
+          <div class="craft-obtain">Где получить: крафт / шахта / данж.</div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+</div>
+
 <script>
-  // подставляем меню из nav.html во все страницы
-  fetch('nav.html')
-    .then(response => response.text())
-    .then(html => {
-      const container = document.getElementById('nav-placeholder');
-      if (container) {
-        container.innerHTML = html;
-      }
-    })
-    .catch(err => console.error('Не удалось загрузить меню', err));
+  // Фильтрация только по категории
+  const typeSelect = document.getElementById("craft-type");
+  const craftCards = Array.from(document.querySelectorAll(".craft-card"));
+
+  function updateCraftFilter() {
+    const type = typeSelect.value;
+
+    craftCards.forEach((card) => {
+      const cardType = card.dataset.type || "all";
+      const ok = (type === "all") || (cardType === type);
+      card.style.display = ok ? "block" : "none";
+    });
+  }
+
+  typeSelect.addEventListener("change", updateCraftFilter);
+  updateCraftFilter();
 </script>
 
 </body>

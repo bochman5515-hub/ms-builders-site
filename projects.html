@@ -1,74 +1,722 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Наши проекты — MS Builders</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Шрифты как на главной -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+
   <style>
-    body { margin: 0; font-family: Arial, sans-serif; background: #0f172a; color: #e5e7eb; }
-    header { padding: 20px; background: #020617; text-align: center; }
-    header h1 { margin: 0; color: #38bdf8; }
-    nav { background: #020617; display: flex; justify-content: center; gap: 20px; padding-bottom: 15px; flex-wrap: wrap; }
-    nav a { color: #e5e7eb; text-decoration: none; font-weight: bold; }
-    nav a:hover { color: #38bdf8; }
-    section { max-width: 1100px; margin: 40px auto; padding: 0 20px;
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-    .project-card { background: #020617; border-radius: 12px; padding: 15px; }
-    .project-card img { width: 100%; border-radius: 12px; margin-bottom: 10px; }
-    h3 { color: #38bdf8; margin-top: 0; }
-    .social-block { margin-top: 40px; text-align: center; }
-    .btn { background: #38bdf8; color: #020617; padding: 10px 20px; border-radius: 8px; text-decoration: none; margin: 5px; display: inline-block; }
-    .btn:hover { background: #0ea5e9; }
-    footer { text-align: center; padding: 20px; background: #020617; color: #9ca3af; }
+    * { box-sizing: border-box; }
+
+    body{
+      margin:0;
+      font-family:"Montserrat",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+      background-color:#0b0f19;
+      color:#e5e7eb;
+    }
+
+    .layout{
+      display:flex;
+      min-height:100vh;
+    }
+
+    /* ===== ЛЕВАЯ ПАНЕЛЬ (как на остальных страницах) ===== */
+    .sidebar{
+      width:260px;
+      background:#020617;
+      padding:24px 20px;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      transition:width .2s ease,padding .2s ease;
+      border-right:1px solid rgba(148,163,184,.12);
+      overflow:hidden;
+    }
+
+    .logo-box{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .logo-box img{
+      width:96px;
+      height:96px;
+      border-radius:10px;
+      object-fit:cover;
+    }
+
+    .sidebar-title{
+      font-size:16px;
+      font-weight:600;
+      line-height:1.3;
+    }
+
+    .sidebar-title span{
+      display:block;
+      font-size:12px;
+      color:#9ca3af;
+      font-weight:400;
+    }
+
+    .server-copy{
+      margin-top:8px;
+      width:100%;
+      text-align:left;
+      border:1px solid rgba(148,163,184,.22);
+      background:rgba(15,23,42,.55);
+      color:#e5e7eb;
+      border-radius:14px;
+      padding:10px 12px;
+      cursor:pointer;
+      transition:.15s;
+      position:relative;
+    }
+
+    .server-copy:hover{
+      border-color:#38bdf8;
+      background:rgba(15,23,42,.7);
+    }
+
+    .server-ip{ display:block; font-weight:700; letter-spacing:.02em; }
+    .server-ver{ display:block; margin-top:2px; font-size:12px; color:#9ca3af; }
+
+    .server-tip{
+      position:absolute;
+      right:10px;
+      top:10px;
+      font-size:11px;
+      color:#a5b4fc;
+      opacity:0;
+      transform:translateY(-2px);
+      transition:.18s;
+      pointer-events:none;
+    }
+
+    .server-copy.copied .server-tip{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .sidebar-nav{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-top:6px;
+    }
+
+    .sidebar-nav a{
+      color:#e5e7eb;
+      text-decoration:none;
+      font-size:14px;
+      padding:6px 0;
+      border-left:3px solid transparent;
+      padding-left:10px;
+      transition:.15s;
+    }
+
+    .sidebar-nav a:hover{
+      color:#38bdf8;
+      border-color:#38bdf8;
+    }
+
+    .sidebar-nav a.active{
+      color:#38bdf8;
+      border-color:#38bdf8;
+      font-weight:600;
+    }
+
+    .sidebar-collapsed .sidebar{
+      width:0;
+      padding:0;
+      border-right:none;
+    }
+
+    /* ===== ПРАВАЯ ЧАСТЬ ===== */
+    .content{
+      flex:1;
+      background:
+        linear-gradient(to bottom, rgba(15,23,42,0.9), rgba(15,23,42,1)),
+        url("bg-stone.png");
+      background-size:auto,128px 128px;
+      background-repeat:repeat;
+      padding-bottom:40px;
+    }
+
+    /* ===== БАННЕР ===== */
+    .hero{
+      position:relative;
+      height:240px;
+      overflow:hidden;
+    }
+
+    .hero img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .hero-overlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to right, rgba(15,23,42,0.7), transparent);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      padding-left:40px;
+      gap:10px;
+    }
+
+    .hero-title{
+      font-family:"Press Start 2P",system-ui;
+      font-size:18px;
+      text-transform:uppercase;
+      color:#f9fafb;
+      text-shadow:0 0 10px rgba(15,23,42,0.9);
+    }
+
+    .hero-subtitle{
+      font-size:14px;
+      max-width:560px;
+      color:#e5e7eb;
+    }
+
+    .hero-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:6px;
+    }
+
+    .hero-tag{
+      font-size:11px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.7);
+      border:1px solid rgba(148,163,184,0.4);
+    }
+
+    .page-section{
+      margin:32px auto 0;
+      max-width:1200px;
+      padding:0 24px;
+    }
+
+    .section-title{
+      font-family:"Press Start 2P",system-ui;
+      font-size:16px;
+      text-transform:uppercase;
+      text-align:center;
+      padding:12px 16px;
+      margin:0 0 24px;
+      background:linear-gradient(90deg,#7c3aed,#ec4899);
+      color:#0b1120;
+      border-radius:999px;
+      letter-spacing:.08em;
+    }
+
+    /* ===== СЕТКА ПРОЕКТОВ (2 в ряд) ===== */
+    .project-grid{
+      display:grid;
+      gap:18px;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+    }
+
+    @media (max-width: 900px){
+      .project-grid{ grid-template-columns:1fr; }
+    }
+
+    /* ===== КАРТОЧКА ПРОЕКТА ===== */
+    .project-card{
+      background:rgba(15,23,42,0.9);
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid rgba(148,163,184,0.35);
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s;
+      cursor:pointer;
+    }
+
+    .project-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 18px 35px rgba(15,23,42,0.8);
+      border-color:#38bdf8;
+    }
+
+    /* ===== СЛАЙДЕР В КАРТОЧКЕ ===== */
+    .project-slider{
+      position:relative;
+      width:100%;
+      height:220px;
+      overflow:hidden;
+      background:rgba(2,6,23,0.35);
+    }
+
+    .project-slider img{
+      width:100%;
+      height:220px;
+      object-fit:cover;
+      display:none;
+    }
+
+    .project-slider img.active{
+      display:block;
+    }
+
+    .slider-btn{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      width:36px;
+      height:36px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.35);
+      background:rgba(2,6,23,0.75);
+      color:#e5e7eb;
+      font-size:18px;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      opacity:0;
+      transition:.15s;
+      z-index:2;
+      box-shadow:0 10px 22px rgba(0,0,0,0.25);
+    }
+
+    .project-card:hover .slider-btn{
+      opacity:1;
+    }
+
+    .slider-btn:hover{
+      border-color:#38bdf8;
+      color:#e0f2fe;
+    }
+
+    .slider-prev{ left:10px; }
+    .slider-next{ right:10px; }
+
+    .project-info{
+      padding:14px 16px 16px;
+    }
+
+    .project-name{
+      font-family:"Press Start 2P",system-ui;
+      font-size:11px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#e0f2fe;
+      margin:0 0 10px;
+    }
+
+    .project-desc{
+      margin:0;
+      font-size:13px;
+      color:#cbd5f5;
+      line-height:1.4;
+    }
+
+    /* ===== БЛОК СОЦСЕТЕЙ ===== */
+    .social-card{
+      margin-top:22px;
+      background:rgba(15,23,42,0.9);
+      border-radius:16px;
+      border:1px solid rgba(148,163,184,0.35);
+      padding:16px;
+      text-align:center;
+      box-shadow:0 10px 24px rgba(15,23,42,0.55);
+    }
+
+    .social-title{
+      font-family:"Press Start 2P",system-ui;
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin:0 0 12px;
+      color:#e0f2fe;
+    }
+
+    .social-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:center;
+    }
+
+    .social-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:999px;
+      text-decoration:none;
+      color:#0b1120;
+      background:linear-gradient(90deg,#0ea5e9,#38bdf8);
+      border:1px solid rgba(148,163,184,0.25);
+      font-weight:700;
+      font-size:13px;
+      transition:.15s;
+    }
+
+    .social-btn:hover{
+      filter:brightness(1.05);
+      transform:translateY(-1px);
+    }
+
+    .social-muted{
+      margin:10px 0 0;
+      font-size:12px;
+      color:#9ca3af;
+    }
+
+    /* ===== МОДАЛКА ===== */
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      background:rgba(0,0,0,0.75);
+      justify-content:center;
+      align-items:center;
+      padding:20px;
+    }
+
+    .modal.open{ display:flex; }
+
+    .modal-content{
+      max-width:92vw;
+      max-height:88vh;
+      border-radius:14px;
+      box-shadow:0 20px 60px rgba(0,0,0,0.55);
+      border:1px solid rgba(148,163,184,0.25);
+      overflow:hidden;
+      background:rgba(2,6,23,0.9);
+    }
+
+    .modal-content img{
+      display:block;
+      max-width:92vw;
+      max-height:88vh;
+      object-fit:contain;
+    }
+
+    /* ===== КНОПКА < > СНИЗУ СЛЕВА ===== */
+    .sidebar-fab{
+      position:fixed;
+      left:14px;
+      bottom:14px;
+      z-index:95;
+      width:44px;
+      height:44px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.35);
+      background:rgba(2,6,23,0.78);
+      backdrop-filter:blur(8px);
+      color:#e5e7eb;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      transition:.15s;
+      box-shadow:0 10px 22px rgba(0,0,0,0.25);
+    }
+
+    .sidebar-fab:hover{
+      border-color:#38bdf8;
+      color:#e0f2fe;
+    }
+
+    .sidebar-fab span{
+      font-size:18px;
+      line-height:1;
+      transform:translateY(-1px);
+    }
+
+    @media (max-width:900px){
+      .layout{ flex-direction:column; }
+      .sidebar-fab{ display:none; }
+      .hero-overlay{ padding-left:20px; }
+      .hero-title{ font-size:14px; }
+      .hero{ height:220px; }
+    }
   </style>
 </head>
 
 <body>
+  <button class="sidebar-fab" id="toggleSidebar" type="button" aria-label="Показать/скрыть панель">
+    <span id="sidebarIcon">&lt;</span>
+  </button>
 
-<header>
-  <h1>Наши проекты</h1>
-  <p>Лучшие постройки и архитектура от MS Builders</p>
-</header>
+  <div class="layout">
+    <aside class="sidebar">
+      <div>
+        <div class="logo-box">
+          <img src="logo.png" alt="Логотип MS Builders" />
+          <div class="sidebar-title">
+            MS Builders
+            <span>Minecraft сервер</span>
+          </div>
+        </div>
 
-<div id="nav-placeholder"></div>
+        <button class="server-copy" id="copyIp" type="button" title="Нажмите, чтобы скопировать IP">
+          <span class="server-ip">play.msbuilders2.ru</span>
+          <span class="server-ver">Версия: 1.21.8</span>
+          <span class="server-tip">Скопировано!</span>
+        </button>
+      </div>
 
+      <nav class="sidebar-nav">
+        <a href="index.html">Главная</a>
+        <a href="news.html">Новости</a>
+        <a href="extra.html">Плагины и датапаки</a>
+        <a href="enchants.html">Чары</a>
+        <a href="projects.html" class="active">Наши проекты</a>
+        <a href="builds.html">Постройки</a>
+        <a href="crafts.html">Крафты</a>
+        <a href="story.html">Сюжет</a>
+      </nav>
+    </aside>
 
-<section>
+    <main class="content">
+      <section class="hero">
+        <!-- можешь заменить на баннер проектов -->
+        <img src="projects-banner.png" alt="Проекты MS Builders" />
+        <div class="hero-overlay">
+          <div class="hero-title">наши проекты</div>
+          <div class="hero-subtitle">
+            Примеры заказных и конкурсных работ MS Builders. Листай фото, смотри стиль и пиши нам для заказа.
+          </div>
+          <div class="hero-tags">
+            <span class="hero-tag">Коммерция</span>
+            <span class="hero-tag">Архитектура</span>
+            <span class="hero-tag">Дизайн</span>
+            <span class="hero-tag">Команда</span>
+          </div>
+        </div>
+      </section>
 
-  <div class="project-card">
-    <img src="project1.jpg" class="preview">
-    <h3>🏰 Главная столица</h3>
-    <p>Центральный город сервера, ключевое место сюжета.</p>
+      <section class="page-section">
+        <h2 class="section-title">ПОРТФОЛИО</h2>
+
+        <div class="project-grid">
+          <!-- pr1_1-5 -->
+          <article class="project-card">
+            <div class="project-slider">
+              <img src="images/images/projects/pr1_1.png" class="active" alt="pr1 1">
+              <img src="images/images/projects/pr1_2.png" alt="pr1 2">
+              <img src="images/images/projects/pr1_3.png" alt="pr1 3">
+              <img src="images/images/projects/pr1_4.png" alt="pr1 4">
+              <img src="images/images/projects/pr1_5.png" alt="pr1 5">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">ОСТРОВ РАЗВЛЕЧЕНИЙ</h3>
+              <p class="project-desc">Построен для нашего сервера во время конкурса.</p>
+            </div>
+          </article>
+
+          <!-- pr2_1-5 -->
+          <article class="project-card">
+            <div class="project-slider">
+              <img src="images/images/projects/pr2_1.png" class="active" alt="pr2 1">
+              <img src="images/images/projects/pr2_2.png" alt="pr2 2">
+              <img src="images/images/projects/pr2_3.png" alt="pr2 3">
+              <img src="images/images/projects/pr2_4.png" alt="pr2 4">
+              <img src="images/images/projects/pr2_5.png" alt="pr2 5">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">МЕДНАЯ ДЕРЕВНЯ</h3>
+              <p class="project-desc">Построена в выживании.</p>
+            </div>
+          </article>
+
+          <!-- sp1_1-3 -->
+          <article class="project-card">
+            <div class="project-slider">
+              <img src="images/images/projects/sp1_1.png" class="active" alt="sp1 1">
+              <img src="images/images/projects/sp1_2.png" alt="sp1 2">
+              <img src="images/images/projects/sp1_3.png" alt="sp1 3">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">СПАВН В КОСМИЧЕСКОМ СТИЛЕ</h3>
+              <p class="project-desc">Концепт спавна с тематикой космоса.</p>
+            </div>
+          </article>
+
+          <!-- sp2_1-5 -->
+          <article class="project-card">
+            <div class="project-slider">
+              <img src="images/images/projects/sp2_1.png" class="active" alt="sp2 1">
+              <img src="images/images/projects/sp2_2.png" alt="sp2 2">
+              <img src="images/images/projects/sp2_3.png" alt="sp2 3">
+              <img src="images/images/projects/sp2_4.png" alt="sp2 4">
+              <img src="images/images/projects/sp2_5.png" alt="sp2 5">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">СПАВН 2-ГО СЕЗОНА</h3>
+              <p class="project-desc">Спавн нашего сервера со 2-го сезона.</p>
+            </div>
+          </article>
+
+          <!-- pr3_1-5 -->
+          <article class="project-card">
+            <div class="project-slider">
+              <img src="images/images/projects/pr3_1.png" class="active" alt="pr3 1">
+              <img src="images/images/projects/pr3_2.png" alt="pr3 2">
+              <img src="images/images/projects/pr3_3.png" alt="pr3 3">
+              <img src="images/images/projects/pr3_4.png" alt="pr3 4">
+              <img src="images/images/projects/pr3_5.png" alt="pr3 5">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">ПРОЕКТ ГОРОДА</h3>
+              <p class="project-desc">Большой городской проект (описание можно расширить позже).</p>
+            </div>
+          </article>
+
+          <!-- pr4_1-3 -->
+          <article class="project-card">
+            <div class="project-slider">
+              <img src="images/images/projects/pr4_1.png" class="active" alt="pr4 1">
+              <img src="images/images/projects/pr4_2.png" alt="pr4 2">
+              <img src="images/images/projects/pr4_3.png" alt="pr4 3">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">ПРОЕКТ БАГРАТИОНА</h3>
+              <p class="project-desc">Неоклассический стиль (описание можно расширить позже).</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="social-card">
+          <h3 class="social-title">связаться с нами</h3>
+
+          <div class="social-links">
+            <a class="social-btn" href="https://vk.com/msbuildersminecraft" target="_blank" rel="noopener">VK</a>
+            <a class="social-btn" href="https://discord.com/invite/Wj8jWS736f" target="_blank" rel="noopener">Discord</a>
+            <a class="social-btn" href="mailto:Komand.or@mail.ru">Почта</a>
+          </div>
+
+          <p class="social-muted">Ответим и поможем с заказом: спавн, хаб, город, интерьер, дизайн.</p>
+        </div>
+      </section>
+    </main>
   </div>
 
-  <div class="project-card">
-    <img src="project1.jpg" class="preview">
-    <h3>🌲 Фэнтези‑деревня</h3>
-    <p>RP‑постройка в стиле волшебного мира.</p>
+  <div class="modal" id="imgModal" aria-hidden="true">
+    <div class="modal-content">
+      <img id="modalImg" src="" alt="Просмотр проекта" />
+    </div>
   </div>
 
-</section>
+  <script>
+    const root = document.documentElement;
 
-<div class="social-block">
-  <h2>Мы в соцсетях</h2>
-  <a class="btn" href="https://vk.com/msbuildersminecraft">Наш VK</a>
-  <a class="btn" href="https://discord.com/invite/Wj8jWS736f">Наш Discord</a>
-  <a class="btn" href="mailto:Komand.or@mail.ru">Эл. почта</a>
-</div>
+    // ===== САЙДБАР (кнопка < >) =====
+    const btnSidebar = document.getElementById("toggleSidebar");
+    const sidebarIcon = document.getElementById("sidebarIcon");
 
-<footer>© MS Builders • Наши проекты</footer>
-<script>
-  // подставляем меню из nav.html во все страницы
-  fetch('nav.html')
-    .then(response => response.text())
-    .then(html => {
-      const container = document.getElementById('nav-placeholder');
-      if (container) {
-        container.innerHTML = html;
+    const sidebarOff = localStorage.getItem("ms_sidebar") === "off";
+    if (sidebarOff) root.classList.add("sidebar-collapsed");
+
+    function syncSidebarIcon(){
+      sidebarIcon.textContent = root.classList.contains("sidebar-collapsed") ? ">" : "<";
+    }
+    syncSidebarIcon();
+
+    btnSidebar.addEventListener("click", () => {
+      root.classList.toggle("sidebar-collapsed");
+      localStorage.setItem("ms_sidebar", root.classList.contains("sidebar-collapsed") ? "off" : "on");
+      syncSidebarIcon();
+    });
+
+    // ===== КОПИРОВАНИЕ IP =====
+    const copyBtn = document.getElementById("copyIp");
+    if (copyBtn){
+      copyBtn.addEventListener("click", async () => {
+        const ip = "play.msbuilders2.ru";
+        try{
+          await navigator.clipboard.writeText(ip);
+        }catch(e){
+          const ta = document.createElement("textarea");
+          ta.value = ip;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          document.body.removeChild(ta);
+        }
+        copyBtn.classList.add("copied");
+        setTimeout(() => copyBtn.classList.remove("copied"), 1200);
+      });
+    }
+
+    // ===== СЛАЙДЕРЫ (внутри карточек) =====
+    document.querySelectorAll(".project-slider").forEach((slider) => {
+      const images = Array.from(slider.querySelectorAll("img"));
+      const prev = slider.querySelector(".slider-prev");
+      const next = slider.querySelector(".slider-next");
+      let index = 0;
+
+      function show(i){
+        images.forEach(img => img.classList.remove("active"));
+        images[i].classList.add("active");
       }
-    })
-    .catch(err => console.error('Не удалось загрузить меню', err));
-</script>
 
+      prev.addEventListener("click", (e) => {
+        e.stopPropagation();
+        index = (index - 1 + images.length) % images.length;
+        show(index);
+      });
+
+      next.addEventListener("click", (e) => {
+        e.stopPropagation();
+        index = (index + 1) % images.length;
+        show(index);
+      });
+    });
+
+    // ===== МОДАЛКА (увеличение активной картинки) =====
+    const modal = document.getElementById("imgModal");
+    const modalImg = document.getElementById("modalImg");
+
+    function openModal(src){
+      if (!src) return;
+      modalImg.src = src;
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeModal(){
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      modalImg.src = "";
+    }
+
+    modal.addEventListener("click", closeModal);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("open")) closeModal();
+    });
+
+    document.querySelectorAll(".project-card").forEach((card) => {
+      card.addEventListener("click", () => {
+        const slider = card.querySelector(".project-slider");
+        if (slider){
+          const active = slider.querySelector("img.active");
+          openModal(active?.src);
+        }
+      });
+    });
+  </script>
 </body>
 </html>

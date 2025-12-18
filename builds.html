@@ -1,169 +1,595 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Постройки — MS Builders</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Шрифты как на главной -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+
   <style>
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
+      font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #0b0f19;
       color: #e5e7eb;
     }
-    header {
-      padding: 20px;
-      background: #020617;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      color: #38bdf8;
-    }
-    nav {
-      background: #020617;
+
+    .layout {
       display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding-bottom: 15px;
-      flex-wrap: wrap;
+      min-height: 100vh;
     }
-    nav a {
-      color: #e5e7eb;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    nav a:hover {
-      color: #38bdf8;
-    }
-    section {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 0 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-    .build-card {
+
+    /* ===== ЛЕВАЯ ПАНЕЛЬ ===== */
+    .sidebar {
+      width: 260px;
       background: #020617;
-      border-radius: 12px;
-      padding: 15px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      transition: width 0.2s ease, padding 0.2s ease;
+      border-right: 1px solid rgba(148,163,184,0.12);
+      overflow: hidden;
     }
-    .build-card h3 {
-      margin-top: 0;
-      color: #38bdf8;
+
+    .logo-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-    .build-card img {
-      width: 100%;
-      max-height: 250px;
+
+    .logo-box img {
+      width: 96px;
+      height: 96px;
+      border-radius: 10px;
       object-fit: cover;
-      border-radius: 12px;
+    }
+
+    .sidebar-title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .sidebar-title span {
       display: block;
-      margin: 10px 0;
-    }
-    .tag {
-      display: inline-block;
-      background: #0f172a;
-      padding: 4px 8px;
-      border-radius: 6px;
       font-size: 12px;
-      margin-right: 5px;
       color: #9ca3af;
+      font-weight: 400;
     }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #020617;
-      font-size: 14px;
+
+    .server-copy {
+      margin-top: 8px;
+      width: 100%;
+      text-align: left;
+      border: 1px solid rgba(148,163,184,0.22);
+      background: rgba(15,23,42,0.55);
+      color: #e5e7eb;
+      border-radius: 14px;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: 0.15s;
+      position: relative;
+    }
+
+    .server-copy:hover {
+      border-color: #38bdf8;
+      background: rgba(15,23,42,0.7);
+    }
+
+    .server-ip {
+      display: block;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .server-ver {
+      display: block;
+      margin-top: 2px;
+      font-size: 12px;
       color: #9ca3af;
     }
 
-    /* Модальное окно для увеличения картинок */
-    #imgModal {
+    .server-tip {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-size: 11px;
+      color: #a5b4fc;
+      opacity: 0;
+      transform: translateY(-2px);
+      transition: 0.18s;
+      pointer-events: none;
+    }
+
+    .server-copy.copied .server-tip {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .sidebar-nav a {
+      color: #e5e7eb;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 6px 0;
+      border-left: 3px solid transparent;
+      padding-left: 10px;
+      transition: 0.15s;
+    }
+
+    .sidebar-nav a:hover {
+      color: #38bdf8;
+      border-color: #38bdf8;
+    }
+
+    .sidebar-nav a.active {
+      color: #38bdf8;
+      border-color: #38bdf8;
+      font-weight: 600;
+    }
+
+    .sidebar-collapsed .sidebar {
+      width: 0;
+      padding: 0;
+      border-right: none;
+    }
+
+    /* ===== ПРАВАЯ ЧАСТЬ ===== */
+    .content {
+      flex: 1;
+      background:
+        linear-gradient(to bottom, rgba(15,23,42,0.9), rgba(15,23,42,1)),
+        url("bg-stone.png");
+      background-size: auto, 128px 128px;
+      background-repeat: repeat;
+      padding-bottom: 40px;
+      padding-top: 0;
+    }
+
+    /* ===== БАННЕР ===== */
+    .hero {
+      position: relative;
+      height: 240px;
+      overflow: hidden;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(15,23,42,0.7), transparent);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 40px;
+      gap: 10px;
+    }
+
+    .hero-title {
+      font-family: "Press Start 2P", system-ui;
+      font-size: 18px;
+      text-transform: uppercase;
+      color: #f9fafb;
+      text-shadow: 0 0 10px rgba(15,23,42,0.9);
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      max-width: 520px;
+      color: #e5e7eb;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .hero-tag {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.7);
+      border: 1px solid rgba(148,163,184,0.4);
+      color: inherit;
+    }
+
+    .page-section {
+      margin: 32px auto 0;
+      max-width: 1200px;
+      padding: 0 24px;
+    }
+
+    .section-title {
+      font-family: "Press Start 2P", system-ui;
+      font-size: 16px;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 12px 16px;
+      margin: 0 0 24px;
+      background: linear-gradient(90deg, #7c3aed, #ec4899);
+      color: #0b1120;
+      border-radius: 999px;
+      letter-spacing: 0.08em;
+    }
+
+    /* Заголовок игрока */
+    .player-title {
+      font-family: "Press Start 2P", system-ui;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin: 0 0 14px;
+      color: #c7d2fe;
+    }
+
+    .player-title span {
+      color: #38bdf8;
+    }
+
+    /* ===== КАРТОЧКИ ПОСТРОЕК ===== */
+    .build-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .build-card {
+      background: rgba(15,23,42,0.9);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(148,163,184,0.35);
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s;
+    }
+
+    .build-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 35px rgba(15,23,42,0.8);
+      border-color: #38bdf8;
+    }
+
+    .build-card img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .build-info {
+      padding: 12px 14px 14px;
+    }
+
+    .build-name {
+      font-family: "Press Start 2P", system-ui;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #e0f2fe;
+      margin: 0 0 8px;
+    }
+
+   elt
+    .build-desc {
+      margin: 0 0 10px;
+      font-size: 13px;
+      color: #cbd5f5;
+      line-height: 1.35;
+    }
+
+    .build-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(2,6,23,0.65);
+      border: 1px solid rgba(148,163,184,0.25);
+      color: #9ca3af;
+    }
+
+    /* ===== МОДАЛКА ===== */
+    .modal {
       display: none;
       position: fixed;
-      z-index: 9999;
       inset: 0;
-      background: rgba(0,0,0,0.7);
+      z-index: 9999;
+      background: rgba(0,0,0,0.75);
       justify-content: center;
       align-items: center;
+      padding: 20px;
     }
-    #imgModal img {
-      max-width: 90%;
-      max-height: 90%;
-      border-radius: 12px;
-      box-shadow: 0 0 20px #000;
+
+    .modal.open { display: flex; }
+
+    .modal-content {
+      max-width: 92vw;
+      max-height: 88vh;
+      border-radius: 14px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+      border: 1px solid rgba(148,163,184,0.25);
+      overflow: hidden;
+      background: rgba(2,6,23,0.9);
     }
-    #imgModal.close-area {
+
+    .modal-content img {
+      display: block;
+      max-width: 92vw;
+      max-height: 88vh;
+      object-fit: contain;
+    }
+
+    /* ===== КНОПКА < > СНИЗУ СЛЕВА ===== */
+    .sidebar-fab {
+      position: fixed;
+      left: 14px;
+      bottom: 14px;
+      z-index: 95;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(2,6,23,0.78);
+      backdrop-filter: blur(8px);
+      color: #e5e7eb;
       cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: 0.15s;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+    }
+
+    .sidebar-fab:hover {
+      border-color: #38bdf8;
+      color: #e0f2fe;
+    }
+
+    .sidebar-fab span {
+      font-size: 18px;
+      line-height: 1;
+      transform: translateY(-1px);
+    }
+
+    /* ===== АДАПТИВ ===== */
+    @media (max-width: 900px) {
+      .layout { flex-direction: column; }
+
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px;
+        gap: 12px;
+      }
+
+      .sidebar-nav {
+        flex-direction: row;
+        gap: 12px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+
+      .sidebar-collapsed .sidebar {
+        width: 100%;
+        padding: 12px 16px;
+        border-right: 0;
+      }
+
+      .sidebar-fab { display: none; }
+
+      .hero-overlay { padding-left: 20px; }
+      .hero-title { font-size: 14px; }
+      .hero { height: 220px; }
     }
   </style>
 </head>
+
 <body>
-<header>
-  <h1>Постройки MS Builders</h1>
-  <p>Лучшие проекты и архитектура сервера</p>
-</header>
-  
-<div id="nav-placeholder"></div>
+  <button class="sidebar-fab" id="toggleSidebar" type="button" aria-label="Показать/скрыть панель">
+    <span id="sidebarIcon">&lt;</span>
+  </button>
 
-<section>
-  <div class="build-card">
-    <h3>🏰 Столица сервера</h3>
-    <img src="project1.jpg" class="preview">
-    <p>Главный город с торговой площадью и порталом.</p>
-    <span class="tag">Город</span>
-    <span class="tag">Сюжет</span>
+  <div class="layout">
+    <!-- ЛЕВАЯ ПАНЕЛЬ -->
+    <aside class="sidebar">
+      <div>
+        <div class="logo-box">
+          <img src="logo.png" alt="Логотип MS Builders" />
+          <div class="sidebar-title">
+            MS Builders
+            <span>Minecraft сервер</span>
+          </div>
+        </div>
+
+        <button class="server-copy" id="copyIp" type="button" title="Нажмите, чтобы скопировать IP">
+          <span class="server-ip">play.msbuilders2.ru</span>
+          <span class="server-ver">Версия: 1.21.8</span>
+          <span class="server-tip" id="copyTip">Скопировано!</span>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="index.html">Главная</a>
+        <a href="news.html">Новости</a>
+        <a href="extra.html">Плагины и датапаки</a>
+        <a href="enchants.html">Чары</a>
+        <a href="projects.html">Наши проекты</a>
+        <a href="builds.html" class="active">Постройки</a>
+        <a href="crafts.html">Крафты</a>
+        <a href="story.html">Сюжет</a>
+      </nav>
+    </aside>
+
+    <!-- ПРАВАЯ ЧАСТЬ -->
+    <main class="content">
+      <!-- БАННЕР -->
+      <section class="hero">
+        <!-- можешь заменить на свой баннер -->
+        <img src="builds-banner.png" alt="Постройки MS Builders" />
+
+        <div class="hero-overlay">
+          <div class="hero-title">постройки сервера</div>
+          <div class="hero-subtitle">
+            Галерея билдов игроков. Каждая карточка привязана к автору — смотри спавны, дома и проекты!
+          </div>
+
+          <div class="hero-tags">
+            <span class="hero-tag">Архитектура</span>
+            <span class="hero-tag">Хабы</span>
+            <span class="hero-tag">Дома</span>
+            <span class="hero-tag">Проекты</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- СЕКЦИЯ -->
+      <section class="page-section">
+        <h2 class="section-title">ПОСТРОЙКИ</h2>
+
+        <h3 class="player-title">Постройки игрока: <span>Boatswain6107</span></h3>
+
+        <div class="build-grid">
+          <!-- 1 -->
+          <article class="build-card" data-full="images/images/builds/Boatswain6107/spawn1.png">
+            <img src="images/images/builds/Boatswain6107/spawn1.png" alt="spawn1" />
+            <div class="build-info">
+              <h4 class="build-name">SPAWN I</h4>
+              <p class="build-desc">Скриншот постройки (описание можно дописать позже).</p>
+              <div class="build-tags">
+                <span class="tag">Спавн</span>
+                <span class="tag">Хаб</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 2 -->
+          <article class="build-card" data-full="images/images/builds/Boatswain6107/spawn2.png">
+            <img src="images/images/builds/Boatswain6107/spawn2.png" alt="spawn2" />
+            <div class="build-info">
+              <h4 class="build-name">SPAWN II</h4>
+              <p class="build-desc">Скриншот постройки (описание можно дописать позже).</p>
+              <div class="build-tags">
+                <span class="tag">Спавн</span>
+                <span class="tag">Архитектура</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 3 -->
+          <article class="build-card" data-full="images/images/builds/Boatswain6107/homB.png">
+            <img src="images/images/builds/Boatswain6107/homB.png" alt="homB" />
+            <div class="build-info">
+              <h4 class="build-name">HOMEB</h4>
+              <p class="build-desc">Скриншот постройки (описание можно дописать позже).</p>
+              <div class="build-tags">
+                <span class="tag">Дом</span>
+                <span class="tag">Проект</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
   </div>
 
-  <div class="build-card">
-    <h3>⛏️ Шахтёрский аванпост</h3>
-    <img src="project1.jpg" class="preview">
-    <p>Промышленная зона добычи ресурсов.</p>
-    <span class="tag">Индастриал</span>
+  <!-- МОДАЛКА -->
+  <div class="modal" id="imgModal" aria-hidden="true">
+    <div class="modal-content">
+      <img id="modalImg" src="" alt="Просмотр постройки" />
+    </div>
   </div>
 
-  <div class="build-card">
-    <h3>🌲 Лесная деревня</h3>
-    <img src="project1.jpg" class="preview">
-    <p>RP-поселение в стиле фэнтези.</p>
-    <span class="tag">RP</span>
-    <span class="tag">Фэнтези</span>
-  </div>
-</section>
+  <script>
+    // ===== САЙДБАР: свернуть/развернуть =====
+    const root = document.documentElement;
+    const btnSidebar = document.getElementById("toggleSidebar");
+    const sidebarIcon = document.getElementById("sidebarIcon");
 
-<footer>
-  © MS Builders • Постройки сервера
-</footer>
+    const sidebarOff = localStorage.getItem("ms_sidebar") === "off";
+    if (sidebarOff) root.classList.add("sidebar-collapsed");
 
-<div id="imgModal" class="close-area">
-  <img id="modalImg" src="">
-</div>
+    function syncSidebarIcon() {
+      sidebarIcon.textContent = root.classList.contains("sidebar-collapsed") ? ">" : "<";
+    }
+    syncSidebarIcon();
 
-<script>
-  const modal = document.getElementById("imgModal");
-  const modalImg = document.getElementById("modalImg");
-  document.querySelectorAll(".preview").forEach(img => {
-    img.addEventListener("click", () => {
-      modal.style.display = "flex";
-      modalImg.src = img.src;
+    btnSidebar.addEventListener("click", () => {
+      root.classList.toggle("sidebar-collapsed");
+      localStorage.setItem("ms_sidebar", root.classList.contains("sidebar-collapsed") ? "off" : "on");
+      syncSidebarIcon();
     });
-  });
-  modal.addEventListener("click", () => {
-    modal.style.display = "none";
-  });
-</script>
-<script>
-  // подставляем меню из nav.html во все страницы
-  fetch('nav.html')
-    .then(response => response.text())
-    .then(html => {
-      const container = document.getElementById('nav-placeholder');
-      if (container) {
-        container.innerHTML = html;
+
+    // ===== КОПИРОВАНИЕ IP =====
+    const copyBtn = document.getElementById("copyIp");
+    if (copyBtn) {
+      copyBtn.addEventListener("click", async () => {
+        const ip = "play.msbuilders2.ru";
+        try {
+          await navigator.clipboard.writeText(ip);
+          copyBtn.classList.add("copied");
+          setTimeout(() => copyBtn.classList.remove("copied"), 1200);
+        } catch (e) {
+          const ta = document.createElement("textarea");
+          ta.value = ip;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          document.body.removeChild(ta);
+          copyBtn.classList.add("copied");
+          setTimeout(() => copyBtn.classList.remove("copied"), 1200);
+        }
+      });
+    }
+
+    // ===== МОДАЛКА (увеличение изображений) =====
+    const modal = document.getElementById("imgModal");
+    const modalImg = document.getElementById("modalImg");
+
+    document.querySelectorAll(".build-card").forEach((card) => {
+      card.addEventListener("click", () => {
+        const src = card.getAttribute("data-full") || card.querySelector("img")?.src;
+        if (!src) return;
+        modalImg.src = src;
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+      });
+    });
+
+    modal.addEventListener("click", () => {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      modalImg.src = "";
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("open")) {
+        modal.click();
       }
-    })
-    .catch(err => console.error('Не удалось загрузить меню', err));
-</script>  
+    });
+  </script>
 </body>
 </html>

@@ -356,6 +356,20 @@
             <option value="other">Прочее</option>
           </select>
         </label>
+        
+        <label>
+          Редкость:
+          <select id="enchant-rarity" class="filter-select">
+            <option value="all">Все</option>
+            <option value="cursed">Проклятые</option>
+            <option value="eternal">Вечные</option>
+            <option value="exemplary">Образцовые</option>
+            <option value="situational">Ситуативные</option>
+            <option value="common">Обыкновенные</option>
+            <option value="curse">Проклятия</option>
+        </select>
+    </label>
+
       </div>
 
       <!-- КАРТОЧКИ ЧАР (ПРИМЕРЫ, МОЖНО РЕДАКТИРОВАТЬ) -->
@@ -366,6 +380,7 @@
           data-type="sword"
           data-name="мастер клинка"
           data-items="меч,топор"
+          data-rarity="exemplary"
         >
           <div class="enchant-name">МАСТЕР КЛИНКА</div>
           <div class="enchant-items">Предметы: мечи, топоры</div>
@@ -373,7 +388,7 @@
             Увеличивает урон по мобам и игрокам, усиливая критические удары.
           </div>
           <div class="enchant-source">
-            Получение: награда за ивенты, редкий лут в данжах.
+            Редкость: Образцовые
           </div>
         </div>
 
@@ -382,6 +397,7 @@
           data-type="armor"
           data-name="каменная кожа"
           data-items="нагрудник,броня"
+          data-rarity="exemplary"
         >
           <div class="enchant-name">КАМЕННАЯ КОЖА</div>
           <div class="enchant-items">Предметы: нагрудник, сет брони</div>
@@ -389,74 +405,16 @@
             Снижает входящий урон от падений и взрывов.
           </div>
           <div class="enchant-source">
-            Получение: торговцы, книги в крепости.
+            Редкость: Образцовые
           </div>
         </div>
 
-        <div
-          class="enchant-card"
-          data-type="tool"
-          data-name="архитектор"
-          data-items="кирка,топор,лопата"
-        >
-          <div class="enchant-name">АРХИТЕКТОР</div>
-          <div class="enchant-items">Предметы: инструменты строителя</div>
-          <div class="enchant-effect">
-            Ускоряет добычу блоков и даёт шанс не потратить прочность при
-            установке декоративных блоков.
-          </div>
-          <div class="enchant-source">
-            Получение: квесты строителей, редкий датапак‑дроп.
-          </div>
-        </div>
 
-        <div
-          class="enchant-card"
-          data-type="bow"
-          data-name="штурмовой залп"
-          data-items="лук,арбалет"
-        >
-          <div class="enchant-name">ШТУРМОВОЙ ЗАЛП</div>
-          <div class="enchant-items">Предметы: лук, арбалет</div>
-          <div class="enchant-effect">
-            Увеличивает скорострельность и даёт шанс выпустить дополнительную стрелу.
-          </div>
-          <div class="enchant-source">
-            Получение: лут с ивентов, сундуки в энд‑локациях.
-          </div>
-        </div>
 
-        <div
-          class="enchant-card"
-          data-type="armor"
-          data-name="строительная защита"
-          data-items="ботинки,шлем"
-        >
-          <div class="enchant-name">СТРОИТЕЛЬНАЯ ЗАЩИТА</div>
-          <div class="enchant-items">Предметы: ботинки, шлем</div>
-          <div class="enchant-effect">
-            Уменьшает урон при падении с высоты и даёт устойчивость к огню.
-          </div>
-          <div class="enchant-source">
-            Получение: специальные ивенты для строителей.
-          </div>
-        </div>
 
-        <div
-          class="enchant-card"
-          data-type="other"
-          data-name="мастер порталов"
-          data-items="трезубец,щит"
-        >
-          <div class="enchant-name">МАСТЕР ПОРТАЛОВ</div>
-          <div class="enchant-items">Предметы: трезубец, щит, особые артефакты</div>
-          <div class="enchant-effect">
-            Даёт бонусы при путешествиях между мирами и около порталов.
-          </div>
-          <div class="enchant-source">
-            Получение: сюжетные цепочки, финальные квесты.
-          </div>
-        </div>
+
+
+      
 
       </div>
     </section>
@@ -464,27 +422,37 @@
 </div>
 
 <script>
-  // Простая фильтрация по названию и типу предмета
+  // Фильтрация по названию, типу и редкости
   const searchInput = document.getElementById("enchant-search");
   const typeSelect = document.getElementById("enchant-type");
+  const raritySelect = document.getElementById("enchant-rarity");
   const cards = Array.from(document.querySelectorAll(".enchant-card"));
 
   function updateEnchantFilter() {
     const q = searchInput.value.trim().toLowerCase();
     const type = typeSelect.value;
+    const rarity = raritySelect.value;
 
     cards.forEach((card) => {
       const name = (card.dataset.name || "").toLowerCase();
       const items = (card.dataset.items || "").toLowerCase();
       const cardType = card.dataset.type || "all";
+      const cardRarity = card.dataset.rarity || "all";
 
       let ok = true;
 
+      // поиск по имени и предметам
       if (q && !name.includes(q) && !items.includes(q)) {
         ok = false;
       }
 
+      // фильтр по типу
       if (type !== "all" && cardType !== type) {
+        ok = false;
+      }
+
+      // фильтр по редкости
+      if (rarity !== "all" && cardRarity !== rarity) {
         ok = false;
       }
 
@@ -494,7 +462,12 @@
 
   searchInput.addEventListener("input", updateEnchantFilter);
   typeSelect.addEventListener("change", updateEnchantFilter);
+  raritySelect.addEventListener("change", updateEnchantFilter);
+
+  // при загрузке сразу применим
+  updateEnchantFilter();
 </script>
+
 
 </body>
 </html>

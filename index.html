@@ -129,9 +129,10 @@
       bottom: -1px;
       left: 0;
       width: 100%;
-      height: 90px; /* волна ниже */
+      height: 90px;
       pointer-events: none;
     }
+
 
     .hero-wave .layer-1 {
       fill: rgba(124, 58, 237, 0.35); /* фиолетовый */
@@ -409,20 +410,10 @@
 
 <svg class="hero-wave" viewBox="0 0 1440 90" preserveAspectRatio="none">
   <defs>
-    <pattern
-      id="stonePattern"
-      patternUnits="userSpaceOnUse"
-      width="128"
-      height="128"
-    >
-      <image
-        href="bg-stone.png"
-        x="0"
-        y="0"
-        width="128"
-        height="128"
-      />
-    </pattern>
+    <linearGradient id="darkBlend" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#0b0f19" />
+    </linearGradient>
   </defs>
 
   <path
@@ -446,10 +437,9 @@
        880,50 1100,50 1320,60
        1440,65 1440,65 1440,65
        L1440,90 L0,90 Z"
-    fill="url(#stonePattern)"
+    fill="url(#darkBlend)"
   />
 </svg>
-
 </section>
 
     <!-- БЛОК: ЧТО ТАКОЕ MS BUILDERS -->

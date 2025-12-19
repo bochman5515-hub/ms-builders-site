@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>О сервере — MS Builders</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Шрифты как на главной -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body{
+      margin:0;
+      font-family:"Montserrat",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+      background-color:#0b0f19;
+      color:#e5e7eb;
+    }
+
+    a{ color:inherit; }
+
+    .layout{ display:flex; min-height:100vh; }
+
+    /* ===== ЛЕВАЯ ПАНЕЛЬ ===== */
+    .sidebar{
+      width:260px;
+      background:#020617;
+      padding:24px 20px;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      transition:width .2s ease,padding .2s ease;
+      border-right:1px solid rgba(148,163,184,.12);
+      overflow:hidden;
+    }
+
+    .logo-box{ display:flex; align-items:center; gap:12px; }
+
+    .logo-box img{
+      width:96px;
+      height:96px;
+      border-radius:10px;
+      object-fit:cover;
+    }
+
+    .sidebar-title{
+      font-size:16px;
+      font-weight:600;
+      line-height:1.3;
+    }
+
+    .sidebar-title span{
+      display:block;
+      font-size:12px;
+      color:#9ca3af;
+      font-weight:400;
+    }
+
+    .server-copy{
+      margin-top:8px;
+      width:100%;
+      text-align:left;
+      border:1px solid rgba(148,163,184,.22);
+      background:rgba(15,23,42,.55);
+      color:#e5e7eb;
+      border-radius:14px;
+      padding:10px 12px;
+      cursor:pointer;
+      transition:.15s;
+      position:relative;
+    }
+
+    .server-copy:hover{
+      border-color:#38bdf8;
+      background:rgba(15,23,42,.7);
+    }
+
+    .server-ip{ display:block; font-weight:700; letter-spacing:.02em; }
+    .server-ver{ display:block; margin-top:2px; font-size:12px; color:#9ca3af; }
+
+    .server-tip{
+      position:absolute;
+      right:10px;
+      top:10px;
+      font-size:11px;
+      color:#a5b4fc;
+      opacity:0;
+      transform:translateY(-2px);
+      transition:.18s;
+      pointer-events:none;
+    }
+
+    .server-copy.copied .server-tip{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .sidebar-nav{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-top:6px;
+    }
+
+    .sidebar-nav a{
+      color:#e5e7eb;
+      text-decoration:none;
+      font-size:14px;
+      padding:6px 0;
+      border-left:3px solid transparent;
+      padding-left:10px;
+      transition:.15s;
+      white-space:nowrap;
+    }
+
+    .sidebar-nav a:hover{
+      color:#38bdf8;
+      border-color:#38bdf8;
+    }
+
+    .sidebar-nav a.active{
+      color:#38bdf8;
+      border-color:#38bdf8;
+      font-weight:600;
+    }
+
+    .sidebar-collapsed .sidebar{
+      width:0;
+      padding:0;
+      border-right:none;
+    }
+
+    /* ===== КНОПКА < > СНИЗУ СЛЕВА ===== */
+    .sidebar-fab{
+      position:fixed;
+      left:14px;
+      bottom:14px;
+      z-index:95;
+      width:44px;
+      height:44px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.35);
+      background:rgba(2,6,23,0.78);
+      backdrop-filter:blur(8px);
+      color:#e5e7eb;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      transition:0.15s;
+      box-shadow:0 10px 22px rgba(0,0,0,0.25);
+    }
+
+    .sidebar-fab:hover{
+      border-color:#38bdf8;
+      color:#e0f2fe;
+    }
+
+    .sidebar-fab span{
+      font-size:18px;
+      line-height:1;
+      transform:translateY(-1px);
+    }
+
+    /* ===== ПРАВАЯ ЧАСТЬ ===== */
+    .content{
+      flex:1;
+      background:
+        linear-gradient(to bottom, rgba(15,23,42,0.9), rgba(15,23,42,1)),
+        url("bg-stone.png");
+      background-size:auto,128px 128px;
+      background-repeat:repeat;
+      padding-bottom:40px;
+    }
+
+    /* ===== БАННЕР ===== */
+    .hero{
+      position:relative;
+      height:240px;
+      overflow:hidden;
+    }
+
+    .hero img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .hero-overlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to right, rgba(15,23,42,0.78), transparent);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      padding:0 24px 0 40px;
+      gap:10px;
+    }
+
+    .hero-title{
+      font-family:"Press Start 2P",system-ui;
+      font-size:18px;
+      text-transform:uppercase;
+      color:#f9fafb;
+      text-shadow:0 0 10px rgba(15,23,42,0.9);
+    }
+
+    .hero-subtitle{
+      font-size:14px;
+      max-width:640px;
+      color:#e5e7eb;
+      line-height:1.45;
+    }
+
+    .hero-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:6px;
+      align-items:center;
+    }
+
+    .hero-tag{
+      font-size:11px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.7);
+      border:1px solid rgba(148,163,184,0.4);
+      color:inherit;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    .hero-tag:hover{
+      border-color:#38bdf8;
+      color:#e0f2fe;
+    }
+
+    .page-section{
+      margin:32px auto 0;
+      max-width:1200px;
+      padding:0 24px;
+    }
+
+    .section-title{
+      font-family:"Press Start 2P",system-ui;
+      font-size:16px;
+      text-transform:uppercase;
+      text-align:center;
+      padding:12px 16px;
+      margin:0 0 18px;
+      background:linear-gradient(90deg, #7c3aed, #ec4899);
+      color:#0b1120;
+      border-radius:999px;
+      letter-spacing:0.08em;
+    }
+
+    /* ===== ТАБЫ ===== */
+    .tabs{
+      background:rgba(15,23,42,0.9);
+      border:1px solid rgba(148,163,184,0.35);
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 14px 26px rgba(15,23,42,0.55);
+    }
+
+    .tabbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      padding:14px 14px 12px;
+      border-bottom:1px solid rgba(148,163,184,0.18);
+      background:rgba(2,6,23,0.55);
+    }
+
+    .tabbtn{
+      border:1px solid rgba(148,163,184,0.28);
+      background:rgba(15,23,42,0.7);
+      color:#e5e7eb;
+      padding:8px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      font-size:12px;
+      transition:0.15s;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      user-select:none;
+    }
+
+    .tabbtn:hover{
+      border-color:#38bdf8;
+      color:#e0f2fe;
+    }
+
+    .tabbtn.active{
+      border-color:#38bdf8;
+      background:rgba(56,189,248,0.12);
+      color:#e0f2fe;
+    }
+
+    .tabpanes{
+      padding:16px 16px 18px;
+    }
+
+    .pane{ display:none; }
+    .pane.active{ display:block; }
+
+    /* ===== КОНТЕНТ-БЛОКИ ===== */
+    .card-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:14px;
+    }
+
+    @media (max-width: 900px){
+      .card-grid{ grid-template-columns:1fr; }
+    }
+
+    .info-card{
+      background:rgba(2,6,23,0.55);
+      border:1px solid rgba(148,163,184,0.22);
+      border-radius:16px;
+      padding:14px 14px 14px;
+    }
+
+    .info-card h3{
+      margin:0 0 8px;
+      font-size:13px;
+      color:#e0f2fe;
+      letter-spacing:0.02em;
+    }
+
+    .info-card p{
+      margin:0;
+      color:#cbd5f5;
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .kpi{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:10px;
+    }
+
+    .pill{
+      display:inline-block;
+      font-size:11px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:rgba(2,6,23,0.65);
+      border:1px solid rgba(148,163,184,0.25);
+      color:#9ca3af;
+    }
+
+    .callout{
+      margin-top:14px;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px dashed rgba(148,163,184,0.35);
+      background:rgba(15,23,42,0.45);
+      color:#e5e7eb;
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .btn-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .btn-link{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid rgba(148,163,184,0.35);
+      background:rgba(15,23,42,0.85);
+      color:#e5e7eb;
+      padding:9px 12px;
+      border-radius:999px;
+      font-size:12px;
+      text-decoration:none;
+      transition:0.15s;
+    }
+
+    .btn-link:hover{
+      border-color:#38bdf8;
+      color:#e0f2fe;
+    }
+
+    /* ===== АККОРДЕОН (ПРАВИЛА) ===== */
+    details{
+      border:1px solid rgba(148,163,184,0.22);
+      background:rgba(2,6,23,0.5);
+      border-radius:14px;
+      padding:10px 12px;
+    }
+
+    details + details{ margin-top:10px; }
+
+    summary{
+      cursor:pointer;
+      list-style:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      font-weight:600;
+      color:#e0f2fe;
+      font-size:13px;
+    }
+
+    summary::-webkit-details-marker{ display:none; }
+
+    .summary-right{
+      color:#9ca3af;
+      font-size:12px;
+      font-weight:400;
+    }
+
+    .rules{
+      margin:10px 0 0;
+      padding-left:18px;
+      color:#cbd5f5;
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .rules li{ margin:6px 0; }
+
+    /* ===== ССЫЛКИ / РЕСУРСЫ ===== */
+    .resource{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .resource .top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .resource .title{
+      font-family:"Press Start 2P",system-ui;
+      font-size:11px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      color:#e0f2fe;
+      margin:0;
+    }
+
+    .resource .desc{
+      margin:0;
+      color:#cbd5f5;
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .muted{
+      color:#9ca3af;
+      font-size:12px;
+    }
+
+    /* ===== АДАПТИВ ===== */
+    @media (max-width: 900px){
+      .layout{ flex-direction:column; }
+
+      .sidebar{
+        width:100%;
+        flex-direction:row;
+        align-items:center;
+        justify-content:space-between;
+        padding:12px 16px;
+        gap:12px;
+      }
+
+      .sidebar-nav{
+        flex-direction:row;
+        gap:12px;
+        overflow-x:auto;
+        padding-bottom:4px;
+        margin-top:0;
+      }
+
+      .sidebar-collapsed .sidebar{
+        width:100%;
+        padding:12px 16px;
+        border-right:0;
+      }
+
+      .sidebar-fab{ display:none; }
+
+      .hero-overlay{ padding-left:20px; padding-right:16px; }
+      .hero-title{ font-size:14px; }
+      .hero{ height:220px; }
+    }
+  </style>
+</head>
+
+<body>
+  <button class="sidebar-fab" id="toggleSidebar" type="button" aria-label="Показать/скрыть панель">
+    <span id="sidebarIcon">&lt;</span>
+  </button>
+
+  <div class="layout">
+    <!-- ЛЕВАЯ ПАНЕЛЬ -->
+    <aside class="sidebar">
+      <div>
+        <div class="logo-box">
+          <img src="logo.png" alt="Логотип MS Builders" />
+          <div class="sidebar-title">
+            MS Builders
+            <span>Minecraft сервер</span>
+          </div>
+        </div>
+
+        <button class="server-copy" id="copyIp" type="button" title="Нажмите, чтобы скопировать IP">
+          <span class="server-ip">play.msbuilders2.ru</span>
+          <span class="server-ver">Версия: 1.21.8</span>
+          <span class="server-tip">Скопировано!</span>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="index.html">Главная</a>
+        <a href="news.html">Новости</a>
+        <a href="extra.html">Плагины и датапаки</a>
+        <a href="enchants.html">Чары</a>
+        <a href="projects.html">Наши проекты</a>
+        <a href="builds.html">Постройки</a>
+        <a href="crafts.html">Крафты</a>
+        <a href="story.html">Сюжет</a>
+        <a href="about.html" class="active">О сервере</a>
+      </nav>
+    </aside>
+
+    <!-- ПРАВАЯ ЧАСТЬ -->
+    <main class="content">
+      <section class="hero">
+        <img src="hero-banner.png" alt="MS Builders" />
+        <div class="hero-overlay">
+          <div class="hero-title">о сервере</div>
+          <div class="hero-subtitle">
+            MS Builders — творческое ядро Minecraft: выживание без вайпов, большие проекты, ивенты и сообщество,
+            где стройки превращаются в легенды.
+          </div>
+          <div class="hero-tags">
+            <a class="hero-tag" href="https://discord.com/invite/Wj8jWS736f" target="_blank" rel="noopener">💬 Discord</a>
+            <span class="hero-tag">🧱 Ванила+</span>
+            <span class="hero-tag">🏛️ Города</span>
+            <span class="hero-tag">🎭 Ивенты</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section">
+        <h2 class="section-title">ИНФОРМАЦИЯ</h2>
+
+        <div class="tabs" id="tabs">
+          <div class="tabbar" role="tablist" aria-label="Вкладки страницы">
+            <button class="tabbtn active" type="button" role="tab" aria-selected="true" data-tab="desc">✨ Описание</button>
+            <button class="tabbtn" type="button" role="tab" aria-selected="false" data-tab="rules">📜 Правила</button>
+            <button class="tabbtn" type="button" role="tab" aria-selected="false" data-tab="links">🔗 Ссылки</button>
+            <button class="tabbtn" type="button" role="tab" aria-selected="false" data-tab="coop">🤝 Сотрудничество</button>
+            <button class="tabbtn" type="button" role="tab" aria-selected="false" data-tab="partners">🌍 Партнёры</button>
+          </div>
+
+          <div class="tabpanes">
+            <!-- ===== ОПИСАНИЕ ===== -->
+            <div class="pane active" id="pane-desc" role="tabpanel">
+              <div class="card-grid">
+                <div class="info-card">
+                  <h3>MS Builders — это не “просто сервер”</h3>
+                  <p>
+                    Это место, где авторы строят города и мегапроекты в честном выживании, а игроки участвуют
+                    в ивентах, приключениях и жизни постоянно растущего мира. Мы не просто играем — мы создаём легенды вместе.
+                  </p>
+                  <div class="kpi">
+                    <span class="pill">Выживание без вайпов</span>
+                    <span class="pill">Без приватов (кроме спавна)</span>
+                    <span class="pill">Ивенты + приключения</span>
+                  </div>
+                </div>
+
+                <div class="info-card">
+                  <h3>Два творческих сервера</h3>
+                  <p>
+                    У нас есть две “песочницы” для вдохновения: ванильное выживание и строительный сервер.
+                    Плюс — идеи, схемы и вдохновение в наших сообществах (TG/VK).
+                  </p>
+                  <div class="kpi">
+                    <span class="pill">Строительный фокус</span>
+                    <span class="pill">Комьюнити-проекты</span>
+                    <span class="pill">Гайды и идеи</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="callout">
+                <b>Подключение:</b> IP <b>play.msbuilders2.ru</b> • Версия <b>1.21.8</b><br/>
+                Сервер работает на московском хостинге — учитывайте пинг/регион при подключении.
+              </div>
+
+              <div class="card-grid" style="margin-top:14px;">
+                <div class="info-card">
+                  <h3>Основные принципы</h3>
+                  <p>
+                    • Всё в выживании<br/>
+                    • Доверие и честность — основа гармонии<br/>
+                    • Ваши постройки остаются надолго: “вайпы — пережиток прошлого”
+                  </p>
+                </div>
+
+                <div class="info-card">
+                  <h3>Как попасть в основной мир</h3>
+                  <p>
+                    Основной сервер — по заявке (whitelist). Зайди в Discord, оставь заявку и дождись ответа администратора.
+                    Обычно это от 5 минут до нескольких часов.
+                  </p>
+                  <div class="btn-row">
+                    <a class="btn-link" href="https://discord.com/invite/Wj8jWS736f" target="_blank" rel="noopener">💬 Подать заявку в Discord</a>
+                    <a class="btn-link" href="join.html">🎮 Как начать игру</a>
+                  </div>
+                  <p class="muted" style="margin-top:10px;">
+                    В хаб можно заходить без заявки, чтобы пообщаться с игроками.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ===== ПРАВИЛА ===== -->
+            <div class="pane" id="pane-rules" role="tabpanel">
+              <details open>
+                <summary>
+                  Общие правила
+                  <span class="summary-right">безопасность, честность, общение</span>
+                </summary>
+                <ul class="rules">
+                  <li><b>Гриферство и воровство запрещены.</b></li>
+                  <li>Читы, баги, эксплойты и любые попытки сломать сервер — запрещены.</li>
+                  <li>Запрещено создавать помехи работе сервера и умышленно понижать TPS.</li>
+                  <li>Мультиаккаунты — запрещены.</li>
+                  <li><b>PvP</b> только на аренах, по взаимному согласию или на ивентах, объявленных администрацией.</li>
+                  <li>Не строй на чужой территории без разрешения. Не оставляй “мусор” (летающие блоки, незакрытые ямы).</li>
+                  <li>Оскорбления, агрессия, спам/флуд, реклама других проектов, 18+ и экстремистская символика — запрещены.</li>
+                  <li>Жалобы принимаются с доказательствами. Решения администрации — окончательные.</li>
+                </ul>
+              </details>
+
+              <details>
+                <summary>
+                  Доп. правила MS Builders
+                  <span class="summary-right">территории, тех. моменты, наказания</span>
+                </summary>
+                <ul class="rules">
+                  <li>Соблюдай правила городов/территорий, в которых находишься.</li>
+                  <li>Не ограничивай свободное перемещение игроков ловушками на общих дорогах.</li>
+                  <li>Не злоупотребляй метками/табличками/холограммами на карте и в мире.</li>
+                  <li>На спавне строят только: Админ, Вивер, Владелец (если не сказано иначе).</li>
+                  <li>Сервер на московском хостинге; для стабильной игры желательно соединение > 25 Мбит/с.</li>
+                  <li>Мелкие кражи: вернуть украденное в течение 3 дней (по запросу администрации).</li>
+                </ul>
+              </details>
+
+              <details>
+                <summary>
+                  Доп. правила MSM
+                  <span class="summary-right">моды, баланс, питомцы, механизмы</span>
+                </summary>
+                <ul class="rules">
+                  <li>Запрещены неразрешённые клиентские/серверные моды. Только одобренные администрацией.</li>
+                  <li>Не используй взрывные/поджигающие предметы и навыки рядом с домами игроков.</li>
+                  <li>Нельзя ломать баланс: не раздавай новичкам “топ” вещи пачками.</li>
+                  <li>Не держи более 15 питомцев одновременно.</li>
+                  <li>Запрещены механизмы, которые сильно понижают TPS.</li>
+                  <li>Нашёл баг/предмет, который крашит игру — срочно сообщи админу через тикеты в Discord.</li>
+                  <li>Админ один — <b>Boatswain</b>. Трактовка правил — за ним.</li>
+                </ul>
+              </details>
+
+              <div class="callout">
+                <b>Важно:</b> незнание правил не освобождает от ответственности. Если что-то непонятно — спроси в Discord,
+                лучше уточнить заранее.
+              </div>
+            </div>
+
+            <!-- ===== ССЫЛКИ ===== -->
+            <div class="pane" id="pane-links" role="tabpanel">
+              <div class="card-grid">
+                <div class="info-card resource">
+                  <div class="top">
+                    <div>
+                      <p class="title">Сборка модов</p>
+                      <p class="desc">Не обязательна, но делает игру приятнее (удобство, визуал, QoL).</p>
+                    </div>
+                  </div>
+                  <div class="btn-row">
+                    <a class="btn-link" href="https://drive.google.com/file/d/1ql0g5NMlgGnV9ew782lUWrzbuz9rhkk_/view" target="_blank" rel="noopener">📦 Открыть в Google Drive</a>
+                  </div>
+                  <p class="muted">Если ссылка не открывается — напиши в Discord, дадим альтернативу.</p>
+                </div>
+
+                <div class="info-card resource">
+                  <div class="top">
+                    <div>
+                      <p class="title">Лаунчер (без лицензии)</p>
+                      <p class="desc">Если играешь не с лицензии — этот лаунчер может подойти.</p>
+                    </div>
+                  </div>
+                  <div class="btn-row">
+                    <a class="btn-link" href="https://minecraft-inside.ru/programs/74705-tl-launcher.html" target="_blank" rel="noopener">🧩 Открыть страницу лаунчера</a>
+                  </div>
+                  <p class="muted">Скачивай только с проверенных источников и не запускай “подозрительные” файлы.</p>
+                </div>
+
+                <div class="info-card resource">
+                  <div class="top">
+                    <div>
+                      <p class="title">Донат-магазин</p>
+                      <p class="desc">Поддержка проекта и проходка (если используете платный способ).</p>
+                    </div>
+                  </div>
+                  <div class="btn-row">
+                    <a class="btn-link" href="https://ms-builders-2.easydonate.ru/" target="_blank" rel="noopener">🛒 Открыть магазин</a>
+                  </div>
+                </div>
+
+                <div class="info-card resource">
+                  <div class="top">
+                    <div>
+                      <p class="title">Соцсети и площадки</p>
+                      <p class="desc">Новости, идеи для построек, общение и контент.</p>
+                    </div>
+                  </div>
+
+                  <div class="btn-row">
+                    <a class="btn-link" href="https://vk.com/msbuildersminecraft" target="_blank" rel="noopener">VK</a>
+                    <a class="btn-link" href="https://youtube.com/@boatswain-komandor?si=4Rl6EPxBwEg5MpZb" target="_blank" rel="noopener">YouTube</a>
+                    <a class="btn-link" href="https://www.twitch.tv/boatswainkomandor" target="_blank" rel="noopener">Twitch</a>
+                    <a class="btn-link" href="https://t.me/+LgUIF4OhhfxmMzFi" target="_blank" rel="noopener">TG беседа</a>
+                    <a class="btn-link" href="https://t.me/MsBuilders" target="_blank" rel="noopener">TG постройки</a>
+                    <a class="btn-link" href="https://discord.com/invite/Wj8jWS736f" target="_blank" rel="noopener">Discord</a>
+                  </div>
+
+                  <p class="muted">
+                    Совет: сохраняй ссылку на Discord в закладки и проверяй, что ты на “правильном” сервере.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ===== СОТРУДНИЧЕСТВО ===== -->
+            <div class="pane" id="pane-coop" role="tabpanel">
+              <div class="info-card">
+                <h3>Сотрудничество и реклама</h3>
+                <p>
+                  Мы открыты к сотрудничеству: совместные ивенты, интеграции, упоминания, партнёрские проекты.
+                  Любая адекватная реклама проекта приветствуется.
+                </p>
+                <div class="btn-row">
+                  <a class="btn-link" href="mailto:komand.or@mail.ru">✉️ komand.or@mail.ru</a>
+                  <a class="btn-link" href="https://discord.com/invite/Wj8jWS736f" target="_blank" rel="noopener">💬 Написать в Discord</a>
+                </div>
+                <p class="muted" style="margin-top:10px;">
+                  В письме/сообщении кратко: кто вы, что предлагаете, сроки и ссылки/материалы.
+                </p>
+              </div>
+            </div>
+
+            <!-- ===== ПАРТНЁРЫ ===== -->
+            <div class="pane" id="pane-partners" role="tabpanel">
+              <div class="card-grid">
+                <div class="info-card">
+                  <h3>Партнёрский сервер</h3>
+                  <p>
+                    Discord партнёров:
+                    <b>https://discord.gg/tZcVf5HG7q</b><br/>
+                    Сервер: <b>mc.RazFill</b>
+                  </p>
+                  <div class="btn-row">
+                    <a class="btn-link" href="https://discord.gg/tZcVf5HG7q" target="_blank" rel="noopener">🌍 Открыть Discord партнёров</a>
+                  </div>
+                </div>
+
+                <div class="info-card">
+                  <h3>Хочешь стать партнёром?</h3>
+                  <p>
+                    Если у вас сервер/проект и вы хотите взаимный пиар или совместные активности — пишите.
+                  </p>
+                  <div class="btn-row">
+                    <a class="btn-link" href="mailto:komand.or@mail.ru">✉️ Написать на почту</a>
+                    <a class="btn-link" href="https://discord.com/invite/Wj8jWS736f" target="_blank" rel="noopener">💬 В Discord</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!-- /tabpanes -->
+        </div><!-- /tabs -->
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const root = document.documentElement;
+
+    // ===== САЙДБАР: свернуть/развернуть =====
+    const btnSidebar = document.getElementById("toggleSidebar");
+    const sidebarIcon = document.getElementById("sidebarIcon");
+
+    const sidebarOff = localStorage.getItem("ms_sidebar") === "off";
+    if (sidebarOff) root.classList.add("sidebar-collapsed");
+
+    function syncSidebarIcon() {
+      sidebarIcon.textContent = root.classList.contains("sidebar-collapsed") ? ">" : "<";
+    }
+    syncSidebarIcon();
+
+    btnSidebar.addEventListener("click", () => {
+      root.classList.toggle("sidebar-collapsed");
+      localStorage.setItem("ms_sidebar", root.classList.contains("sidebar-collapsed") ? "off" : "on");
+      syncSidebarIcon();
+    });
+
+    // ===== КОПИРОВАНИЕ IP =====
+    const copyBtn = document.getElementById("copyIp");
+    if (copyBtn) {
+      copyBtn.addEventListener("click", async () => {
+        const ip = "play.msbuilders2.ru";
+        try {
+          await navigator.clipboard.writeText(ip);
+        } catch (e) {
+          const ta = document.createElement("textarea");
+          ta.value = ip;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          document.body.removeChild(ta);
+        }
+        copyBtn.classList.add("copied");
+        setTimeout(() => copyBtn.classList.remove("copied"), 1200);
+      });
+    }
+
+    // ===== ТАБЫ (с поддержкой #hash) =====
+    const tabBtns = Array.from(document.querySelectorAll(".tabbtn"));
+    const panes = {
+      desc: document.getElementById("pane-desc"),
+      rules: document.getElementById("pane-rules"),
+      links: document.getElementById("pane-links"),
+      coop: document.getElementById("pane-coop"),
+      partners: document.getElementById("pane-partners"),
+    };
+
+    function setTab(key, pushHash = true) {
+      tabBtns.forEach((b) => {
+        const is = b.dataset.tab === key;
+        b.classList.toggle("active", is);
+        b.setAttribute("aria-selected", is ? "true" : "false");
+      });
+
+      Object.keys(panes).forEach((k) => panes[k].classList.toggle("active", k === key));
+
+      if (pushHash) {
+        history.replaceState(null, "", "#" + key);
+      }
+    }
+
+    tabBtns.forEach((b) => {
+      b.addEventListener("click", () => setTab(b.dataset.tab));
+    });
+
+    const hash = (location.hash || "").replace("#", "");
+    if (hash && panes[hash]) setTab(hash, false);
+  </script>
+</body>
+</html>

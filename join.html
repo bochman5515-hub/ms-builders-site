@@ -1,111 +1,578 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Как зайти — MS Builders</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Как начать игру — MS Builders</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Шрифты как на сайте -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #e5e7eb;
+    * { box-sizing: border-box; }
+
+    body{
+      margin:0;
+      font-family:"Montserrat",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+      background-color:#0b0f19;
+      color:#e5e7eb;
     }
-    header {
-      padding: 20px;
-      background: #020617;
-      text-align: center;
+
+    .layout{
+      display:flex;
+      min-height:100vh;
     }
-    header h1 {
-      margin: 0;
-      color: #38bdf8;
+
+    /* ===== ЛЕВАЯ ПАНЕЛЬ ===== */
+    .sidebar{
+      width:260px;
+      background:#020617;
+      padding:24px 20px;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      transition:width .2s ease,padding .2s ease;
+      border-right:1px solid rgba(148,163,184,.12);
+      overflow:hidden;
     }
-    nav {
-      background: #020617;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding-bottom: 15px;
+
+    .logo-box{
+      display:flex;
+      align-items:center;
+      gap:12px;
     }
-    nav a {
-      color: #e5e7eb;
-      text-decoration: none;
-      font-weight: bold;
+
+    .logo-box img{
+      width:96px;
+      height:96px;
+      border-radius:10px;
+      object-fit:cover;
     }
-    nav a:hover {
-      color: #38bdf8;
+
+    .sidebar-title{
+      font-size:16px;
+      font-weight:600;
+      line-height:1.3;
     }
-    section {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
+
+    .sidebar-title span{
+      display:block;
+      font-size:12px;
+      color:#9ca3af;
+      font-weight:400;
     }
-    .card {
-      background: #020617;
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 20px;
+
+    .server-copy{
+      margin-top:8px;
+      width:100%;
+      text-align:left;
+      border:1px solid rgba(148,163,184,.22);
+      background:rgba(15,23,42,.55);
+      color:#e5e7eb;
+      border-radius:14px;
+      padding:10px 12px;
+      cursor:pointer;
+      transition:.15s;
+      position:relative;
     }
-    .ip {
-      font-size: 20px;
-      background: #020617;
-      padding: 10px;
-      border-radius: 8px;
-      display: inline-block;
-      margin-top: 10px;
-      color: #38bdf8;
+
+    .server-copy:hover{
+      border-color:#38bdf8;
+      background:rgba(15,23,42,.7);
     }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #020617;
-      font-size: 14px;
-      color: #9ca3af;
+
+    .server-ip{
+      display:block;
+      font-weight:700;
+      letter-spacing:.02em;
+    }
+
+    .server-ver{
+      display:block;
+      margin-top:2px;
+      font-size:12px;
+      color:#9ca3af;
+    }
+
+    .server-tip{
+      position:absolute;
+      right:10px;
+      top:10px;
+      font-size:11px;
+      color:#a5b4fc;
+      opacity:0;
+      transform:translateY(-2px);
+      transition:.18s;
+      pointer-events:none;
+    }
+
+    .server-copy.copied .server-tip{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .sidebar-nav{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-top:6px;
+    }
+
+    .sidebar-nav a{
+      color:#e5e7eb;
+      text-decoration:none;
+      font-size:14px;
+      padding:6px 0;
+      border-left:3px solid transparent;
+      padding-left:10px;
+      transition:.15s;
+    }
+
+    .sidebar-nav a:hover{
+      color:#38bdf8;
+      border-color:#38bdf8;
+    }
+
+    .sidebar-nav a.active{
+      color:#38bdf8;
+      border-color:#38bdf8;
+      font-weight:600;
+    }
+
+    .sidebar-collapsed .sidebar{
+      width:0;
+      padding:0;
+      border-right:none;
+    }
+
+    /* ===== ПРАВАЯ ЧАСТЬ ===== */
+    .content{
+      flex:1;
+      background:
+        linear-gradient(to bottom, rgba(15,23,42,0.9), rgba(15,23,42,1)),
+        url("bg-stone.png");
+      background-size:auto,128px 128px;
+      background-repeat:repeat;
+      padding-bottom:40px;
+    }
+
+    /* ===== БАННЕР ===== */
+    .hero{
+      position:relative;
+      height:240px;
+      overflow:hidden;
+    }
+
+    .hero img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .hero-overlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to right, rgba(15,23,42,0.75), transparent);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      padding-left:40px;
+      gap:10px;
+    }
+
+    .hero-title{
+      font-family:"Press Start 2P",system-ui;
+      font-size:18px;
+      text-transform:uppercase;
+      color:#f9fafb;
+      text-shadow:0 0 10px rgba(15,23,42,0.9);
+    }
+
+    .hero-subtitle{
+      font-size:14px;
+      max-width:600px;
+      color:#e5e7eb;
+      line-height:1.45;
+    }
+
+    .hero-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:6px;
+    }
+
+    .hero-tag{
+      font-size:11px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.7);
+      border:1px solid rgba(148,163,184,0.4);
+    }
+
+    .page-section{
+      margin:32px auto 0;
+      max-width:1200px;
+      padding:0 24px;
+    }
+
+    .section-title{
+      font-family:"Press Start 2P",system-ui;
+      font-size:16px;
+      text-transform:uppercase;
+      text-align:center;
+      padding:12px 16px;
+      margin:0 0 18px;
+      background:linear-gradient(90deg,#7c3aed,#ec4899);
+      color:#0b1120;
+      border-radius:999px;
+      letter-spacing:.08em;
+    }
+
+    /* ===== КАРТОЧКИ / БЛОКИ ===== */
+    .grid{
+      display:grid;
+      gap:18px;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+    }
+
+    @media (max-width: 980px){
+      .grid{ grid-template-columns:1fr; }
+    }
+
+    .card{
+      background:rgba(15,23,42,0.92);
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid rgba(148,163,184,0.35);
+      box-shadow:0 10px 24px rgba(15,23,42,0.55);
+      padding:16px;
+    }
+
+    .card-title{
+      margin:0 0 10px;
+      font-family:"Press Start 2P",system-ui;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:#e0f2fe;
+      line-height:1.45;
+    }
+
+    .card-text{
+      margin:0;
+      font-size:13px;
+      color:#cbd5f5;
+      line-height:1.5;
+    }
+
+    .list{
+      margin:10px 0 0;
+      padding-left:18px;
+      color:#cbd5f5;
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    .steps{
+      margin:10px 0 0;
+      padding-left:18px;
+      color:#cbd5f5;
+      font-size:13px;
+      line-height:1.65;
+    }
+
+    .pill-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.25);
+      background:rgba(2,6,23,0.55);
+      color:#e5e7eb;
+      font-weight:700;
+      font-size:13px;
+      text-decoration:none;
+      transition:.15s;
+    }
+
+    .pill:hover{
+      border-color:#38bdf8;
+      color:#e0f2fe;
+      transform:translateY(-1px);
+    }
+
+    .pill.primary{
+      color:#0b1120;
+      background:linear-gradient(90deg,#0ea5e9,#38bdf8);
+    }
+
+    .pill.primary:hover{
+      filter:brightness(1.05);
+    }
+
+    .note{
+      margin-top:12px;
+      padding:12px 12px;
+      border-radius:14px;
+      background:rgba(2,6,23,0.55);
+      border:1px solid rgba(148,163,184,0.22);
+      color:#cbd5f5;
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .note b{ color:#e0f2fe; }
+
+    /* ===== КНОПКА < > СНИЗУ СЛЕВА ===== */
+    .sidebar-fab{
+      position:fixed;
+      left:14px;
+      bottom:14px;
+      z-index:95;
+      width:44px;
+      height:44px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.35);
+      background:rgba(2,6,23,0.78);
+      backdrop-filter:blur(8px);
+      color:#e5e7eb;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      transition:.15s;
+      box-shadow:0 10px 22px rgba(0,0,0,0.25);
+    }
+
+    .sidebar-fab:hover{
+      border-color:#38bdf8;
+      color:#e0f2fe;
+    }
+
+    .sidebar-fab span{
+      font-size:18px;
+      line-height:1;
+      transform:translateY(-1px);
+    }
+
+    /* ===== АДАПТИВ ===== */
+    @media (max-width:900px){
+      .layout{ flex-direction:column; }
+      .sidebar-fab{ display:none; }
+      .hero-overlay{ padding-left:20px; }
+      .hero-title{ font-size:14px; }
+      .hero{ height:220px; }
     }
   </style>
 </head>
 
 <body>
+  <button class="sidebar-fab" id="toggleSidebar" type="button" aria-label="Показать/скрыть панель">
+    <span id="sidebarIcon">&lt;</span>
+  </button>
 
-<header>
-  <h1>Как зайти на MS Builders</h1>
-  <p>Подключение к серверу Minecraft</p>
-</header>
+  <div class="layout">
+    <!-- ЛЕВАЯ ПАНЕЛЬ -->
+    <aside class="sidebar">
+      <div>
+        <div class="logo-box">
+          <img src="logo.png" alt="Логотип MS Builders" />
+          <div class="sidebar-title">
+            MS Builders
+            <span>Minecraft сервер</span>
+          </div>
+        </div>
 
-<div id="nav-placeholder"></div>
+        <button class="server-copy" id="copyIp" type="button" title="Нажмите, чтобы скопировать IP">
+          <span class="server-ip">play.msbuilders2.ru</span>
+          <span class="server-ver">Версия: 1.21.8</span>
+          <span class="server-tip">Скопировано!</span>
+        </button>
+      </div>
 
+      <nav class="sidebar-nav">
+        <a href="index.html">Главная</a>
+        <a href="news.html">Новости</a>
+        <a href="extra.html">Плагины и датапаки</a>
+        <a href="enchants.html">Чары</a>
+        <a href="projects.html">Наши проекты</a>
+        <a href="builds.html">Постройки</a>
+        <a href="crafts.html">Крафты</a>
+        <a href="join.html" class="active">Начало игры</a>
+        <a href="rules.html">Правила</a>
+        <a href="story.html">Сюжет</a>
+      </nav>
+    </aside>
 
-<section>
+    <!-- ПРАВАЯ ЧАСТЬ -->
+    <main class="content">
+      <!-- БАННЕР -->
+      <section class="hero">
+        <!-- можешь заменить на свой баннер -->
+        <img src="join-banner.png" alt="Как начать игру на MS Builders" />
 
-  <div class="card">
-    <h2>🎮 Требования</h2>
-    <ul>
-      <li>Minecraft Java Edition</li>
-      <li>Версия: 1.20+</li>
-      <li>Лицензия: не обязательна (если используете оффлайн)</li>
-    </ul>
+        <div class="hero-overlay">
+          <div class="hero-title">как начать игру</div>
+          <div class="hero-subtitle">
+            Подключайся к хабу без заявки, общайся с игроками и смотри сервер.
+            А чтобы играть в мире и сохранять постройки — подай заявку в Discord (Whitelist).
+          </div>
+
+          <div class="hero-tags">
+            <span class="hero-tag">Whitelist</span>
+            <span class="hero-tag">Хаб без заявки</span>
+            <span class="hero-tag">Discord</span>
+            <span class="hero-tag">1.21.8</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section">
+        <h2 class="section-title">БЫСТРЫЙ СТАРТ</h2>
+
+        <div class="grid">
+          <div class="card">
+            <h3 class="card-title">🎮 Требования</h3>
+            <p class="card-text">
+              Чтобы зайти на сервер, тебе нужен Minecraft Java Edition.
+            </p>
+            <ul class="list">
+              <li>Игра: <b>Minecraft Java Edition</b></li>
+              <li>Версия сервера: <b>1.21.8</b></li>
+              <li>Ник: проверь правильность написания</li>
+              <li>Верификация в Discord: <b>не обязательна</b></li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">🌍 Данные для входа</h3>
+            <p class="card-text">
+              IP можно скопировать кликом по блоку слева (под логотипом).
+            </p>
+            <div class="note">
+              <b>IP:</b> play.msbuilders2.ru<br />
+              <b>Версия:</b> 1.21.8
+            </div>
+
+            <div class="pill-row">
+              <a class="pill primary" href="https://discord.com/invite/Wj8jWS736f" target="_blank" rel="noopener">
+                💬 Discord — подать заявку
+              </a>
+              <a class="pill" href="https://ms-builders-2.easydonate.ru/" target="_blank" rel="noopener">
+                🧾 Платный проход (50₽)
+              </a>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">🧭 Можно зайти без заявки</h3>
+            <p class="card-text">
+              В <b>хаб</b> можно зайти без заявки — чтобы просто пообщаться с игроками, посмотреть атмосферу и узнать правила.
+              Для полноценной игры (мир / сохранение построек) нужен Whitelist.
+            </p>
+            <div class="note">
+              Если что-то не получилось — пиши в Discord в тех-поддержку (<b>#ТЕХ-ПОДДЕРЖКА</b>).
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">✅ Как попасть в Whitelist (бесплатно)</h3>
+            <ol class="steps">
+              <li>Зайди в наш Discord: <b>discord.gg/Wj8jWS736f</b></li>
+              <li>Открой канал <b>#Заявки-и-проход</b></li>
+              <li>Заполни заявку и дождись ответа администратора</li>
+              <li>Обычно ожидание: <b>от 5 минут до 4–5 часов</b></li>
+              <li>Ответь администратору — тебе всё расскажут и добавят на сервер</li>
+            </ol>
+            <div class="pill-row">
+              <a class="pill primary" href="https://discord.com/invite/Wj8jWS736f" target="_blank" rel="noopener">
+                💬 Перейти в Discord
+              </a>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">⚡ Платный проход (без ожидания)</h3>
+            <p class="card-text">
+              Если не хочешь ждать ответа — можно купить проход на сервер за <b>50₽</b>.
+            </p>
+            <div class="pill-row">
+              <a class="pill primary" href="https://ms-builders-2.easydonate.ru/" target="_blank" rel="noopener">
+                🧾 Купить проход
+              </a>
+            </div>
+            <div class="note">
+              После покупки ты сможешь быстрее начать игру — подробности допишешь здесь, если нужно.
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">🔐 Первый вход и регистрация</h3>
+            <p class="card-text">
+              После входа на сервер, если у вас система регистрации:
+            </p>
+            <div class="note">
+              <b>/register &lt;пароль&gt; &lt;повтор_пароля&gt;</b><br />
+              <b>ОБЯЗАТЕЛЬНО запомните пароль!</b> Восстановление — платное.
+            </div>
+            <div class="note">
+              <b>Важно:</b> следите за уведомлениями и сообщениями в заявке/Discord.
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   </div>
 
-  <div class="card">
-    <h2>🌍 Данные для входа</h2>
-    <p>IP сервера:</p>
-    <div class="ip">play.msbuilders.ru</div>
-    <p>Версия: <strong>1.20+</strong></p>
-  </div>
+  <script>
+    const root = document.documentElement;
 
-  <div class="card">
-    <h2>📘 Инструкция</h2>
-    <ol>
-      <li>Запуск
-<script>
-  // подставляем меню из nav.html во все страницы
-  fetch('nav.html')
-    .then(response => response.text())
-    .then(html => {
-      const container = document.getElementById('nav-placeholder');
-      if (container) {
-        container.innerHTML = html;
-      }
-    })
-    .catch(err => console.error('Не удалось загрузить меню', err));
-</script>
+    // ===== САЙДБАР < > =====
+    const btnSidebar = document.getElementById("toggleSidebar");
+    const sidebarIcon = document.getElementById("sidebarIcon");
+
+    const sidebarOff = localStorage.getItem("ms_sidebar") === "off";
+    if (sidebarOff) root.classList.add("sidebar-collapsed");
+
+    function syncSidebarIcon(){
+      sidebarIcon.textContent = root.classList.contains("sidebar-collapsed") ? ">" : "<";
+    }
+    syncSidebarIcon();
+
+    btnSidebar.addEventListener("click", () => {
+      root.classList.toggle("sidebar-collapsed");
+      localStorage.setItem("ms_sidebar", root.classList.contains("sidebar-collapsed") ? "off" : "on");
+      syncSidebarIcon();
+    });
+
+    // ===== КОПИРОВАНИЕ IP =====
+    const copyBtn = document.getElementById("copyIp");
+    if (copyBtn){
+      copyBtn.addEventListener("click", async () => {
+        const ip = "play.msbuilders2.ru";
+        try{
+          await navigator.clipboard.writeText(ip);
+        }catch(e){
+          const ta = document.createElement("textarea");
+          ta.value = ip;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          document.body.removeChild(ta);
+        }
+        copyBtn.classList.add("copied");
+        setTimeout(() => copyBtn.classList.remove("copied"), 1200);
+      });
+    }
+  </script>
+</body>
+</html>

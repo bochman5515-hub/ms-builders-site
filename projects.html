@@ -5,13 +5,11 @@
   <title>Наши проекты — MS Builders</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Шрифты как на главной -->
   <link rel="icon" href="msb.png">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
     *{ box-sizing:border-box; }
-
     body{
       margin:0;
       font-family:"Montserrat",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
@@ -21,7 +19,7 @@
 
     .layout{ display:flex; min-height:100vh; }
 
-    /* ===== ЛЕВАЯ ПАНЕЛЬ ===== */
+    /* ===== SIDEBAR ===== */
     .sidebar{
       width:260px;
       background:#020617;
@@ -33,10 +31,8 @@
       border-right:1px solid rgba(148,163,184,.12);
       overflow:hidden;
     }
-
     .logo-box{ display:flex; align-items:center; gap:12px; }
     .logo-box img{ width:96px; height:96px; border-radius:10px; object-fit:cover; }
-
     .sidebar-title{ font-size:16px; font-weight:600; line-height:1.3; }
     .sidebar-title span{ display:block; font-size:12px; color:#9ca3af; font-weight:400; }
 
@@ -56,59 +52,41 @@
     .server-copy:hover{ border-color:#38bdf8; background:rgba(15,23,42,.7); }
     .server-ip{ display:block; font-weight:700; letter-spacing:.02em; }
     .server-ver{ display:block; margin-top:2px; font-size:12px; color:#9ca3af; }
-
     .server-tip{
-      position:absolute;
-      right:10px;
-      top:10px;
-      font-size:11px;
-      color:#a5b4fc;
-      opacity:0;
-      transform:translateY(-2px);
-      transition:.18s;
-      pointer-events:none;
+      position:absolute; right:10px; top:10px;
+      font-size:11px; color:#a5b4fc;
+      opacity:0; transform:translateY(-2px);
+      transition:.18s; pointer-events:none;
     }
     .server-copy.copied .server-tip{ opacity:1; transform:translateY(0); }
 
     .sidebar-nav{ display:flex; flex-direction:column; gap:8px; margin-top:6px; }
     .sidebar-nav a{
-      color:#e5e7eb;
-      text-decoration:none;
-      font-size:14px;
-      padding:6px 0;
-      border-left:3px solid transparent;
-      padding-left:10px;
-      transition:.15s;
-      white-space:nowrap;
+      color:#e5e7eb; text-decoration:none; font-size:14px;
+      padding:6px 0; border-left:3px solid transparent;
+      padding-left:10px; transition:.15s;
     }
     .sidebar-nav a:hover{ color:#38bdf8; border-color:#38bdf8; }
     .sidebar-nav a.active{ color:#38bdf8; border-color:#38bdf8; font-weight:600; }
 
     .sidebar-collapsed .sidebar{ width:0; padding:0; border-right:none; }
 
-    /* ===== КНОПКА < > СНИЗУ СЛЕВА ===== */
+    /* ===== FAB ===== */
     .sidebar-fab{
-      position:fixed;
-      left:14px;
-      bottom:14px;
-      z-index:95;
-      width:44px;
-      height:44px;
-      border-radius:999px;
+      position:fixed; left:14px; bottom:14px; z-index:95;
+      width:44px; height:44px; border-radius:999px;
       border:1px solid rgba(148,163,184,0.35);
       background:rgba(2,6,23,0.78);
       backdrop-filter:blur(8px);
-      color:#e5e7eb;
-      cursor:pointer;
-      display:grid;
-      place-items:center;
+      color:#e5e7eb; cursor:pointer;
+      display:grid; place-items:center;
       transition:.15s;
       box-shadow:0 10px 22px rgba(0,0,0,0.25);
     }
     .sidebar-fab:hover{ border-color:#38bdf8; color:#e0f2fe; }
     .sidebar-fab span{ font-size:18px; line-height:1; transform:translateY(-1px); }
 
-    /* ===== ПРАВАЯ ЧАСТЬ ===== */
+    /* ===== CONTENT ===== */
     .content{
       flex:1;
       background:
@@ -119,16 +97,13 @@
       padding-bottom:40px;
     }
 
-    /* ===== БАННЕР ===== */
+    /* ===== HERO ===== */
     .hero{ position:relative; height:240px; overflow:hidden; }
     .hero img{ width:100%; height:100%; object-fit:cover; display:block; }
     .hero-overlay{
-      position:absolute;
-      inset:0;
+      position:absolute; inset:0;
       background:linear-gradient(to right, rgba(15,23,42,0.7), transparent);
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
+      display:flex; flex-direction:column; justify-content:center;
       padding:0 24px 0 40px;
       gap:10px;
     }
@@ -139,12 +114,10 @@
       color:#f9fafb;
       text-shadow:0 0 10px rgba(15,23,42,0.9);
     }
-    .hero-subtitle{ font-size:14px; max-width:620px; color:#e5e7eb; line-height:1.45; }
+    .hero-subtitle{ font-size:14px; max-width:700px; color:#e5e7eb; line-height:1.45; }
     .hero-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
     .hero-tag{
-      font-size:11px;
-      padding:4px 8px;
-      border-radius:999px;
+      font-size:11px; padding:4px 8px; border-radius:999px;
       background:rgba(15,23,42,0.7);
       border:1px solid rgba(148,163,184,0.4);
     }
@@ -157,30 +130,22 @@
       text-transform:uppercase;
       text-align:center;
       padding:12px 16px;
-      margin:0 0 18px;
+      margin:0 0 14px;
       background:linear-gradient(90deg,#7c3aed,#ec4899);
       color:#0b1120;
       border-radius:999px;
       letter-spacing:.08em;
     }
 
-    /* ===== ФИЛЬТРЫ ===== */
+    /* ===== FILTERS ===== */
     .filters{
       display:flex;
       flex-wrap:wrap;
-      align-items:center;
-      justify-content:space-between;
       gap:10px;
-      margin:0 0 18px;
-      padding:12px;
-      border-radius:16px;
-      border:1px solid rgba(148,163,184,0.25);
-      background:rgba(2,6,23,0.55);
-      box-shadow:0 10px 22px rgba(0,0,0,0.18);
+      justify-content:center;
+      margin:0 0 22px;
     }
-
-    .filter-left{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
-    .chip{
+    .filter-btn{
       border:1px solid rgba(148,163,184,0.28);
       background:rgba(15,23,42,0.7);
       color:#e5e7eb;
@@ -190,75 +155,28 @@
       font-size:12px;
       transition:.15s;
       display:inline-flex;
-      gap:8px;
       align-items:center;
+      gap:8px;
       user-select:none;
     }
-    .chip:hover{ border-color:#38bdf8; color:#e0f2fe; }
-    .chip.active{
+    .filter-btn:hover{ border-color:#38bdf8; color:#e0f2fe; }
+    .filter-btn.active{
       border-color:#38bdf8;
       background:rgba(56,189,248,0.12);
       color:#e0f2fe;
-      font-weight:600;
-    }
-    .chip small{
-      font-size:11px;
-      color:#9ca3af;
-      font-weight:600;
-      background:rgba(2,6,23,0.55);
-      border:1px solid rgba(148,163,184,0.18);
-      padding:2px 8px;
-      border-radius:999px;
     }
 
-    .filter-right{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-
-    .search{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      border-radius:999px;
-      padding:8px 12px;
-      border:1px solid rgba(148,163,184,0.25);
-      background:rgba(15,23,42,0.7);
-      min-width:240px;
-    }
-    .search input{
-      width:100%;
-      border:none;
-      outline:none;
-      background:transparent;
-      color:#e5e7eb;
-      font-size:13px;
-    }
-    .search input::placeholder{ color:#94a3b8; }
-
-    .sort{
-      border-radius:999px;
-      padding:8px 12px;
-      border:1px solid rgba(148,163,184,0.25);
-      background:rgba(15,23,42,0.7);
-      color:#e5e7eb;
-      font-size:13px;
-      outline:none;
-      cursor:pointer;
-    }
-
-    /* ===== СЕТКА ПРОЕКТОВ ===== */
+    /* ===== GRID ===== */
     .project-grid{
       display:grid;
       gap:18px;
       grid-template-columns:repeat(2, minmax(0, 1fr));
     }
-    @media (max-width: 900px){ .project-grid{ grid-template-columns:1fr; } }
+    @media (max-width: 900px){
+      .project-grid{ grid-template-columns:1fr; }
+    }
 
-    /* ===== КАРТОЧКА ===== */
+    /* ===== CARD ===== */
     .project-card{
       background:rgba(15,23,42,0.9);
       border-radius:16px;
@@ -266,7 +184,6 @@
       border:1px solid rgba(148,163,184,0.35);
       transition:transform .18s ease, box-shadow .18s ease, border-color .18s;
       cursor:pointer;
-      position:relative;
     }
     .project-card:hover{
       transform:translateY(-4px);
@@ -274,30 +191,7 @@
       border-color:#38bdf8;
     }
 
-    /* тэги на карточке */
-    .badge-row{
-      position:absolute;
-      left:12px;
-      top:12px;
-      z-index:3;
-      display:flex;
-      flex-wrap:wrap;
-      gap:6px;
-      max-width:calc(100% - 24px);
-      pointer-events:none;
-    }
-    .badge{
-      font-size:11px;
-      padding:4px 8px;
-      border-radius:999px;
-      background:rgba(2,6,23,0.72);
-      border:1px solid rgba(148,163,184,0.25);
-      color:#e0f2fe;
-      backdrop-filter:blur(6px);
-      white-space:nowrap;
-    }
-
-    /* ===== СЛАЙДЕР ===== */
+    /* ===== slider in card ===== */
     .project-slider{
       position:relative;
       width:100%;
@@ -311,7 +205,7 @@
       object-fit:cover;
       display:none;
       user-select:none;
-      pointer-events:none;
+      -webkit-user-drag:none;
     }
     .project-slider img.active{ display:block; }
 
@@ -319,8 +213,7 @@
       position:absolute;
       top:50%;
       transform:translateY(-50%);
-      width:36px;
-      height:36px;
+      width:36px; height:36px;
       border-radius:999px;
       border:1px solid rgba(148,163,184,0.35);
       background:rgba(2,6,23,0.75);
@@ -331,13 +224,25 @@
       place-items:center;
       opacity:0;
       transition:.15s;
-      z-index:4;
+      z-index:2;
       box-shadow:0 10px 22px rgba(0,0,0,0.25);
     }
     .project-card:hover .slider-btn{ opacity:1; }
     .slider-btn:hover{ border-color:#38bdf8; color:#e0f2fe; }
     .slider-prev{ left:10px; }
     .slider-next{ right:10px; }
+
+    .count-badge{
+      position:absolute;
+      left:10px; bottom:10px;
+      font-size:11px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:rgba(2,6,23,0.72);
+      border:1px solid rgba(148,163,184,0.25);
+      color:#e5e7eb;
+      z-index:2;
+    }
 
     .project-info{ padding:14px 16px 16px; }
     .project-name{
@@ -355,7 +260,22 @@
       line-height:1.4;
     }
 
-    /* ===== БЛОК СОЦСЕТЕЙ ===== */
+    .tag-row{
+      margin-top:10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .tag{
+      font-size:11px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:rgba(2,6,23,0.65);
+      border:1px solid rgba(148,163,184,0.25);
+      color:#9ca3af;
+    }
+
+    /* ===== SOCIAL ===== */
     .social-card{
       margin-top:22px;
       background:rgba(15,23,42,0.9);
@@ -391,8 +311,8 @@
     .social-btn:hover{ filter:brightness(1.05); transform:translateY(-1px); }
     .social-muted{ margin:10px 0 0; font-size:12px; color:#9ca3af; }
 
-    /* ===== МОДАЛКА (галерея) ===== */
-    .modal{
+    /* ===== LIGHTBOX (листать все фото) ===== */
+    .lightbox{
       display:none;
       position:fixed;
       inset:0;
@@ -400,99 +320,84 @@
       background:rgba(0,0,0,0.78);
       justify-content:center;
       align-items:center;
-      padding:18px;
+      padding:16px;
     }
-    .modal.open{ display:flex; }
+    .lightbox.open{ display:flex; }
 
-    .modal-box{
-      width:min(1100px, 96vw);
-      max-height:92vh;
-      background:rgba(2,6,23,0.92);
-      border:1px solid rgba(148,163,184,0.25);
+    .lb-wrap{
+      width:min(1100px, 94vw);
+      max-height:90vh;
       border-radius:16px;
+      border:1px solid rgba(148,163,184,0.25);
+      background:rgba(2,6,23,0.92);
+      box-shadow:0 20px 70px rgba(0,0,0,0.55);
       overflow:hidden;
-      box-shadow:0 24px 80px rgba(0,0,0,0.55);
       display:flex;
       flex-direction:column;
     }
 
-    .modal-top{
+    .lb-top{
       display:flex;
-      align-items:center;
+      align-items:flex-start;
       justify-content:space-between;
-      gap:12px;
+      gap:10px;
       padding:12px 12px;
       border-bottom:1px solid rgba(148,163,184,0.18);
-      background:rgba(15,23,42,0.55);
+      background:rgba(2,6,23,0.55);
     }
 
-    .modal-title{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-      min-width:0;
-    }
-    .modal-title b{
+    .lb-title{
+      margin:0;
       font-family:"Press Start 2P",system-ui;
       font-size:11px;
       letter-spacing:.08em;
       text-transform:uppercase;
       color:#e0f2fe;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width:70vw;
+      line-height:1.5;
     }
-    .modal-title span{
-      color:#9ca3af;
+
+    .lb-sub{
+      margin:4px 0 0;
       font-size:12px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width:70vw;
+      color:#9ca3af;
+      line-height:1.4;
     }
 
-    .modal-actions{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-
-    .mbtn{
-      border:1px solid rgba(148,163,184,0.28);
+    .lb-close{
+      width:38px;
+      height:38px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.35);
       background:rgba(15,23,42,0.75);
       color:#e5e7eb;
-      padding:8px 10px;
-      border-radius:999px;
       cursor:pointer;
-      font-size:12px;
+      display:grid;
+      place-items:center;
       transition:.15s;
-      user-select:none;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
+      flex:0 0 auto;
     }
-    .mbtn:hover{ border-color:#38bdf8; color:#e0f2fe; }
+    .lb-close:hover{ border-color:#38bdf8; color:#e0f2fe; }
 
-    .modal-main{
+    .lb-body{
       position:relative;
-      flex:1;
       display:flex;
-      align-items:center;
       justify-content:center;
-      background:rgba(2,6,23,0.55);
-      min-height:320px;
+      align-items:center;
+      min-height:360px;
+      background:rgba(2,6,23,0.45);
+      overflow:hidden;
     }
-    .modal-main img{
+
+    .lb-img{
       max-width:100%;
-      max-height:62vh;
+      max-height:72vh;
       object-fit:contain;
       display:block;
       user-select:none;
+      -webkit-user-drag:none;
     }
 
-    .nav-btn{
+    .lb-nav{
       position:absolute;
       top:50%;
       transform:translateY(-50%);
@@ -502,51 +407,41 @@
       border:1px solid rgba(148,163,184,0.35);
       background:rgba(2,6,23,0.78);
       color:#e5e7eb;
-      font-size:20px;
       cursor:pointer;
       display:grid;
       place-items:center;
       transition:.15s;
-      box-shadow:0 10px 22px rgba(0,0,0,0.35);
+      box-shadow:0 10px 22px rgba(0,0,0,0.25);
     }
-    .nav-btn:hover{ border-color:#38bdf8; color:#e0f2fe; }
-    .nav-prev{ left:12px; }
-    .nav-next{ right:12px; }
+    .lb-nav:hover{ border-color:#38bdf8; color:#e0f2fe; }
+    .lb-prev{ left:12px; }
+    .lb-next{ right:12px; }
 
-    .thumbs{
-      padding:10px 12px 12px;
-      border-top:1px solid rgba(148,163,184,0.18);
-      background:rgba(15,23,42,0.45);
+    .lb-footer{
       display:flex;
-      gap:8px;
-      overflow:auto;
-    }
-    .thumb{
-      width:92px;
-      height:56px;
-      border-radius:12px;
-      overflow:hidden;
-      flex:0 0 auto;
-      border:1px solid rgba(148,163,184,0.25);
-      cursor:pointer;
-      opacity:.85;
-      transition:.15s;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      border-top:1px solid rgba(148,163,184,0.18);
       background:rgba(2,6,23,0.55);
     }
-    .thumb:hover{ border-color:#38bdf8; opacity:1; }
-    .thumb.active{ border-color:#38bdf8; opacity:1; box-shadow:0 10px 16px rgba(0,0,0,0.28); }
-    .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .lb-counter{
+      font-size:12px;
+      color:#cbd5f5;
+    }
+    .lb-hint{
+      font-size:12px;
+      color:#9ca3af;
+    }
 
-    /* ===== АДАПТИВ ===== */
     @media (max-width:900px){
       .layout{ flex-direction:column; }
       .sidebar-fab{ display:none; }
       .hero-overlay{ padding-left:20px; padding-right:16px; }
       .hero-title{ font-size:14px; }
       .hero{ height:220px; }
-      .search{ min-width:180px; width:100%; }
-      .filter-right{ width:100%; justify-content:stretch; }
-      .filters{ align-items:stretch; }
+      .lb-hint{ display:none; }
     }
   </style>
 </head>
@@ -593,14 +488,13 @@
         <div class="hero-overlay">
           <div class="hero-title">наши проекты</div>
           <div class="hero-subtitle">
-            Портфолио MS Builders: спавны, лобби, здания, города и конкурсные работы.
-            Открывай карточку — и листай все фото проекта в увеличении.
+            Портфолио заказных и конкурсных работ MS Builders. Нажми на карточку — откроется просмотр всех фото проекта.
           </div>
           <div class="hero-tags">
             <span class="hero-tag">Коммерция</span>
             <span class="hero-tag">Спавны</span>
             <span class="hero-tag">Архитектура</span>
-            <span class="hero-tag">Фэнтези</span>
+            <span class="hero-tag">Стили</span>
           </div>
         </div>
       </section>
@@ -608,71 +502,508 @@
       <section class="page-section">
         <h2 class="section-title">ПОРТФОЛИО</h2>
 
-        <!-- ФИЛЬТРЫ -->
-        <div class="filters">
-          <div class="filter-left" id="chipBar"></div>
-
-          <div class="filter-right">
-            <div class="search">
-              🔎
-              <input id="searchInput" type="text" placeholder="Поиск: спавн, викторианский, неоклассика..." />
-            </div>
-
-            <select class="sort" id="sortSelect" aria-label="Сортировка">
-              <option value="new">Сначала новое</option>
-              <option value="az">По названию (A–Я)</option>
-            </select>
-          </div>
+        <div class="filters" id="filters">
+          <button class="filter-btn active" type="button" data-filter="all">✨ Все</button>
+          <button class="filter-btn" type="button" data-filter="spawn">🧭 Спавны</button>
+          <button class="filter-btn" type="button" data-filter="lobby">🚪 Лобби</button>
+          <button class="filter-btn" type="button" data-filter="buildings">🏛️ Здания</button>
+          <button class="filter-btn" type="button" data-filter="village">🏘️ Деревни</button>
+          <button class="filter-btn" type="button" data-filter="territory">🗺️ Территории</button>
+          <button class="filter-btn" type="button" data-filter="city">🏙️ Город</button>
+          <button class="filter-btn" type="button" data-filter="contest">🏆 Конкурс</button>
         </div>
 
-        <!-- СЕТКА -->
-        <div class="project-grid" id="grid"></div>
+        <div class="project-grid" id="grid">
+          <!-- ======= БАЗОВЫЕ (уже были) ======= -->
+
+          <!-- pr1_1-5 -->
+          <article class="project-card" data-tags="contest,city">
+            <div class="project-slider" data-gallery="pr1" data-title="Остров развлечений" data-desc="Построенный для нашего сервера во время конкурса.">
+              <span class="count-badge">5 фото</span>
+              <img src="images/images/projects/pr1_1.png" class="active" alt="pr1 1">
+              <img src="images/images/projects/pr1_2.png" alt="pr1 2">
+              <img src="images/images/projects/pr1_3.png" alt="pr1 3">
+              <img src="images/images/projects/pr1_4.png" alt="pr1 4">
+              <img src="images/images/projects/pr1_5.png" alt="pr1 5">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">ОСТРОВ РАЗВЛЕЧЕНИЙ</h3>
+              <p class="project-desc">Построенный для нашего сервера во время конкурса.</p>
+              <div class="tag-row">
+                <span class="tag">конкурс</span><span class="tag">проект</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- pr2_1-5 -->
+          <article class="project-card" data-tags="village">
+            <div class="project-slider" data-gallery="pr2" data-title="Медная деревня" data-desc="Деревня, построенная в выживании.">
+              <span class="count-badge">5 фото</span>
+              <img src="images/images/projects/pr2_1.png" class="active" alt="pr2 1">
+              <img src="images/images/projects/pr2_2.png" alt="pr2 2">
+              <img src="images/images/projects/pr2_3.png" alt="pr2 3">
+              <img src="images/images/projects/pr2_4.png" alt="pr2 4">
+              <img src="images/images/projects/pr2_5.png" alt="pr2 5">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">МЕДНАЯ ДЕРЕВНЯ</h3>
+              <p class="project-desc">Деревня, построенная в выживании.</p>
+              <div class="tag-row">
+                <span class="tag">деревня</span><span class="tag">выживание</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- sp1_1-3 -->
+          <article class="project-card" data-tags="spawn">
+            <div class="project-slider" data-gallery="sp1" data-title="Спавн в космическом стиле" data-desc="Спавн с тематикой космоса и футуризма.">
+              <span class="count-badge">3 фото</span>
+              <img src="images/images/projects/sp1_1.png" class="active" alt="sp1 1">
+              <img src="images/images/projects/sp1_2.png" alt="sp1 2">
+              <img src="images/images/projects/sp1_3.png" alt="sp1 3">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">СПАВН: КОСМОС</h3>
+              <p class="project-desc">Спавн с тематикой космоса и футуризма.</p>
+              <div class="tag-row">
+                <span class="tag">спавн</span><span class="tag">футуризм</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- sp2_1-5 -->
+          <article class="project-card" data-tags="spawn">
+            <div class="project-slider" data-gallery="sp2" data-title="Спавн 2-го сезона" data-desc="Спавн нашего сервера со 2-го сезона.">
+              <span class="count-badge">5 фото</span>
+              <img src="images/images/projects/sp2_1.png" class="active" alt="sp2 1">
+              <img src="images/images/projects/sp2_2.png" alt="sp2 2">
+              <img src="images/images/projects/sp2_3.png" alt="sp2 3">
+              <img src="images/images/projects/sp2_4.png" alt="sp2 4">
+              <img src="images/images/projects/sp2_5.png" alt="sp2 5">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">СПАВН 2-ГО СЕЗОНА</h3>
+              <p class="project-desc">Спавн нашего сервера со 2-го сезона.</p>
+              <div class="tag-row">
+                <span class="tag">спавн</span><span class="tag">классика</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- pr3_1-5 -->
+          <article class="project-card" data-tags="city">
+            <div class="project-slider" data-gallery="pr3" data-title="Проект города" data-desc="Масштабный городской проект с улицами и архитектурными зонами.">
+              <span class="count-badge">5 фото</span>
+              <img src="images/images/projects/pr3_1.png" class="active" alt="pr3 1">
+              <img src="images/images/projects/pr3_2.png" alt="pr3 2">
+              <img src="images/images/projects/pr3_3.png" alt="pr3 3">
+              <img src="images/images/projects/pr3_4.png" alt="pr3 4">
+              <img src="images/images/projects/pr3_5.png" alt="pr3 5">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">ПРОЕКТ ГОРОДА</h3>
+              <p class="project-desc">Масштабный городской проект с улицами и архитектурными зонами.</p>
+              <div class="tag-row">
+                <span class="tag">город</span><span class="tag">проект</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- pr4_1-3 -->
+          <article class="project-card" data-tags="buildings">
+            <div class="project-slider" data-gallery="pr4" data-title="Проект Багратиона" data-desc="Неоклассический проект с монументальной архитектурой.">
+              <span class="count-badge">3 фото</span>
+              <img src="images/images/projects/pr4_1.png" class="active" alt="pr4 1">
+              <img src="images/images/projects/pr4_2.png" alt="pr4 2">
+              <img src="images/images/projects/pr4_3.png" alt="pr4 3">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">ПРОЕКТ БАГРАТИОНА</h3>
+              <p class="project-desc">Неоклассический проект с монументальной архитектурой.</p>
+              <div class="tag-row">
+                <span class="tag">здания</span><span class="tag">неоклассика</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- ======= НОВЫЕ ПРОЕКТЫ ИЗ ТВОЕГО СПИСКА ======= -->
+
+          <!-- zd5_1-3 -->
+          <article class="project-card" data-tags="buildings">
+            <div class="project-slider" data-gallery="zd5" data-title="Викторианское здание" data-desc="Детализированная архитектура в викторианском стиле.">
+              <span class="count-badge">3 фото</span>
+              <img src="images/images/projects/zd5_1.png" class="active" alt="zd5 1">
+              <img src="images/images/projects/zd5_2.png" alt="zd5 2">
+              <img src="images/images/projects/zd5_3.png" alt="zd5 3">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">ЗДАНИЕ: ВИКТОРИАНСКИЙ СТИЛЬ</h3>
+              <p class="project-desc">Детализированная архитектура в викторианском стиле.</p>
+              <div class="tag-row"><span class="tag">здания</span><span class="tag">викторианский</span></div>
+            </div>
+          </article>
+
+          <!-- z1-3 -->
+          <article class="project-card" data-tags="buildings,city">
+            <div class="project-slider" data-gallery="z" data-title="Здания MSB2" data-desc="Подборка городских зданий и фасадов на MSB2.">
+              <span class="count-badge">3 фото</span>
+              <img src="images/images/projects/z1.png" class="active" alt="z 1">
+              <img src="images/images/projects/z2.png" alt="z 2">
+              <img src="images/images/projects/z3.png" alt="z 3">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">ЗДАНИЯ MSB2</h3>
+              <p class="project-desc">Подборка городских зданий и фасадов на MSB2.</p>
+              <div class="tag-row"><span class="tag">здания</span><span class="tag">город</span></div>
+            </div>
+          </article>
+
+          <!-- d5 -->
+          <article class="project-card" data-tags="buildings">
+            <div class="project-slider" data-gallery="d5" data-title="Багровый амбар" data-desc="Багровый амбар Boatswain — атмосферная постройка с характером.">
+              <span class="count-badge">1 фото</span>
+              <img src="images/images/projects/d5.png" class="active" alt="d5">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">БАГРОВЫЙ АМБАР</h3>
+              <p class="project-desc">Багровый амбар Boatswain — атмосферная постройка с характером.</p>
+              <div class="tag-row"><span class="tag">здания</span><span class="tag">атмосфера</span></div>
+            </div>
+          </article>
+
+          <!-- d5_1-5 -->
+          <article class="project-card" data-tags="village">
+            <div class="project-slider" data-gallery="d5_2" data-title="Фэнтези-деревня на древе" data-desc="Деревня на ветке огромного древа для t2x2.">
+              <span class="count-badge">5 фото</span>
+              <img src="images/images/projects/d5_1.png" class="active" alt="d5_1">
+              <img src="images/images/projects/d5_2.png" alt="d5_2">
+              <img src="images/images/projects/d5_3.png" alt="d5_3">
+              <img src="images/images/projects/d5_4.png" alt="d5_4">
+              <img src="images/images/projects/d5_5.png" alt="d5_5">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">ФЭНТЕЗИ-ДЕРЕВНЯ НА ДРЕВЕ</h3>
+              <p class="project-desc">Деревня на ветке огромного древа для t2x2.</p>
+              <div class="tag-row"><span class="tag">деревня</span><span class="tag">фэнтези</span></div>
+            </div>
+          </article>
+
+          <!-- d6_1-3 -->
+          <article class="project-card" data-tags="buildings">
+            <div class="project-slider" data-gallery="d6" data-title="Домик в фэнтези стиле" data-desc="Домик в фэнтези стиле (вдохновлён Pinterest).">
+              <span class="count-badge">3 фото</span>
+              <img src="images/images/projects/d6_1.png" class="active" alt="d6_1">
+              <img src="images/images/projects/d6_2.png" alt="d6_2">
+              <img src="images/images/projects/d6_3.png" alt="d6_3">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">ДОМИК: ФЭНТЕЗИ</h3>
+              <p class="project-desc">Домик в фэнтези стиле (вдохновлён Pinterest).</p>
+              <div class="tag-row"><span class="tag">здания</span><span class="tag">фэнтези</span></div>
+            </div>
+          </article>
+
+          <!-- d52 и d61 -->
+          <article class="project-card" data-tags="buildings">
+            <div class="project-slider" data-gallery="dNeo" data-title="Царская высотка" data-desc="Неоклассическое здание: “царская высотка” / парадный фасад.">
+              <span class="count-badge">2 фото</span>
+              <img src="images/images/projects/d52.png" class="active" alt="d52">
+              <img src="images/images/projects/d61.png" alt="d61">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">ЦАРСКАЯ ВЫСОТКА</h3>
+              <p class="project-desc">Неоклассическое здание: “царская высотка” / парадный фасад.</p>
+              <div class="tag-row"><span class="tag">здания</span><span class="tag">неоклассика</span></div>
+            </div>
+          </article>
+
+          <!-- kor1-3 -->
+          <article class="project-card" data-tags="contest">
+            <div class="project-slider" data-gallery="kor" data-title="Пустынный корабль" data-desc="Пустынный корабль для конкурса: форма, детали, атмосфера.">
+              <span class="count-badge">3 фото</span>
+              <img src="images/images/projects/kor1.png" class="active" alt="kor1">
+              <img src="images/images/projects/kor2.png" alt="kor2">
+              <img src="images/images/projects/kor3.png" alt="kor3">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">ПУСТЫННЫЙ КОРАБЛЬ</h3>
+              <p class="project-desc">Пустынный корабль для конкурса: форма, детали, атмосфера.</p>
+              <div class="tag-row"><span class="tag">конкурс</span><span class="tag">пустыня</span></div>
+            </div>
+          </article>
+
+          <!-- l1_1-5 -->
+          <article class="project-card" data-tags="lobby,spawn">
+            <div class="project-slider" data-gallery="l1" data-title="Лобби/спавн: фэнтези" data-desc="Лобби/спавн в фэнтези стиле: уют + масштаб.">
+              <span class="count-badge">5 фото</span>
+              <img src="images/images/projects/l1_1.png" class="active" alt="l1_1">
+              <img src="images/images/projects/l1_2.png" alt="l1_2">
+              <img src="images/images/projects/l1_3.png" alt="l1_3">
+              <img src="images/images/projects/l1_4.png" alt="l1_4">
+              <img src="images/images/projects/l1_5.png" alt="l1_5">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">ЛОББИ/СПАВН: ФЭНТЕЗИ</h3>
+              <p class="project-desc">Лобби/спавн в фэнтези стиле: уют + масштаб.</p>
+              <div class="tag-row"><span class="tag">лобби</span><span class="tag">фэнтези</span></div>
+            </div>
+          </article>
+
+          <!-- sp3_1-6 -->
+          <article class="project-card" data-tags="spawn">
+            <div class="project-slider" data-gallery="sp3" data-title="Спавн: Китайский полумесяц" data-desc="Спавн в китайском стиле в форме полумесяца.">
+              <span class="count-badge">6 фото</span>
+              <img src="images/images/projects/sp3_1.png" class="active" alt="sp3_1">
+              <img src="images/images/projects/sp3_2.png" alt="sp3_2">
+              <img src="images/images/projects/sp3_3.png" alt="sp3_3">
+              <img src="images/images/projects/sp3_4.png" alt="sp3_4">
+              <img src="images/images/projects/sp3_5.png" alt="sp3_5">
+              <img src="images/images/projects/sp3_6.png" alt="sp3_6">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">СПАВН: КИТАЙСКИЙ ПОЛУМЕСЯЦ</h3>
+              <p class="project-desc">Спавн в китайском стиле в форме полумесяца.</p>
+              <div class="tag-row"><span class="tag">спавн</span><span class="tag">китай</span></div>
+            </div>
+          </article>
+
+          <!-- s4_1-5 -->
+          <article class="project-card" data-tags="spawn">
+            <div class="project-slider" data-gallery="s4" data-title="Спавн: Адская стилистика" data-desc="Спавн в адской стилистике: мрачный свет и агрессивные формы.">
+              <span class="count-badge">5 фото</span>
+              <img src="images/images/projects/s4_1.png" class="active" alt="s4_1">
+              <img src="images/images/projects/s4_2.png" alt="s4_2">
+              <img src="images/images/projects/s4_3.png" alt="s4_3">
+              <img src="images/images/projects/s4_4.png" alt="s4_4">
+              <img src="images/images/projects/s4_5.png" alt="s4_5">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">СПАВН: АДСКИЙ</h3>
+              <p class="project-desc">Спавн в адской стилистике: мрачный свет и агрессивные формы.</p>
+              <div class="tag-row"><span class="tag">спавн</span><span class="tag">ад</span></div>
+            </div>
+          </article>
+
+          <!-- sp5_1-5 -->
+          <article class="project-card" data-tags="spawn">
+            <div class="project-slider" data-gallery="sp5" data-title="Спавн: фэнтези-техно" data-desc="Смешение фэнтези и технических мотивов: механика + магия.">
+              <span class="count-badge">5 фото</span>
+              <img src="images/images/projects/sp5_1.png" class="active" alt="sp5_1">
+              <img src="images/images/projects/sp5_2.png" alt="sp5_2">
+              <img src="images/images/projects/sp5_3.png" alt="sp5_3">
+              <img src="images/images/projects/sp5_4.png" alt="sp5_4">
+              <img src="images/images/projects/sp5_5.png" alt="sp5_5">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">СПАВН: ФЭНТЕЗИ-ТЕХНО</h3>
+              <p class="project-desc">Смешение фэнтези и технических мотивов: механика + магия.</p>
+              <div class="tag-row"><span class="tag">спавн</span><span class="tag">техно</span></div>
+            </div>
+          </article>
+
+          <!-- sp7_1-6 -->
+          <article class="project-card" data-tags="spawn">
+            <div class="project-slider" data-gallery="sp7" data-title="Спавн: Японский стиль" data-desc="Спавн в японском стиле: композиция, ворота, атмосфера.">
+              <span class="count-badge">6 фото</span>
+              <img src="images/images/projects/sp7_1.png" class="active" alt="sp7_1">
+              <img src="images/images/projects/sp7_2.png" alt="sp7_2">
+              <img src="images/images/projects/sp7_3.png" alt="sp7_3">
+              <img src="images/images/projects/sp7_4.png" alt="sp7_4">
+              <img src="images/images/projects/sp7_5.png" alt="sp7_5">
+              <img src="images/images/projects/sp7_6.png" alt="sp7_6">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">СПАВН: ЯПОНИЯ</h3>
+              <p class="project-desc">Спавн в японском стиле: композиция, ворота, атмосфера.</p>
+              <div class="tag-row"><span class="tag">спавн</span><span class="tag">япония</span></div>
+            </div>
+          </article>
+
+          <!-- sp6_1-5 -->
+          <article class="project-card" data-tags="spawn">
+            <div class="project-slider" data-gallery="sp6" data-title="Спавн: Средневековье" data-desc="Классический средневековый спавн с крепостными мотивами.">
+              <span class="count-badge">5 фото</span>
+              <img src="images/images/projects/sp6_1.png" class="active" alt="sp6_1">
+              <img src="images/images/projects/sp6_2.png" alt="sp6_2">
+              <img src="images/images/projects/sp6_3.png" alt="sp6_3">
+              <img src="images/images/projects/sp6_4.png" alt="sp6_4">
+              <img src="images/images/projects/sp6_5.png" alt="sp6_5">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">СПАВН: СРЕДНЕВЕКОВЬЕ</h3>
+              <p class="project-desc">Классический средневековый спавн с крепостными мотивами.</p>
+              <div class="tag-row"><span class="tag">спавн</span><span class="tag">средневековье</span></div>
+            </div>
+          </article>
+
+          <!-- l2_1-3 -->
+          <article class="project-card" data-tags="lobby,spawn">
+            <div class="project-slider" data-gallery="l2" data-title="Лобби/спавн: Китай" data-desc="Лобби/спавн в китайском стиле: акценты на крыши и силуэты.">
+              <span class="count-badge">3 фото</span>
+              <img src="images/images/projects/l2_1.png" class="active" alt="l2_1">
+              <img src="images/images/projects/l2_2.png" alt="l2_2">
+              <img src="images/images/projects/l2_3.png" alt="l2_3">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">ЛОББИ/СПАВН: КИТАЙ</h3>
+              <p class="project-desc">Лобби/спавн в китайском стиле: акценты на крыши и силуэты.</p>
+              <div class="tag-row"><span class="tag">лобби</span><span class="tag">китай</span></div>
+            </div>
+          </article>
+
+          <!-- sp8_1-5 -->
+          <article class="project-card" data-tags="spawn">
+            <div class="project-slider" data-gallery="sp8" data-title="Спавн: 4 времени года" data-desc="Средневековый спавн, оформленный в четырёх сезонах.">
+              <span class="count-badge">5 фото</span>
+              <img src="images/images/projects/sp8_1.png" class="active" alt="sp8_1">
+              <img src="images/images/projects/sp8_2.png" alt="sp8_2">
+              <img src="images/images/projects/sp8_3.png" alt="sp8_3">
+              <img src="images/images/projects/sp8_4.png" alt="sp8_4">
+              <img src="images/images/projects/sp8_5.png" alt="sp8_5">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">СПАВН: 4 ВРЕМЕНИ ГОДА</h3>
+              <p class="project-desc">Средневековый спавн, оформленный в четырёх сезонах.</p>
+              <div class="tag-row"><span class="tag">спавн</span><span class="tag">сезоны</span></div>
+            </div>
+          </article>
+
+          <!-- sp9_1-3 -->
+          <article class="project-card" data-tags="spawn">
+            <div class="project-slider" data-gallery="sp9" data-title="Спавн: Греция" data-desc="Спавн в греческом стиле (под старую версию).">
+              <span class="count-badge">3 фото</span>
+              <img src="images/images/projects/sp9_1.png" class="active" alt="sp9_1">
+              <img src="images/images/projects/sp9_2.png" alt="sp9_2">
+              <img src="images/images/projects/sp9_3.png" alt="sp9_3">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">СПАВН: ГРЕЦИЯ</h3>
+              <p class="project-desc">Спавн в греческом стиле (под старую версию).</p>
+              <div class="tag-row"><span class="tag">спавн</span><span class="tag">антика</span></div>
+            </div>
+          </article>
+
+          <!-- zon1_1-3 -->
+          <article class="project-card" data-tags="territory">
+            <div class="project-slider" data-gallery="zon1" data-title="Территория: фэнтези" data-desc="Территория в фэнтези стиле на MSB2.">
+              <span class="count-badge">3 фото</span>
+              <img src="images/images/projects/zon1_1.png" class="active" alt="zon1_1">
+              <img src="images/images/projects/zon1_2.png" alt="zon1_2">
+              <img src="images/images/projects/zon1_3.png" alt="zon1_3">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">ТЕРРИТОРИЯ: ФЭНТЕЗИ (MSB2)</h3>
+              <p class="project-desc">Территория в фэнтези стиле на MSB2.</p>
+              <div class="tag-row"><span class="tag">территории</span><span class="tag">фэнтези</span></div>
+            </div>
+          </article>
+
+          <!-- lob3_1-3 -->
+          <article class="project-card" data-tags="lobby,spawn">
+            <div class="project-slider" data-gallery="lob3" data-title="Лобби/спавн: смешанное фэнтези" data-desc="Смешанный фэнтези стиль: разные материалы и настроение.">
+              <span class="count-badge">3 фото</span>
+              <img src="images/images/projects/lob3_1.png" class="active" alt="lob3_1">
+              <img src="images/images/projects/lob3_2.png" alt="lob3_2">
+              <img src="images/images/projects/lob3_3.png" alt="lob3_3">
+              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
+              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">ЛОББИ/СПАВН: СМЕШАННОЕ ФЭНТЕЗИ</h3>
+              <p class="project-desc">Смешанный фэнтези стиль: разные материалы и настроение.</p>
+              <div class="tag-row"><span class="tag">лобби</span><span class="tag">фэнтези</span></div>
+            </div>
+          </article>
+
+        </div>
 
         <div class="social-card">
           <h3 class="social-title">связаться с нами</h3>
-
           <div class="social-links">
             <a class="social-btn" href="https://vk.com/msbuildersminecraft" target="_blank" rel="noopener">VK</a>
             <a class="social-btn" href="https://discord.com/invite/Wj8jWS736f" target="_blank" rel="noopener">Discord</a>
             <a class="social-btn" href="mailto:Komand.or@mail.ru">Почта</a>
           </div>
-
-          <p class="social-muted">Быстро сделаем: спавн/лобби, город, набор зданий, интерьер, уникальные точки для ивентов.</p>
+          <p class="social-muted">Спавн / хаб / город / интерьер / здания. Опишешь задачу — предложим стиль и сроки.</p>
         </div>
       </section>
     </main>
   </div>
 
-  <!-- МОДАЛКА-ГАЛЕРЕЯ -->
-  <div class="modal" id="modal" aria-hidden="true">
-    <div class="modal-box" role="dialog" aria-label="Просмотр проекта">
-      <div class="modal-top">
-        <div class="modal-title">
-          <b id="mTitle">Проект</b>
-          <span id="mMeta">1 / 1</span>
+  <!-- ===== LIGHTBOX ===== -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lb-wrap" role="dialog" aria-modal="true" aria-label="Просмотр проекта">
+      <div class="lb-top">
+        <div>
+          <p class="lb-title" id="lbTitle">ПРОЕКТ</p>
+          <p class="lb-sub" id="lbDesc">Описание проекта</p>
         </div>
-
-        <div class="modal-actions">
-          <button class="mbtn" id="mPrevProject" type="button" title="Предыдущий проект (Shift + ←)">⟵ Проект</button>
-          <button class="mbtn" id="mNextProject" type="button" title="Следующий проект (Shift + →)">Проект ⟶</button>
-          <button class="mbtn" id="mClose" type="button" title="Закрыть (Esc)">✕ Закрыть</button>
-        </div>
+        <button class="lb-close" id="lbClose" type="button" aria-label="Закрыть">✕</button>
       </div>
 
-      <div class="modal-main">
-        <button class="nav-btn nav-prev" id="mPrev" type="button" aria-label="Предыдущее фото">‹</button>
-        <img id="mImg" src="" alt="Просмотр изображения" />
-        <button class="nav-btn nav-next" id="mNext" type="button" aria-label="Следующее фото">›</button>
+      <div class="lb-body" id="lbBody">
+        <button class="lb-nav lb-prev" id="lbPrev" type="button" aria-label="Предыдущее фото">‹</button>
+        <img class="lb-img" id="lbImg" src="" alt="Фото проекта">
+        <button class="lb-nav lb-next" id="lbNext" type="button" aria-label="Следующее фото">›</button>
       </div>
 
-      <div class="thumbs" id="mThumbs" aria-label="Превью фотографий"></div>
+      <div class="lb-footer">
+        <div class="lb-counter" id="lbCounter">1 / 1</div>
+        <div class="lb-hint">Клавиши: ← → • Закрыть: Esc • Свайп на телефоне</div>
+      </div>
     </div>
   </div>
 
   <script>
     const root = document.documentElement;
 
-    // ===== САЙДБАР =====
+    // ===== SIDEBAR =====
     const btnSidebar = document.getElementById("toggleSidebar");
     const sidebarIcon = document.getElementById("sidebarIcon");
 
@@ -690,14 +1021,13 @@
       syncSidebarIcon();
     });
 
-    // ===== КОПИРОВАНИЕ IP =====
+    // ===== COPY IP =====
     const copyBtn = document.getElementById("copyIp");
     if (copyBtn){
       copyBtn.addEventListener("click", async () => {
         const ip = "play.msbuilders2.ru";
-        try{
-          await navigator.clipboard.writeText(ip);
-        }catch(e){
+        try{ await navigator.clipboard.writeText(ip); }
+        catch(e){
           const ta = document.createElement("textarea");
           ta.value = ip;
           document.body.appendChild(ta);
@@ -710,455 +1040,164 @@
       });
     }
 
-    // ===== ДАННЫЕ ПРОЕКТОВ =====
-    // Путь к картинкам (оставил твой): images/images/projects/
-    const IMG_DIR = "images/images/projects/";
+    // ===== SLIDERS IN CARDS =====
+    document.querySelectorAll(".project-slider").forEach((slider) => {
+      const images = Array.from(slider.querySelectorAll("img"));
+      const prev = slider.querySelector(".slider-prev");
+      const next = slider.querySelector(".slider-next");
+      let index = 0;
 
-    // helper: создать список файлов (base_1.png ... base_N.png)
-    function makeIndexed(base, count){
-      const out = [];
-      for (let i = 1; i <= count; i++){
-        out.push(`${IMG_DIR}${base}_${i}.png`);
-      }
-      return out;
-    }
-
-    // helper: одиночный файл (base.png)
-    function makeSingle(fileBase){
-      return [`${IMG_DIR}${fileBase}.png`];
-    }
-
-    // Категории (для фильтра)
-    const CATS = [
-      { key:"all", label:"Все" },
-      { key:"spawns", label:"Спавны" },
-      { key:"lobbies", label:"Лобби" },
-      { key:"buildings", label:"Здания" },
-      { key:"areas", label:"Территории" },
-      { key:"villages", label:"Деревни/Города" },
-      { key:"contest", label:"Конкурс" },
-    ];
-
-    // ВАЖНО:
-    // - если вдруг у тебя какие-то файлы называются иначе (например z1_1.png vs z1-1.png) — просто поправь base.
-    const PROJECTS = [
-      // === старые ===
-      { id:"pr1", title:"Остров развлечений", desc:"Построен для нашего сервера во время конкурса.", cat:"contest", tags:["Конкурс","Ивент"], images: makeIndexed("pr1", 5) },
-      { id:"pr2", title:"Медная деревня", desc:"Проект в выживании: уютный стиль + детали из меди.", cat:"villages", tags:["Выживание","Деревня"], images: makeIndexed("pr2", 5) },
-      { id:"sp1", title:"Спавн в космическом стиле", desc:"Футуристичный спавн/хаб с космической тематикой.", cat:"spawns", tags:["Спавн","Космос"], images: makeIndexed("sp1", 3) },
-      { id:"sp2", title:"Спавн 2-го сезона", desc:"Главный спавн нашего сервера со 2-го сезона.", cat:"spawns", tags:["Спавн","Сезон"], images: makeIndexed("sp2", 5) },
-      { id:"pr3", title:"Проект города", desc:"Большой городской проект: кварталы, улицы, масштабы.", cat:"villages", tags:["Город","Масштаб"], images: makeIndexed("pr3", 5) },
-      { id:"pr4", title:"Проект «Багратион»", desc:"Неоклассический проект: строгие формы и монументальность.", cat:"buildings", tags:["Неоклассика"], images: makeIndexed("pr4", 3) },
-
-      // === новые из твоего списка ===
-      { id:"zd5", title:"Викторианское здание", desc:"Архитектура в викторианском стиле: акценты, фасады, декор.", cat:"buildings", tags:["Викторианский","Здание"], images: makeIndexed("zd5", 3) },
-
-      { id:"z1", title:"Здания MSB2", desc:"Подборка построек и архитектуры с MSB2 (серия зданий).", cat:"buildings", tags:["MSB2","Архитектура"], images: makeIndexed("z1", 3) },
-
-      { id:"d5", title:"Багровый амбар", desc:"Лаконичный амбар в багровой палитре (работа Boatswain).", cat:"buildings", tags:["Амбар","Стиль"], images: makeSingle("d5") },
-
-      { id:"d5x", title:"Фэнтези деревня на древе", desc:"Деревня на ветвях огромного древа (для t2x2).", cat:"villages", tags:["Фэнтези","Деревня"], images: makeIndexed("d5_1", 5) /* см. примечание ниже */ },
-
-      { id:"d6", title:"Фэнтези домик", desc:"Домик в фэнтези стиле «как с Pinterest»: уют + детали.", cat:"buildings", tags:["Фэнтези","Дом"], images: makeIndexed("d6", 3) },
-
-      { id:"d52", title:"Неоклассика / царская высотка", desc:"Здание в неоклассическом стиле: строгие линии и высотность.", cat:"buildings", tags:["Неоклассика","Высотка"], images: makeSingle("d52") },
-
-      { id:"d61", title:"Неоклассика (вариант)", desc:"Вторая работа в неоклассике — другой фасад/композиция.", cat:"buildings", tags:["Неоклассика"], images: makeSingle("d61") },
-
-      { id:"kor", title:"Пустынный корабль", desc:"Корабль для конкурса в пустынной тематике.", cat:"contest", tags:["Конкурс","Пустыня"], images: makeIndexed("kor", 3) },
-
-      { id:"l1", title:"Лобби/спавн (фэнтези)", desc:"Фэнтези лобби/спавн: сказочная атмосфера и масштаб.", cat:"lobbies", tags:["Лобби","Фэнтези"], images: makeIndexed("l1", 5) },
-
-      { id:"sp3", title:"Спавн в китайском стиле", desc:"Спавн в форме полумесяца: китайская стилистика и символика.", cat:"spawns", tags:["Спавн","Китай"], images: makeIndexed("sp3", 6) },
-
-      { id:"s4", title:"Адский спавн", desc:"Спавн в адской стилистике: жар, базальт, багровые акценты.", cat:"spawns", tags:["Спавн","Ад"], images: makeIndexed("s4", 5) },
-
-      { id:"sp5", title:"Фэнтези-технический спавн", desc:"Смесь фэнтези и техно: механика, формы, «маг-инж» вайб.", cat:"spawns", tags:["Спавн","Техно"], images: makeIndexed("sp5", 5) },
-
-      { id:"sp7", title:"Японский спавн", desc:"Спавн в японском стиле: гармония, формы, традиционные мотивы.", cat:"spawns", tags:["Спавн","Япония"], images: makeIndexed("sp7", 6) },
-
-      { id:"sp6", title:"Средневековый спавн", desc:"Классический медивальный стиль: камень, дерево, башни.", cat:"spawns", tags:["Спавн","Средневековье"], images: makeIndexed("sp6", 5) },
-
-      { id:"l2", title:"Лобби/спавн (китайский стиль)", desc:"Лобби/спавн с китайской эстетикой: арки, крыши, фонари.", cat:"lobbies", tags:["Лобби","Китай"], images: makeIndexed("l2", 3) },
-
-      { id:"sp8", title:"Спавн «4 времени года»", desc:"Средневековый спавн, разделённый на 4 сезона — эффектный концепт.", cat:"spawns", tags:["Спавн","Сезоны"], images: makeIndexed("sp8", 5) },
-
-      { id:"sp9", title:"Греческий спавн", desc:"Спавн в греческом стиле (под старую версию): колонны и мрамор.", cat:"spawns", tags:["Спавн","Греция"], images: makeIndexed("sp9", 3) },
-
-      { id:"zon1", title:"Фэнтези территория (MSB2)", desc:"Территория/локация в фэнтези стиле на MSB2.", cat:"areas", tags:["Территория","Фэнтези"], images: makeIndexed("zon1", 3) },
-
-      { id:"lob3", title:"Лобби/спавн (смешанное фэнтези)", desc:"Смешанный фэнтези-стиль: разные материалы и визуальные слои.", cat:"lobbies", tags:["Лобби","Фэнтези"], images: makeIndexed("lob3", 3) },
-    ];
-
-    /**
-     * ВАЖНОЕ ПРИМЕЧАНИЕ по d5_1-5:
-     * Ты написал: d5_1-5 (Фэнтези деревня...) — обычно это значит файлы d5_1.png ... d5_5.png.
-     * В текущей записи я использовал makeIndexed("d5_1", 5) (то есть d5_1_1.png ...).
-     * Если у тебя реально файлы называются d5_1.png, d5_2.png ... d5_5.png —
-     * то просто замени в массиве PROJECTS строку:
-     *   images: makeIndexed("d5_1", 5)
-     * на:
-     *   images: (function(){ const a=[]; for(let i=1;i<=5;i++) a.push(`${IMG_DIR}d5_${i}.png`); return a; })()
-     */
-    // маленький фикс “на всякий” — автоматически подправим d5_1-5 на d5_1..d5_5
-    (function fixD5(){
-      const p = PROJECTS.find(x => x.id === "d5x");
-      if (!p) return;
-      // Если у тебя нет d5_1_1.png, а есть d5_1.png... — включи строку ниже:
-      p.images = (function(){
-        const a = [];
-        for (let i=1;i<=5;i++) a.push(`${IMG_DIR}d5_${i}.png`);
-        return a;
-      })();
-    })();
-
-    // ===== UI: ЧИПЫ ФИЛЬТРА =====
-    const chipBar = document.getElementById("chipBar");
-    const searchInput = document.getElementById("searchInput");
-    const sortSelect = document.getElementById("sortSelect");
-    const grid = document.getElementById("grid");
-
-    let state = {
-      cat: "all",
-      q: "",
-      sort: "new",
-    };
-
-    function getVisibleProjects(){
-      let arr = [...PROJECTS];
-
-      // фильтр по категории
-      if (state.cat !== "all"){
-        arr = arr.filter(p => p.cat === state.cat);
+      function show(i){
+        images.forEach(img => img.classList.remove("active"));
+        images[i].classList.add("active");
       }
 
-      // поиск по названию/описанию/тэгам
-      const q = state.q.trim().toLowerCase();
-      if (q){
-        arr = arr.filter(p => {
-          const hay = `${p.title} ${p.desc} ${(p.tags||[]).join(" ")}`.toLowerCase();
-          return hay.includes(q);
-        });
+      // Если 1 фото — кнопки скрыть
+      if (images.length <= 1){
+        prev.style.display = "none";
+        next.style.display = "none";
       }
 
-      // сортировка
-      if (state.sort === "az"){
-        arr.sort((a,b) => a.title.localeCompare(b.title, "ru"));
-      } else {
-        // "new" — как в списке (последние ниже можно перенести вверх, если хочешь)
-        // оставляем порядок массива
-      }
-
-      return arr;
-    }
-
-    function countByCat(){
-      const counts = {};
-      for (const c of CATS) counts[c.key] = 0;
-      counts.all = PROJECTS.length;
-      for (const p of PROJECTS){
-        if (counts[p.cat] === undefined) counts[p.cat] = 0;
-        counts[p.cat]++;
-      }
-      return counts;
-    }
-
-    function renderChips(){
-      const counts = countByCat();
-      chipBar.innerHTML = "";
-
-      for (const c of CATS){
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "chip" + (state.cat === c.key ? " active" : "");
-        btn.dataset.cat = c.key;
-
-        const label = document.createElement("span");
-        label.textContent = c.label;
-
-        const num = document.createElement("small");
-        num.textContent = counts[c.key] ?? 0;
-
-        btn.appendChild(label);
-        btn.appendChild(num);
-
-        btn.addEventListener("click", () => {
-          state.cat = c.key;
-          renderChips();
-          renderGrid();
-        });
-
-        chipBar.appendChild(btn);
-      }
-    }
-
-    // ===== РЕНДЕР КАРТОЧЕК (вместо ручного HTML) =====
-    function renderGrid(){
-      const items = getVisibleProjects();
-      grid.innerHTML = "";
-
-      for (const p of items){
-        const card = document.createElement("article");
-        card.className = "project-card";
-        card.dataset.id = p.id;
-        card.dataset.cat = p.cat;
-
-        // badges
-        const badges = document.createElement("div");
-        badges.className = "badge-row";
-        const topBadges = (p.tags || []).slice(0, 3);
-        for (const t of topBadges){
-          const b = document.createElement("span");
-          b.className = "badge";
-          b.textContent = t;
-          badges.appendChild(b);
-        }
-
-        // slider
-        const slider = document.createElement("div");
-        slider.className = "project-slider";
-
-        const imgs = p.images.map((src, idx) => {
-          const im = document.createElement("img");
-          im.src = src;
-          im.alt = `${p.id} ${idx+1}`;
-          if (idx === 0) im.classList.add("active");
-          slider.appendChild(im);
-          return im;
-        });
-
-        // prev/next в карточке, только если > 1 фото
-        if (p.images.length > 1){
-          const prev = document.createElement("button");
-          prev.className = "slider-btn slider-prev";
-          prev.type = "button";
-          prev.setAttribute("aria-label", "Предыдущее фото");
-          prev.textContent = "‹";
-
-          const next = document.createElement("button");
-          next.className = "slider-btn slider-next";
-          next.type = "button";
-          next.setAttribute("aria-label", "Следующее фото");
-          next.textContent = "›";
-
-          slider.appendChild(prev);
-          slider.appendChild(next);
-
-          let idx = 0;
-          function show(i){
-            imgs.forEach(x => x.classList.remove("active"));
-            imgs[i].classList.add("active");
-          }
-
-          prev.addEventListener("click", (e) => {
-            e.stopPropagation();
-            idx = (idx - 1 + imgs.length) % imgs.length;
-            show(idx);
-          });
-
-          next.addEventListener("click", (e) => {
-            e.stopPropagation();
-            idx = (idx + 1) % imgs.length;
-            show(idx);
-          });
-        }
-
-        // info
-        const info = document.createElement("div");
-        info.className = "project-info";
-
-        const name = document.createElement("h3");
-        name.className = "project-name";
-        name.textContent = p.title;
-
-        const desc = document.createElement("p");
-        desc.className = "project-desc";
-        desc.textContent = p.desc;
-
-        info.appendChild(name);
-        info.appendChild(desc);
-
-        card.appendChild(badges);
-        card.appendChild(slider);
-        card.appendChild(info);
-
-        // click => open modal gallery
-        card.addEventListener("click", () => {
-          const active = slider.querySelector("img.active");
-          const activeSrc = active ? active.getAttribute("src") : p.images[0];
-          const startIndex = Math.max(0, p.images.indexOf(activeSrc));
-          openModalForProject(p.id, startIndex);
-        });
-
-        grid.appendChild(card);
-      }
-
-      // если ничего не найдено
-      if (!items.length){
-        const empty = document.createElement("div");
-        empty.className = "social-card";
-        empty.innerHTML = `
-          <h3 class="social-title">ничего не найдено</h3>
-          <p class="social-muted">Попробуй другой фильтр или сократи запрос поиска.</p>
-        `;
-        grid.appendChild(empty);
-      }
-    }
-
-    // ===== ПОИСК/СОРТ =====
-    searchInput.addEventListener("input", () => {
-      state.q = searchInput.value;
-      renderGrid();
-    });
-
-    sortSelect.addEventListener("change", () => {
-      state.sort = sortSelect.value;
-      renderGrid();
-    });
-
-    // ===== МОДАЛКА: листаем фото + листаем проекты =====
-    const modal = document.getElementById("modal");
-    const mTitle = document.getElementById("mTitle");
-    const mMeta  = document.getElementById("mMeta");
-    const mImg   = document.getElementById("mImg");
-    const mThumbs = document.getElementById("mThumbs");
-    const mClose = document.getElementById("mClose");
-    const mPrev  = document.getElementById("mPrev");
-    const mNext  = document.getElementById("mNext");
-    const mPrevProject = document.getElementById("mPrevProject");
-    const mNextProject = document.getElementById("mNextProject");
-
-    let modalState = {
-      projectId: null,
-      imgIndex: 0,
-      visibleList: [], // список id проектов по текущим фильтрам (чтобы листать "все работы")
-    };
-
-    function getProjectById(id){
-      return PROJECTS.find(p => p.id === id);
-    }
-
-    function setModalImage(){
-      const p = getProjectById(modalState.projectId);
-      if (!p) return;
-
-      const total = p.images.length;
-      const i = ((modalState.imgIndex % total) + total) % total;
-      modalState.imgIndex = i;
-
-      mTitle.textContent = p.title;
-      mMeta.textContent = `${i+1} / ${total} • ${p.tags?.join(" • ") || ""}`.trim();
-
-      mImg.src = p.images[i];
-
-      // thumbs
-      mThumbs.innerHTML = "";
-      p.images.forEach((src, idx) => {
-        const t = document.createElement("div");
-        t.className = "thumb" + (idx === i ? " active" : "");
-        t.title = `Фото ${idx+1}`;
-
-        const im = document.createElement("img");
-        im.src = src;
-        im.alt = `thumb ${idx+1}`;
-
-        t.appendChild(im);
-        t.addEventListener("click", (e) => {
-          e.stopPropagation();
-          modalState.imgIndex = idx;
-          setModalImage();
-        });
-
-        mThumbs.appendChild(t);
+      prev.addEventListener("click", (e) => {
+        e.stopPropagation();
+        index = (index - 1 + images.length) % images.length;
+        show(index);
       });
 
-      // скролл к активному thumb
-      const activeThumb = mThumbs.querySelector(".thumb.active");
-      if (activeThumb){
-        const left = activeThumb.offsetLeft - 60;
-        mThumbs.scrollTo({ left, behavior: "smooth" });
-      }
+      next.addEventListener("click", (e) => {
+        e.stopPropagation();
+        index = (index + 1) % images.length;
+        show(index);
+      });
+    });
+
+    // ===== FILTERS =====
+    const filterBtns = Array.from(document.querySelectorAll(".filter-btn"));
+    const cards = Array.from(document.querySelectorAll(".project-card"));
+
+    function setFilter(key){
+      filterBtns.forEach(b => b.classList.toggle("active", b.dataset.filter === key));
+
+      cards.forEach(card => {
+        const tags = (card.dataset.tags || "").split(",").map(s => s.trim()).filter(Boolean);
+        const show = (key === "all") ? true : tags.includes(key);
+        card.style.display = show ? "" : "none";
+      });
+
+      // скролл немного вверх к сетке, чтобы после фильтра было удобно
+      const grid = document.getElementById("grid");
+      grid.scrollIntoView({ behavior:"smooth", block:"start" });
     }
 
-    function openModalForProject(projectId, startIndex = 0){
-      const p = getProjectById(projectId);
-      if (!p) return;
+    filterBtns.forEach(btn => btn.addEventListener("click", () => setFilter(btn.dataset.filter)));
 
-      modalState.projectId = projectId;
-      modalState.imgIndex = startIndex;
+    // ===== LIGHTBOX (листать все фото проекта) =====
+    const lightbox = document.getElementById("lightbox");
+    const lbImg = document.getElementById("lbImg");
+    const lbTitle = document.getElementById("lbTitle");
+    const lbDesc = document.getElementById("lbDesc");
+    const lbCounter = document.getElementById("lbCounter");
+    const lbClose = document.getElementById("lbClose");
+    const lbPrev = document.getElementById("lbPrev");
+    const lbNext = document.getElementById("lbNext");
+    const lbBody = document.getElementById("lbBody");
 
-      // список видимых проектов по текущим фильтрам/поиску
-      modalState.visibleList = getVisibleProjects().map(x => x.id);
+    let lbImages = [];
+    let lbIndex = 0;
 
-      modal.classList.add("open");
-      modal.setAttribute("aria-hidden", "false");
+    function openLightbox(title, desc, images, startIndex = 0){
+      lbTitle.textContent = title || "ПРОЕКТ";
+      lbDesc.textContent = desc || "";
+      lbImages = images || [];
+      lbIndex = Math.max(0, Math.min(startIndex, lbImages.length - 1));
+      renderLightbox();
+
+      lightbox.classList.add("open");
+      lightbox.setAttribute("aria-hidden","false");
       document.body.style.overflow = "hidden";
-
-      setModalImage();
     }
 
-    function closeModal(){
-      modal.classList.remove("open");
-      modal.setAttribute("aria-hidden", "true");
-      mImg.src = "";
-      mThumbs.innerHTML = "";
+    function closeLightbox(){
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden","true");
       document.body.style.overflow = "";
-      modalState.projectId = null;
-      modalState.imgIndex = 0;
+      lbImg.src = "";
+      lbImages = [];
+      lbIndex = 0;
     }
 
-    function nextImg(){ modalState.imgIndex++; setModalImage(); }
-    function prevImg(){ modalState.imgIndex--; setModalImage(); }
+    function renderLightbox(){
+      if (!lbImages.length) return;
+      lbImg.src = lbImages[lbIndex];
+      lbCounter.textContent = `${lbIndex + 1} / ${lbImages.length}`;
 
-    function nextProject(){
-      const list = modalState.visibleList;
-      if (!list.length) return;
-      const idx = list.indexOf(modalState.projectId);
-      const next = list[(idx + 1) % list.length];
-      modalState.projectId = next;
-      modalState.imgIndex = 0;
-      setModalImage();
+      const showNav = lbImages.length > 1;
+      lbPrev.style.display = showNav ? "" : "none";
+      lbNext.style.display = showNav ? "" : "none";
     }
 
-    function prevProject(){
-      const list = modalState.visibleList;
-      if (!list.length) return;
-      const idx = list.indexOf(modalState.projectId);
-      const prev = list[(idx - 1 + list.length) % list.length];
-      modalState.projectId = prev;
-      modalState.imgIndex = 0;
-      setModalImage();
+    function prevPhoto(){
+      if (lbImages.length <= 1) return;
+      lbIndex = (lbIndex - 1 + lbImages.length) % lbImages.length;
+      renderLightbox();
     }
 
-    mClose.addEventListener("click", closeModal);
-    mNext.addEventListener("click", (e) => { e.stopPropagation(); nextImg(); });
-    mPrev.addEventListener("click", (e) => { e.stopPropagation(); prevImg(); });
-    mNextProject.addEventListener("click", (e) => { e.stopPropagation(); nextProject(); });
-    mPrevProject.addEventListener("click", (e) => { e.stopPropagation(); prevProject(); });
+    function nextPhoto(){
+      if (lbImages.length <= 1) return;
+      lbIndex = (lbIndex + 1) % lbImages.length;
+      renderLightbox();
+    }
 
-    // клик по фону закрывает (но не по modal-box)
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) closeModal();
+    lbClose.addEventListener("click", closeLightbox);
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) closeLightbox();
     });
+    lbPrev.addEventListener("click", (e) => { e.stopPropagation(); prevPhoto(); });
+    lbNext.addEventListener("click", (e) => { e.stopPropagation(); nextPhoto(); });
 
-    // клавиши
     document.addEventListener("keydown", (e) => {
-      if (!modal.classList.contains("open")) return;
-
-      if (e.key === "Escape") return closeModal();
-
-      // фото
-      if (!e.shiftKey && (e.key === "ArrowRight")) return nextImg();
-      if (!e.shiftKey && (e.key === "ArrowLeft"))  return prevImg();
-
-      // проекты (Shift + стрелки)
-      if (e.shiftKey && (e.key === "ArrowRight")) return nextProject();
-      if (e.shiftKey && (e.key === "ArrowLeft"))  return prevProject();
+      if (!lightbox.classList.contains("open")) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") prevPhoto();
+      if (e.key === "ArrowRight") nextPhoto();
     });
 
-    // ===== INIT =====
-    renderChips();
-    renderGrid();
+    // Свайп на мобилке
+    let touchX = 0;
+    lbBody.addEventListener("touchstart", (e) => {
+      touchX = e.touches[0].clientX;
+    }, { passive:true });
+
+    lbBody.addEventListener("touchend", (e) => {
+      const endX = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX : touchX;
+      const dx = endX - touchX;
+      if (Math.abs(dx) < 40) return;
+      if (dx > 0) prevPhoto();
+      else nextPhoto();
+    }, { passive:true });
+
+    // Открытие лайтбокса по клику на карточку
+    document.querySelectorAll(".project-card").forEach((card) => {
+      card.addEventListener("click", () => {
+        const slider = card.querySelector(".project-slider");
+        if (!slider) return;
+
+        const title = slider.dataset.title || card.querySelector(".project-name")?.textContent || "ПРОЕКТ";
+        const desc = slider.dataset.desc || card.querySelector(".project-desc")?.textContent || "";
+        const imgs = Array.from(slider.querySelectorAll("img")).map(img => img.getAttribute("src"));
+
+        // стартуем с активной в карточке
+        const active = slider.querySelector("img.active");
+        const startIndex = Math.max(0, imgs.indexOf(active?.getAttribute("src")));
+
+        openLightbox(title, desc, imgs, startIndex);
+      });
+    });
+
+    // Небольшая защита: клики по кнопкам слайдера не открывают лайтбокс
+    document.querySelectorAll(".slider-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => e.stopPropagation());
+    });
   </script>
 </body>
 </html>

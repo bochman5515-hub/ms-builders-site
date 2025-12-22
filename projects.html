@@ -6,10 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Шрифты как на главной -->
+  <link rel="icon" href="msb.png">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
-    * { box-sizing: border-box; }
+    *{ box-sizing:border-box; }
 
     body{
       margin:0;
@@ -18,12 +19,9 @@
       color:#e5e7eb;
     }
 
-    .layout{
-      display:flex;
-      min-height:100vh;
-    }
+    .layout{ display:flex; min-height:100vh; }
 
-    /* ===== ЛЕВАЯ ПАНЕЛЬ (как на остальных страницах) ===== */
+    /* ===== ЛЕВАЯ ПАНЕЛЬ ===== */
     .sidebar{
       width:260px;
       background:#020617;
@@ -36,31 +34,11 @@
       overflow:hidden;
     }
 
-    .logo-box{
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
+    .logo-box{ display:flex; align-items:center; gap:12px; }
+    .logo-box img{ width:96px; height:96px; border-radius:10px; object-fit:cover; }
 
-    .logo-box img{
-      width:96px;
-      height:96px;
-      border-radius:10px;
-      object-fit:cover;
-    }
-
-    .sidebar-title{
-      font-size:16px;
-      font-weight:600;
-      line-height:1.3;
-    }
-
-    .sidebar-title span{
-      display:block;
-      font-size:12px;
-      color:#9ca3af;
-      font-weight:400;
-    }
+    .sidebar-title{ font-size:16px; font-weight:600; line-height:1.3; }
+    .sidebar-title span{ display:block; font-size:12px; color:#9ca3af; font-weight:400; }
 
     .server-copy{
       margin-top:8px;
@@ -75,12 +53,7 @@
       transition:.15s;
       position:relative;
     }
-
-    .server-copy:hover{
-      border-color:#38bdf8;
-      background:rgba(15,23,42,.7);
-    }
-
+    .server-copy:hover{ border-color:#38bdf8; background:rgba(15,23,42,.7); }
     .server-ip{ display:block; font-weight:700; letter-spacing:.02em; }
     .server-ver{ display:block; margin-top:2px; font-size:12px; color:#9ca3af; }
 
@@ -95,19 +68,9 @@
       transition:.18s;
       pointer-events:none;
     }
+    .server-copy.copied .server-tip{ opacity:1; transform:translateY(0); }
 
-    .server-copy.copied .server-tip{
-      opacity:1;
-      transform:translateY(0);
-    }
-
-    .sidebar-nav{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      margin-top:6px;
-    }
-
+    .sidebar-nav{ display:flex; flex-direction:column; gap:8px; margin-top:6px; }
     .sidebar-nav a{
       color:#e5e7eb;
       text-decoration:none;
@@ -116,291 +79,12 @@
       border-left:3px solid transparent;
       padding-left:10px;
       transition:.15s;
+      white-space:nowrap;
     }
+    .sidebar-nav a:hover{ color:#38bdf8; border-color:#38bdf8; }
+    .sidebar-nav a.active{ color:#38bdf8; border-color:#38bdf8; font-weight:600; }
 
-    .sidebar-nav a:hover{
-      color:#38bdf8;
-      border-color:#38bdf8;
-    }
-
-    .sidebar-nav a.active{
-      color:#38bdf8;
-      border-color:#38bdf8;
-      font-weight:600;
-    }
-
-    .sidebar-collapsed .sidebar{
-      width:0;
-      padding:0;
-      border-right:none;
-    }
-
-    /* ===== ПРАВАЯ ЧАСТЬ ===== */
-    .content{
-      flex:1;
-      background:
-        linear-gradient(to bottom, rgba(15,23,42,0.9), rgba(15,23,42,1)),
-        url("bg-stone.png");
-      background-size:auto,128px 128px;
-      background-repeat:repeat;
-      padding-bottom:40px;
-    }
-
-    /* ===== БАННЕР ===== */
-    .hero{
-      position:relative;
-      height:240px;
-      overflow:hidden;
-    }
-
-    .hero img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
-
-    .hero-overlay{
-      position:absolute;
-      inset:0;
-      background:linear-gradient(to right, rgba(15,23,42,0.7), transparent);
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      padding-left:40px;
-      gap:10px;
-    }
-
-    .hero-title{
-      font-family:"Press Start 2P",system-ui;
-      font-size:18px;
-      text-transform:uppercase;
-      color:#f9fafb;
-      text-shadow:0 0 10px rgba(15,23,42,0.9);
-    }
-
-    .hero-subtitle{
-      font-size:14px;
-      max-width:560px;
-      color:#e5e7eb;
-    }
-
-    .hero-tags{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:6px;
-    }
-
-    .hero-tag{
-      font-size:11px;
-      padding:4px 8px;
-      border-radius:999px;
-      background:rgba(15,23,42,0.7);
-      border:1px solid rgba(148,163,184,0.4);
-    }
-
-    .page-section{
-      margin:32px auto 0;
-      max-width:1200px;
-      padding:0 24px;
-    }
-
-    .section-title{
-      font-family:"Press Start 2P",system-ui;
-      font-size:16px;
-      text-transform:uppercase;
-      text-align:center;
-      padding:12px 16px;
-      margin:0 0 24px;
-      background:linear-gradient(90deg,#7c3aed,#ec4899);
-      color:#0b1120;
-      border-radius:999px;
-      letter-spacing:.08em;
-    }
-
-    /* ===== СЕТКА ПРОЕКТОВ (2 в ряд) ===== */
-    .project-grid{
-      display:grid;
-      gap:18px;
-      grid-template-columns:repeat(2, minmax(0, 1fr));
-    }
-
-    @media (max-width: 900px){
-      .project-grid{ grid-template-columns:1fr; }
-    }
-
-    /* ===== КАРТОЧКА ПРОЕКТА ===== */
-    .project-card{
-      background:rgba(15,23,42,0.9);
-      border-radius:16px;
-      overflow:hidden;
-      border:1px solid rgba(148,163,184,0.35);
-      transition:transform .18s ease, box-shadow .18s ease, border-color .18s;
-      cursor:pointer;
-    }
-
-    .project-card:hover{
-      transform:translateY(-4px);
-      box-shadow:0 18px 35px rgba(15,23,42,0.8);
-      border-color:#38bdf8;
-    }
-
-    /* ===== СЛАЙДЕР В КАРТОЧКЕ ===== */
-    .project-slider{
-      position:relative;
-      width:100%;
-      height:220px;
-      overflow:hidden;
-      background:rgba(2,6,23,0.35);
-    }
-
-    .project-slider img{
-      width:100%;
-      height:220px;
-      object-fit:cover;
-      display:none;
-    }
-
-    .project-slider img.active{
-      display:block;
-    }
-
-    .slider-btn{
-      position:absolute;
-      top:50%;
-      transform:translateY(-50%);
-      width:36px;
-      height:36px;
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,0.35);
-      background:rgba(2,6,23,0.75);
-      color:#e5e7eb;
-      font-size:18px;
-      cursor:pointer;
-      display:grid;
-      place-items:center;
-      opacity:0;
-      transition:.15s;
-      z-index:2;
-      box-shadow:0 10px 22px rgba(0,0,0,0.25);
-    }
-
-    .project-card:hover .slider-btn{
-      opacity:1;
-    }
-
-    .slider-btn:hover{
-      border-color:#38bdf8;
-      color:#e0f2fe;
-    }
-
-    .slider-prev{ left:10px; }
-    .slider-next{ right:10px; }
-
-    .project-info{
-      padding:14px 16px 16px;
-    }
-
-    .project-name{
-      font-family:"Press Start 2P",system-ui;
-      font-size:11px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      color:#e0f2fe;
-      margin:0 0 10px;
-    }
-
-    .project-desc{
-      margin:0;
-      font-size:13px;
-      color:#cbd5f5;
-      line-height:1.4;
-    }
-
-    /* ===== БЛОК СОЦСЕТЕЙ ===== */
-    .social-card{
-      margin-top:22px;
-      background:rgba(15,23,42,0.9);
-      border-radius:16px;
-      border:1px solid rgba(148,163,184,0.35);
-      padding:16px;
-      text-align:center;
-      box-shadow:0 10px 24px rgba(15,23,42,0.55);
-    }
-
-    .social-title{
-      font-family:"Press Start 2P",system-ui;
-      font-size:12px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      margin:0 0 12px;
-      color:#e0f2fe;
-    }
-
-    .social-links{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      justify-content:center;
-    }
-
-    .social-btn{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 14px;
-      border-radius:999px;
-      text-decoration:none;
-      color:#0b1120;
-      background:linear-gradient(90deg,#0ea5e9,#38bdf8);
-      border:1px solid rgba(148,163,184,0.25);
-      font-weight:700;
-      font-size:13px;
-      transition:.15s;
-    }
-
-    .social-btn:hover{
-      filter:brightness(1.05);
-      transform:translateY(-1px);
-    }
-
-    .social-muted{
-      margin:10px 0 0;
-      font-size:12px;
-      color:#9ca3af;
-    }
-
-    /* ===== МОДАЛКА ===== */
-    .modal{
-      display:none;
-      position:fixed;
-      inset:0;
-      z-index:9999;
-      background:rgba(0,0,0,0.75);
-      justify-content:center;
-      align-items:center;
-      padding:20px;
-    }
-
-    .modal.open{ display:flex; }
-
-    .modal-content{
-      max-width:92vw;
-      max-height:88vh;
-      border-radius:14px;
-      box-shadow:0 20px 60px rgba(0,0,0,0.55);
-      border:1px solid rgba(148,163,184,0.25);
-      overflow:hidden;
-      background:rgba(2,6,23,0.9);
-    }
-
-    .modal-content img{
-      display:block;
-      max-width:92vw;
-      max-height:88vh;
-      object-fit:contain;
-    }
+    .sidebar-collapsed .sidebar{ width:0; padding:0; border-right:none; }
 
     /* ===== КНОПКА < > СНИЗУ СЛЕВА ===== */
     .sidebar-fab{
@@ -421,24 +105,448 @@
       transition:.15s;
       box-shadow:0 10px 22px rgba(0,0,0,0.25);
     }
+    .sidebar-fab:hover{ border-color:#38bdf8; color:#e0f2fe; }
+    .sidebar-fab span{ font-size:18px; line-height:1; transform:translateY(-1px); }
 
-    .sidebar-fab:hover{
+    /* ===== ПРАВАЯ ЧАСТЬ ===== */
+    .content{
+      flex:1;
+      background:
+        linear-gradient(to bottom, rgba(15,23,42,0.9), rgba(15,23,42,1)),
+        url("bg-stone.png");
+      background-size:auto,128px 128px;
+      background-repeat:repeat;
+      padding-bottom:40px;
+    }
+
+    /* ===== БАННЕР ===== */
+    .hero{ position:relative; height:240px; overflow:hidden; }
+    .hero img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .hero-overlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to right, rgba(15,23,42,0.7), transparent);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      padding:0 24px 0 40px;
+      gap:10px;
+    }
+    .hero-title{
+      font-family:"Press Start 2P",system-ui;
+      font-size:18px;
+      text-transform:uppercase;
+      color:#f9fafb;
+      text-shadow:0 0 10px rgba(15,23,42,0.9);
+    }
+    .hero-subtitle{ font-size:14px; max-width:620px; color:#e5e7eb; line-height:1.45; }
+    .hero-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+    .hero-tag{
+      font-size:11px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.7);
+      border:1px solid rgba(148,163,184,0.4);
+    }
+
+    .page-section{ margin:32px auto 0; max-width:1200px; padding:0 24px; }
+
+    .section-title{
+      font-family:"Press Start 2P",system-ui;
+      font-size:16px;
+      text-transform:uppercase;
+      text-align:center;
+      padding:12px 16px;
+      margin:0 0 18px;
+      background:linear-gradient(90deg,#7c3aed,#ec4899);
+      color:#0b1120;
+      border-radius:999px;
+      letter-spacing:.08em;
+    }
+
+    /* ===== ФИЛЬТРЫ ===== */
+    .filters{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin:0 0 18px;
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(148,163,184,0.25);
+      background:rgba(2,6,23,0.55);
+      box-shadow:0 10px 22px rgba(0,0,0,0.18);
+    }
+
+    .filter-left{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+    .chip{
+      border:1px solid rgba(148,163,184,0.28);
+      background:rgba(15,23,42,0.7);
+      color:#e5e7eb;
+      padding:8px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      font-size:12px;
+      transition:.15s;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      user-select:none;
+    }
+    .chip:hover{ border-color:#38bdf8; color:#e0f2fe; }
+    .chip.active{
       border-color:#38bdf8;
+      background:rgba(56,189,248,0.12);
+      color:#e0f2fe;
+      font-weight:600;
+    }
+    .chip small{
+      font-size:11px;
+      color:#9ca3af;
+      font-weight:600;
+      background:rgba(2,6,23,0.55);
+      border:1px solid rgba(148,163,184,0.18);
+      padding:2px 8px;
+      border-radius:999px;
+    }
+
+    .filter-right{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .search{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      border-radius:999px;
+      padding:8px 12px;
+      border:1px solid rgba(148,163,184,0.25);
+      background:rgba(15,23,42,0.7);
+      min-width:240px;
+    }
+    .search input{
+      width:100%;
+      border:none;
+      outline:none;
+      background:transparent;
+      color:#e5e7eb;
+      font-size:13px;
+    }
+    .search input::placeholder{ color:#94a3b8; }
+
+    .sort{
+      border-radius:999px;
+      padding:8px 12px;
+      border:1px solid rgba(148,163,184,0.25);
+      background:rgba(15,23,42,0.7);
+      color:#e5e7eb;
+      font-size:13px;
+      outline:none;
+      cursor:pointer;
+    }
+
+    /* ===== СЕТКА ПРОЕКТОВ ===== */
+    .project-grid{
+      display:grid;
+      gap:18px;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+    }
+    @media (max-width: 900px){ .project-grid{ grid-template-columns:1fr; } }
+
+    /* ===== КАРТОЧКА ===== */
+    .project-card{
+      background:rgba(15,23,42,0.9);
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid rgba(148,163,184,0.35);
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s;
+      cursor:pointer;
+      position:relative;
+    }
+    .project-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 18px 35px rgba(15,23,42,0.8);
+      border-color:#38bdf8;
+    }
+
+    /* тэги на карточке */
+    .badge-row{
+      position:absolute;
+      left:12px;
+      top:12px;
+      z-index:3;
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      max-width:calc(100% - 24px);
+      pointer-events:none;
+    }
+    .badge{
+      font-size:11px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:rgba(2,6,23,0.72);
+      border:1px solid rgba(148,163,184,0.25);
+      color:#e0f2fe;
+      backdrop-filter:blur(6px);
+      white-space:nowrap;
+    }
+
+    /* ===== СЛАЙДЕР ===== */
+    .project-slider{
+      position:relative;
+      width:100%;
+      height:220px;
+      overflow:hidden;
+      background:rgba(2,6,23,0.35);
+    }
+    .project-slider img{
+      width:100%;
+      height:220px;
+      object-fit:cover;
+      display:none;
+      user-select:none;
+      pointer-events:none;
+    }
+    .project-slider img.active{ display:block; }
+
+    .slider-btn{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      width:36px;
+      height:36px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.35);
+      background:rgba(2,6,23,0.75);
+      color:#e5e7eb;
+      font-size:18px;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      opacity:0;
+      transition:.15s;
+      z-index:4;
+      box-shadow:0 10px 22px rgba(0,0,0,0.25);
+    }
+    .project-card:hover .slider-btn{ opacity:1; }
+    .slider-btn:hover{ border-color:#38bdf8; color:#e0f2fe; }
+    .slider-prev{ left:10px; }
+    .slider-next{ right:10px; }
+
+    .project-info{ padding:14px 16px 16px; }
+    .project-name{
+      font-family:"Press Start 2P",system-ui;
+      font-size:11px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#e0f2fe;
+      margin:0 0 10px;
+    }
+    .project-desc{
+      margin:0;
+      font-size:13px;
+      color:#cbd5f5;
+      line-height:1.4;
+    }
+
+    /* ===== БЛОК СОЦСЕТЕЙ ===== */
+    .social-card{
+      margin-top:22px;
+      background:rgba(15,23,42,0.9);
+      border-radius:16px;
+      border:1px solid rgba(148,163,184,0.35);
+      padding:16px;
+      text-align:center;
+      box-shadow:0 10px 24px rgba(15,23,42,0.55);
+    }
+    .social-title{
+      font-family:"Press Start 2P",system-ui;
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin:0 0 12px;
       color:#e0f2fe;
     }
+    .social-links{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+    .social-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:999px;
+      text-decoration:none;
+      color:#0b1120;
+      background:linear-gradient(90deg,#0ea5e9,#38bdf8);
+      border:1px solid rgba(148,163,184,0.25);
+      font-weight:700;
+      font-size:13px;
+      transition:.15s;
+    }
+    .social-btn:hover{ filter:brightness(1.05); transform:translateY(-1px); }
+    .social-muted{ margin:10px 0 0; font-size:12px; color:#9ca3af; }
 
-    .sidebar-fab span{
-      font-size:18px;
-      line-height:1;
-      transform:translateY(-1px);
+    /* ===== МОДАЛКА (галерея) ===== */
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      background:rgba(0,0,0,0.78);
+      justify-content:center;
+      align-items:center;
+      padding:18px;
+    }
+    .modal.open{ display:flex; }
+
+    .modal-box{
+      width:min(1100px, 96vw);
+      max-height:92vh;
+      background:rgba(2,6,23,0.92);
+      border:1px solid rgba(148,163,184,0.25);
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:0 24px 80px rgba(0,0,0,0.55);
+      display:flex;
+      flex-direction:column;
     }
 
+    .modal-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 12px;
+      border-bottom:1px solid rgba(148,163,184,0.18);
+      background:rgba(15,23,42,0.55);
+    }
+
+    .modal-title{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      min-width:0;
+    }
+    .modal-title b{
+      font-family:"Press Start 2P",system-ui;
+      font-size:11px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#e0f2fe;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:70vw;
+    }
+    .modal-title span{
+      color:#9ca3af;
+      font-size:12px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:70vw;
+    }
+
+    .modal-actions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .mbtn{
+      border:1px solid rgba(148,163,184,0.28);
+      background:rgba(15,23,42,0.75);
+      color:#e5e7eb;
+      padding:8px 10px;
+      border-radius:999px;
+      cursor:pointer;
+      font-size:12px;
+      transition:.15s;
+      user-select:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .mbtn:hover{ border-color:#38bdf8; color:#e0f2fe; }
+
+    .modal-main{
+      position:relative;
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(2,6,23,0.55);
+      min-height:320px;
+    }
+    .modal-main img{
+      max-width:100%;
+      max-height:62vh;
+      object-fit:contain;
+      display:block;
+      user-select:none;
+    }
+
+    .nav-btn{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      width:44px;
+      height:44px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.35);
+      background:rgba(2,6,23,0.78);
+      color:#e5e7eb;
+      font-size:20px;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      transition:.15s;
+      box-shadow:0 10px 22px rgba(0,0,0,0.35);
+    }
+    .nav-btn:hover{ border-color:#38bdf8; color:#e0f2fe; }
+    .nav-prev{ left:12px; }
+    .nav-next{ right:12px; }
+
+    .thumbs{
+      padding:10px 12px 12px;
+      border-top:1px solid rgba(148,163,184,0.18);
+      background:rgba(15,23,42,0.45);
+      display:flex;
+      gap:8px;
+      overflow:auto;
+    }
+    .thumb{
+      width:92px;
+      height:56px;
+      border-radius:12px;
+      overflow:hidden;
+      flex:0 0 auto;
+      border:1px solid rgba(148,163,184,0.25);
+      cursor:pointer;
+      opacity:.85;
+      transition:.15s;
+      background:rgba(2,6,23,0.55);
+    }
+    .thumb:hover{ border-color:#38bdf8; opacity:1; }
+    .thumb.active{ border-color:#38bdf8; opacity:1; box-shadow:0 10px 16px rgba(0,0,0,0.28); }
+    .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    /* ===== АДАПТИВ ===== */
     @media (max-width:900px){
       .layout{ flex-direction:column; }
       .sidebar-fab{ display:none; }
-      .hero-overlay{ padding-left:20px; }
+      .hero-overlay{ padding-left:20px; padding-right:16px; }
       .hero-title{ font-size:14px; }
       .hero{ height:220px; }
+      .search{ min-width:180px; width:100%; }
+      .filter-right{ width:100%; justify-content:stretch; }
+      .filters{ align-items:stretch; }
     }
   </style>
 </head>
@@ -481,18 +589,18 @@
 
     <main class="content">
       <section class="hero">
-        <!-- можешь заменить на баннер проектов -->
         <img src="projects-banner.png" alt="Проекты MS Builders" />
         <div class="hero-overlay">
           <div class="hero-title">наши проекты</div>
           <div class="hero-subtitle">
-            Примеры заказных и конкурсных работ MS Builders. Листай фото, смотри стиль и пиши нам для заказа.
+            Портфолио MS Builders: спавны, лобби, здания, города и конкурсные работы.
+            Открывай карточку — и листай все фото проекта в увеличении.
           </div>
           <div class="hero-tags">
             <span class="hero-tag">Коммерция</span>
+            <span class="hero-tag">Спавны</span>
             <span class="hero-tag">Архитектура</span>
-            <span class="hero-tag">Дизайн</span>
-            <span class="hero-tag">Команда</span>
+            <span class="hero-tag">Фэнтези</span>
           </div>
         </div>
       </section>
@@ -500,105 +608,25 @@
       <section class="page-section">
         <h2 class="section-title">ПОРТФОЛИО</h2>
 
-        <div class="project-grid">
-          <!-- pr1_1-5 -->
-          <article class="project-card">
-            <div class="project-slider">
-              <img src="images/images/projects/pr1_1.png" class="active" alt="pr1 1">
-              <img src="images/images/projects/pr1_2.png" alt="pr1 2">
-              <img src="images/images/projects/pr1_3.png" alt="pr1 3">
-              <img src="images/images/projects/pr1_4.png" alt="pr1 4">
-              <img src="images/images/projects/pr1_5.png" alt="pr1 5">
-              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
-              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
-            </div>
-            <div class="project-info">
-              <h3 class="project-name">ОСТРОВ РАЗВЛЕЧЕНИЙ</h3>
-              <p class="project-desc">Построен для нашего сервера во время конкурса.</p>
-            </div>
-          </article>
+        <!-- ФИЛЬТРЫ -->
+        <div class="filters">
+          <div class="filter-left" id="chipBar"></div>
 
-          <!-- pr2_1-5 -->
-          <article class="project-card">
-            <div class="project-slider">
-              <img src="images/images/projects/pr2_1.png" class="active" alt="pr2 1">
-              <img src="images/images/projects/pr2_2.png" alt="pr2 2">
-              <img src="images/images/projects/pr2_3.png" alt="pr2 3">
-              <img src="images/images/projects/pr2_4.png" alt="pr2 4">
-              <img src="images/images/projects/pr2_5.png" alt="pr2 5">
-              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
-              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
+          <div class="filter-right">
+            <div class="search">
+              🔎
+              <input id="searchInput" type="text" placeholder="Поиск: спавн, викторианский, неоклассика..." />
             </div>
-            <div class="project-info">
-              <h3 class="project-name">МЕДНАЯ ДЕРЕВНЯ</h3>
-              <p class="project-desc">Построена в выживании.</p>
-            </div>
-          </article>
 
-          <!-- sp1_1-3 -->
-          <article class="project-card">
-            <div class="project-slider">
-              <img src="images/images/projects/sp1_1.png" class="active" alt="sp1 1">
-              <img src="images/images/projects/sp1_2.png" alt="sp1 2">
-              <img src="images/images/projects/sp1_3.png" alt="sp1 3">
-              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
-              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
-            </div>
-            <div class="project-info">
-              <h3 class="project-name">СПАВН В КОСМИЧЕСКОМ СТИЛЕ</h3>
-              <p class="project-desc">Концепт спавна с тематикой космоса.</p>
-            </div>
-          </article>
-
-          <!-- sp2_1-5 -->
-          <article class="project-card">
-            <div class="project-slider">
-              <img src="images/images/projects/sp2_1.png" class="active" alt="sp2 1">
-              <img src="images/images/projects/sp2_2.png" alt="sp2 2">
-              <img src="images/images/projects/sp2_3.png" alt="sp2 3">
-              <img src="images/images/projects/sp2_4.png" alt="sp2 4">
-              <img src="images/images/projects/sp2_5.png" alt="sp2 5">
-              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
-              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
-            </div>
-            <div class="project-info">
-              <h3 class="project-name">СПАВН 2-ГО СЕЗОНА</h3>
-              <p class="project-desc">Спавн нашего сервера со 2-го сезона.</p>
-            </div>
-          </article>
-
-          <!-- pr3_1-5 -->
-          <article class="project-card">
-            <div class="project-slider">
-              <img src="images/images/projects/pr3_1.png" class="active" alt="pr3 1">
-              <img src="images/images/projects/pr3_2.png" alt="pr3 2">
-              <img src="images/images/projects/pr3_3.png" alt="pr3 3">
-              <img src="images/images/projects/pr3_4.png" alt="pr3 4">
-              <img src="images/images/projects/pr3_5.png" alt="pr3 5">
-              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
-              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
-            </div>
-            <div class="project-info">
-              <h3 class="project-name">ПРОЕКТ ГОРОДА</h3>
-              <p class="project-desc">Большой городской проект (описание можно расширить позже).</p>
-            </div>
-          </article>
-
-          <!-- pr4_1-3 -->
-          <article class="project-card">
-            <div class="project-slider">
-              <img src="images/images/projects/pr4_1.png" class="active" alt="pr4 1">
-              <img src="images/images/projects/pr4_2.png" alt="pr4 2">
-              <img src="images/images/projects/pr4_3.png" alt="pr4 3">
-              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
-              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
-            </div>
-            <div class="project-info">
-              <h3 class="project-name">ПРОЕКТ БАГРАТИОНА</h3>
-              <p class="project-desc">Неоклассический стиль (описание можно расширить позже).</p>
-            </div>
-          </article>
+            <select class="sort" id="sortSelect" aria-label="Сортировка">
+              <option value="new">Сначала новое</option>
+              <option value="az">По названию (A–Я)</option>
+            </select>
+          </div>
         </div>
+
+        <!-- СЕТКА -->
+        <div class="project-grid" id="grid"></div>
 
         <div class="social-card">
           <h3 class="social-title">связаться с нами</h3>
@@ -609,22 +637,42 @@
             <a class="social-btn" href="mailto:Komand.or@mail.ru">Почта</a>
           </div>
 
-          <p class="social-muted">Ответим и поможем с заказом: спавн, хаб, город, интерьер, дизайн.</p>
+          <p class="social-muted">Быстро сделаем: спавн/лобби, город, набор зданий, интерьер, уникальные точки для ивентов.</p>
         </div>
       </section>
     </main>
   </div>
 
-  <div class="modal" id="imgModal" aria-hidden="true">
-    <div class="modal-content">
-      <img id="modalImg" src="" alt="Просмотр проекта" />
+  <!-- МОДАЛКА-ГАЛЕРЕЯ -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-label="Просмотр проекта">
+      <div class="modal-top">
+        <div class="modal-title">
+          <b id="mTitle">Проект</b>
+          <span id="mMeta">1 / 1</span>
+        </div>
+
+        <div class="modal-actions">
+          <button class="mbtn" id="mPrevProject" type="button" title="Предыдущий проект (Shift + ←)">⟵ Проект</button>
+          <button class="mbtn" id="mNextProject" type="button" title="Следующий проект (Shift + →)">Проект ⟶</button>
+          <button class="mbtn" id="mClose" type="button" title="Закрыть (Esc)">✕ Закрыть</button>
+        </div>
+      </div>
+
+      <div class="modal-main">
+        <button class="nav-btn nav-prev" id="mPrev" type="button" aria-label="Предыдущее фото">‹</button>
+        <img id="mImg" src="" alt="Просмотр изображения" />
+        <button class="nav-btn nav-next" id="mNext" type="button" aria-label="Следующее фото">›</button>
+      </div>
+
+      <div class="thumbs" id="mThumbs" aria-label="Превью фотографий"></div>
     </div>
   </div>
 
   <script>
     const root = document.documentElement;
 
-    // ===== САЙДБАР (кнопка < >) =====
+    // ===== САЙДБАР =====
     const btnSidebar = document.getElementById("toggleSidebar");
     const sidebarIcon = document.getElementById("sidebarIcon");
 
@@ -662,62 +710,455 @@
       });
     }
 
-    // ===== СЛАЙДЕРЫ (внутри карточек) =====
-    document.querySelectorAll(".project-slider").forEach((slider) => {
-      const images = Array.from(slider.querySelectorAll("img"));
-      const prev = slider.querySelector(".slider-prev");
-      const next = slider.querySelector(".slider-next");
-      let index = 0;
+    // ===== ДАННЫЕ ПРОЕКТОВ =====
+    // Путь к картинкам (оставил твой): images/images/projects/
+    const IMG_DIR = "images/images/projects/";
 
-      function show(i){
-        images.forEach(img => img.classList.remove("active"));
-        images[i].classList.add("active");
+    // helper: создать список файлов (base_1.png ... base_N.png)
+    function makeIndexed(base, count){
+      const out = [];
+      for (let i = 1; i <= count; i++){
+        out.push(`${IMG_DIR}${base}_${i}.png`);
+      }
+      return out;
+    }
+
+    // helper: одиночный файл (base.png)
+    function makeSingle(fileBase){
+      return [`${IMG_DIR}${fileBase}.png`];
+    }
+
+    // Категории (для фильтра)
+    const CATS = [
+      { key:"all", label:"Все" },
+      { key:"spawns", label:"Спавны" },
+      { key:"lobbies", label:"Лобби" },
+      { key:"buildings", label:"Здания" },
+      { key:"areas", label:"Территории" },
+      { key:"villages", label:"Деревни/Города" },
+      { key:"contest", label:"Конкурс" },
+    ];
+
+    // ВАЖНО:
+    // - если вдруг у тебя какие-то файлы называются иначе (например z1_1.png vs z1-1.png) — просто поправь base.
+    const PROJECTS = [
+      // === старые ===
+      { id:"pr1", title:"Остров развлечений", desc:"Построен для нашего сервера во время конкурса.", cat:"contest", tags:["Конкурс","Ивент"], images: makeIndexed("pr1", 5) },
+      { id:"pr2", title:"Медная деревня", desc:"Проект в выживании: уютный стиль + детали из меди.", cat:"villages", tags:["Выживание","Деревня"], images: makeIndexed("pr2", 5) },
+      { id:"sp1", title:"Спавн в космическом стиле", desc:"Футуристичный спавн/хаб с космической тематикой.", cat:"spawns", tags:["Спавн","Космос"], images: makeIndexed("sp1", 3) },
+      { id:"sp2", title:"Спавн 2-го сезона", desc:"Главный спавн нашего сервера со 2-го сезона.", cat:"spawns", tags:["Спавн","Сезон"], images: makeIndexed("sp2", 5) },
+      { id:"pr3", title:"Проект города", desc:"Большой городской проект: кварталы, улицы, масштабы.", cat:"villages", tags:["Город","Масштаб"], images: makeIndexed("pr3", 5) },
+      { id:"pr4", title:"Проект «Багратион»", desc:"Неоклассический проект: строгие формы и монументальность.", cat:"buildings", tags:["Неоклассика"], images: makeIndexed("pr4", 3) },
+
+      // === новые из твоего списка ===
+      { id:"zd5", title:"Викторианское здание", desc:"Архитектура в викторианском стиле: акценты, фасады, декор.", cat:"buildings", tags:["Викторианский","Здание"], images: makeIndexed("zd5", 3) },
+
+      { id:"z1", title:"Здания MSB2", desc:"Подборка построек и архитектуры с MSB2 (серия зданий).", cat:"buildings", tags:["MSB2","Архитектура"], images: makeIndexed("z1", 3) },
+
+      { id:"d5", title:"Багровый амбар", desc:"Лаконичный амбар в багровой палитре (работа Boatswain).", cat:"buildings", tags:["Амбар","Стиль"], images: makeSingle("d5") },
+
+      { id:"d5x", title:"Фэнтези деревня на древе", desc:"Деревня на ветвях огромного древа (для t2x2).", cat:"villages", tags:["Фэнтези","Деревня"], images: makeIndexed("d5_1", 5) /* см. примечание ниже */ },
+
+      { id:"d6", title:"Фэнтези домик", desc:"Домик в фэнтези стиле «как с Pinterest»: уют + детали.", cat:"buildings", tags:["Фэнтези","Дом"], images: makeIndexed("d6", 3) },
+
+      { id:"d52", title:"Неоклассика / царская высотка", desc:"Здание в неоклассическом стиле: строгие линии и высотность.", cat:"buildings", tags:["Неоклассика","Высотка"], images: makeSingle("d52") },
+
+      { id:"d61", title:"Неоклассика (вариант)", desc:"Вторая работа в неоклассике — другой фасад/композиция.", cat:"buildings", tags:["Неоклассика"], images: makeSingle("d61") },
+
+      { id:"kor", title:"Пустынный корабль", desc:"Корабль для конкурса в пустынной тематике.", cat:"contest", tags:["Конкурс","Пустыня"], images: makeIndexed("kor", 3) },
+
+      { id:"l1", title:"Лобби/спавн (фэнтези)", desc:"Фэнтези лобби/спавн: сказочная атмосфера и масштаб.", cat:"lobbies", tags:["Лобби","Фэнтези"], images: makeIndexed("l1", 5) },
+
+      { id:"sp3", title:"Спавн в китайском стиле", desc:"Спавн в форме полумесяца: китайская стилистика и символика.", cat:"spawns", tags:["Спавн","Китай"], images: makeIndexed("sp3", 6) },
+
+      { id:"s4", title:"Адский спавн", desc:"Спавн в адской стилистике: жар, базальт, багровые акценты.", cat:"spawns", tags:["Спавн","Ад"], images: makeIndexed("s4", 5) },
+
+      { id:"sp5", title:"Фэнтези-технический спавн", desc:"Смесь фэнтези и техно: механика, формы, «маг-инж» вайб.", cat:"spawns", tags:["Спавн","Техно"], images: makeIndexed("sp5", 5) },
+
+      { id:"sp7", title:"Японский спавн", desc:"Спавн в японском стиле: гармония, формы, традиционные мотивы.", cat:"spawns", tags:["Спавн","Япония"], images: makeIndexed("sp7", 6) },
+
+      { id:"sp6", title:"Средневековый спавн", desc:"Классический медивальный стиль: камень, дерево, башни.", cat:"spawns", tags:["Спавн","Средневековье"], images: makeIndexed("sp6", 5) },
+
+      { id:"l2", title:"Лобби/спавн (китайский стиль)", desc:"Лобби/спавн с китайской эстетикой: арки, крыши, фонари.", cat:"lobbies", tags:["Лобби","Китай"], images: makeIndexed("l2", 3) },
+
+      { id:"sp8", title:"Спавн «4 времени года»", desc:"Средневековый спавн, разделённый на 4 сезона — эффектный концепт.", cat:"spawns", tags:["Спавн","Сезоны"], images: makeIndexed("sp8", 5) },
+
+      { id:"sp9", title:"Греческий спавн", desc:"Спавн в греческом стиле (под старую версию): колонны и мрамор.", cat:"spawns", tags:["Спавн","Греция"], images: makeIndexed("sp9", 3) },
+
+      { id:"zon1", title:"Фэнтези территория (MSB2)", desc:"Территория/локация в фэнтези стиле на MSB2.", cat:"areas", tags:["Территория","Фэнтези"], images: makeIndexed("zon1", 3) },
+
+      { id:"lob3", title:"Лобби/спавн (смешанное фэнтези)", desc:"Смешанный фэнтези-стиль: разные материалы и визуальные слои.", cat:"lobbies", tags:["Лобби","Фэнтези"], images: makeIndexed("lob3", 3) },
+    ];
+
+    /**
+     * ВАЖНОЕ ПРИМЕЧАНИЕ по d5_1-5:
+     * Ты написал: d5_1-5 (Фэнтези деревня...) — обычно это значит файлы d5_1.png ... d5_5.png.
+     * В текущей записи я использовал makeIndexed("d5_1", 5) (то есть d5_1_1.png ...).
+     * Если у тебя реально файлы называются d5_1.png, d5_2.png ... d5_5.png —
+     * то просто замени в массиве PROJECTS строку:
+     *   images: makeIndexed("d5_1", 5)
+     * на:
+     *   images: (function(){ const a=[]; for(let i=1;i<=5;i++) a.push(`${IMG_DIR}d5_${i}.png`); return a; })()
+     */
+    // маленький фикс “на всякий” — автоматически подправим d5_1-5 на d5_1..d5_5
+    (function fixD5(){
+      const p = PROJECTS.find(x => x.id === "d5x");
+      if (!p) return;
+      // Если у тебя нет d5_1_1.png, а есть d5_1.png... — включи строку ниже:
+      p.images = (function(){
+        const a = [];
+        for (let i=1;i<=5;i++) a.push(`${IMG_DIR}d5_${i}.png`);
+        return a;
+      })();
+    })();
+
+    // ===== UI: ЧИПЫ ФИЛЬТРА =====
+    const chipBar = document.getElementById("chipBar");
+    const searchInput = document.getElementById("searchInput");
+    const sortSelect = document.getElementById("sortSelect");
+    const grid = document.getElementById("grid");
+
+    let state = {
+      cat: "all",
+      q: "",
+      sort: "new",
+    };
+
+    function getVisibleProjects(){
+      let arr = [...PROJECTS];
+
+      // фильтр по категории
+      if (state.cat !== "all"){
+        arr = arr.filter(p => p.cat === state.cat);
       }
 
-      prev.addEventListener("click", (e) => {
-        e.stopPropagation();
-        index = (index - 1 + images.length) % images.length;
-        show(index);
-      });
+      // поиск по названию/описанию/тэгам
+      const q = state.q.trim().toLowerCase();
+      if (q){
+        arr = arr.filter(p => {
+          const hay = `${p.title} ${p.desc} ${(p.tags||[]).join(" ")}`.toLowerCase();
+          return hay.includes(q);
+        });
+      }
 
-      next.addEventListener("click", (e) => {
-        e.stopPropagation();
-        index = (index + 1) % images.length;
-        show(index);
-      });
+      // сортировка
+      if (state.sort === "az"){
+        arr.sort((a,b) => a.title.localeCompare(b.title, "ru"));
+      } else {
+        // "new" — как в списке (последние ниже можно перенести вверх, если хочешь)
+        // оставляем порядок массива
+      }
+
+      return arr;
+    }
+
+    function countByCat(){
+      const counts = {};
+      for (const c of CATS) counts[c.key] = 0;
+      counts.all = PROJECTS.length;
+      for (const p of PROJECTS){
+        if (counts[p.cat] === undefined) counts[p.cat] = 0;
+        counts[p.cat]++;
+      }
+      return counts;
+    }
+
+    function renderChips(){
+      const counts = countByCat();
+      chipBar.innerHTML = "";
+
+      for (const c of CATS){
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "chip" + (state.cat === c.key ? " active" : "");
+        btn.dataset.cat = c.key;
+
+        const label = document.createElement("span");
+        label.textContent = c.label;
+
+        const num = document.createElement("small");
+        num.textContent = counts[c.key] ?? 0;
+
+        btn.appendChild(label);
+        btn.appendChild(num);
+
+        btn.addEventListener("click", () => {
+          state.cat = c.key;
+          renderChips();
+          renderGrid();
+        });
+
+        chipBar.appendChild(btn);
+      }
+    }
+
+    // ===== РЕНДЕР КАРТОЧЕК (вместо ручного HTML) =====
+    function renderGrid(){
+      const items = getVisibleProjects();
+      grid.innerHTML = "";
+
+      for (const p of items){
+        const card = document.createElement("article");
+        card.className = "project-card";
+        card.dataset.id = p.id;
+        card.dataset.cat = p.cat;
+
+        // badges
+        const badges = document.createElement("div");
+        badges.className = "badge-row";
+        const topBadges = (p.tags || []).slice(0, 3);
+        for (const t of topBadges){
+          const b = document.createElement("span");
+          b.className = "badge";
+          b.textContent = t;
+          badges.appendChild(b);
+        }
+
+        // slider
+        const slider = document.createElement("div");
+        slider.className = "project-slider";
+
+        const imgs = p.images.map((src, idx) => {
+          const im = document.createElement("img");
+          im.src = src;
+          im.alt = `${p.id} ${idx+1}`;
+          if (idx === 0) im.classList.add("active");
+          slider.appendChild(im);
+          return im;
+        });
+
+        // prev/next в карточке, только если > 1 фото
+        if (p.images.length > 1){
+          const prev = document.createElement("button");
+          prev.className = "slider-btn slider-prev";
+          prev.type = "button";
+          prev.setAttribute("aria-label", "Предыдущее фото");
+          prev.textContent = "‹";
+
+          const next = document.createElement("button");
+          next.className = "slider-btn slider-next";
+          next.type = "button";
+          next.setAttribute("aria-label", "Следующее фото");
+          next.textContent = "›";
+
+          slider.appendChild(prev);
+          slider.appendChild(next);
+
+          let idx = 0;
+          function show(i){
+            imgs.forEach(x => x.classList.remove("active"));
+            imgs[i].classList.add("active");
+          }
+
+          prev.addEventListener("click", (e) => {
+            e.stopPropagation();
+            idx = (idx - 1 + imgs.length) % imgs.length;
+            show(idx);
+          });
+
+          next.addEventListener("click", (e) => {
+            e.stopPropagation();
+            idx = (idx + 1) % imgs.length;
+            show(idx);
+          });
+        }
+
+        // info
+        const info = document.createElement("div");
+        info.className = "project-info";
+
+        const name = document.createElement("h3");
+        name.className = "project-name";
+        name.textContent = p.title;
+
+        const desc = document.createElement("p");
+        desc.className = "project-desc";
+        desc.textContent = p.desc;
+
+        info.appendChild(name);
+        info.appendChild(desc);
+
+        card.appendChild(badges);
+        card.appendChild(slider);
+        card.appendChild(info);
+
+        // click => open modal gallery
+        card.addEventListener("click", () => {
+          const active = slider.querySelector("img.active");
+          const activeSrc = active ? active.getAttribute("src") : p.images[0];
+          const startIndex = Math.max(0, p.images.indexOf(activeSrc));
+          openModalForProject(p.id, startIndex);
+        });
+
+        grid.appendChild(card);
+      }
+
+      // если ничего не найдено
+      if (!items.length){
+        const empty = document.createElement("div");
+        empty.className = "social-card";
+        empty.innerHTML = `
+          <h3 class="social-title">ничего не найдено</h3>
+          <p class="social-muted">Попробуй другой фильтр или сократи запрос поиска.</p>
+        `;
+        grid.appendChild(empty);
+      }
+    }
+
+    // ===== ПОИСК/СОРТ =====
+    searchInput.addEventListener("input", () => {
+      state.q = searchInput.value;
+      renderGrid();
     });
 
-    // ===== МОДАЛКА (увеличение активной картинки) =====
-    const modal = document.getElementById("imgModal");
-    const modalImg = document.getElementById("modalImg");
+    sortSelect.addEventListener("change", () => {
+      state.sort = sortSelect.value;
+      renderGrid();
+    });
 
-    function openModal(src){
-      if (!src) return;
-      modalImg.src = src;
+    // ===== МОДАЛКА: листаем фото + листаем проекты =====
+    const modal = document.getElementById("modal");
+    const mTitle = document.getElementById("mTitle");
+    const mMeta  = document.getElementById("mMeta");
+    const mImg   = document.getElementById("mImg");
+    const mThumbs = document.getElementById("mThumbs");
+    const mClose = document.getElementById("mClose");
+    const mPrev  = document.getElementById("mPrev");
+    const mNext  = document.getElementById("mNext");
+    const mPrevProject = document.getElementById("mPrevProject");
+    const mNextProject = document.getElementById("mNextProject");
+
+    let modalState = {
+      projectId: null,
+      imgIndex: 0,
+      visibleList: [], // список id проектов по текущим фильтрам (чтобы листать "все работы")
+    };
+
+    function getProjectById(id){
+      return PROJECTS.find(p => p.id === id);
+    }
+
+    function setModalImage(){
+      const p = getProjectById(modalState.projectId);
+      if (!p) return;
+
+      const total = p.images.length;
+      const i = ((modalState.imgIndex % total) + total) % total;
+      modalState.imgIndex = i;
+
+      mTitle.textContent = p.title;
+      mMeta.textContent = `${i+1} / ${total} • ${p.tags?.join(" • ") || ""}`.trim();
+
+      mImg.src = p.images[i];
+
+      // thumbs
+      mThumbs.innerHTML = "";
+      p.images.forEach((src, idx) => {
+        const t = document.createElement("div");
+        t.className = "thumb" + (idx === i ? " active" : "");
+        t.title = `Фото ${idx+1}`;
+
+        const im = document.createElement("img");
+        im.src = src;
+        im.alt = `thumb ${idx+1}`;
+
+        t.appendChild(im);
+        t.addEventListener("click", (e) => {
+          e.stopPropagation();
+          modalState.imgIndex = idx;
+          setModalImage();
+        });
+
+        mThumbs.appendChild(t);
+      });
+
+      // скролл к активному thumb
+      const activeThumb = mThumbs.querySelector(".thumb.active");
+      if (activeThumb){
+        const left = activeThumb.offsetLeft - 60;
+        mThumbs.scrollTo({ left, behavior: "smooth" });
+      }
+    }
+
+    function openModalForProject(projectId, startIndex = 0){
+      const p = getProjectById(projectId);
+      if (!p) return;
+
+      modalState.projectId = projectId;
+      modalState.imgIndex = startIndex;
+
+      // список видимых проектов по текущим фильтрам/поиску
+      modalState.visibleList = getVisibleProjects().map(x => x.id);
+
       modal.classList.add("open");
       modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+
+      setModalImage();
     }
 
     function closeModal(){
       modal.classList.remove("open");
       modal.setAttribute("aria-hidden", "true");
-      modalImg.src = "";
+      mImg.src = "";
+      mThumbs.innerHTML = "";
+      document.body.style.overflow = "";
+      modalState.projectId = null;
+      modalState.imgIndex = 0;
     }
 
-    modal.addEventListener("click", closeModal);
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && modal.classList.contains("open")) closeModal();
+    function nextImg(){ modalState.imgIndex++; setModalImage(); }
+    function prevImg(){ modalState.imgIndex--; setModalImage(); }
+
+    function nextProject(){
+      const list = modalState.visibleList;
+      if (!list.length) return;
+      const idx = list.indexOf(modalState.projectId);
+      const next = list[(idx + 1) % list.length];
+      modalState.projectId = next;
+      modalState.imgIndex = 0;
+      setModalImage();
+    }
+
+    function prevProject(){
+      const list = modalState.visibleList;
+      if (!list.length) return;
+      const idx = list.indexOf(modalState.projectId);
+      const prev = list[(idx - 1 + list.length) % list.length];
+      modalState.projectId = prev;
+      modalState.imgIndex = 0;
+      setModalImage();
+    }
+
+    mClose.addEventListener("click", closeModal);
+    mNext.addEventListener("click", (e) => { e.stopPropagation(); nextImg(); });
+    mPrev.addEventListener("click", (e) => { e.stopPropagation(); prevImg(); });
+    mNextProject.addEventListener("click", (e) => { e.stopPropagation(); nextProject(); });
+    mPrevProject.addEventListener("click", (e) => { e.stopPropagation(); prevProject(); });
+
+    // клик по фону закрывает (но не по modal-box)
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
     });
 
-    document.querySelectorAll(".project-card").forEach((card) => {
-      card.addEventListener("click", () => {
-        const slider = card.querySelector(".project-slider");
-        if (slider){
-          const active = slider.querySelector("img.active");
-          openModal(active?.src);
-        }
-      });
+    // клавиши
+    document.addEventListener("keydown", (e) => {
+      if (!modal.classList.contains("open")) return;
+
+      if (e.key === "Escape") return closeModal();
+
+      // фото
+      if (!e.shiftKey && (e.key === "ArrowRight")) return nextImg();
+      if (!e.shiftKey && (e.key === "ArrowLeft"))  return prevImg();
+
+      // проекты (Shift + стрелки)
+      if (e.shiftKey && (e.key === "ArrowRight")) return nextProject();
+      if (e.shiftKey && (e.key === "ArrowLeft"))  return prevProject();
     });
+
+    // ===== INIT =====
+    renderChips();
+    renderGrid();
   </script>
 </body>
 </html>

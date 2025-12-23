@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Комьюнити — MS Builders</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Иконка/шрифты как на остальных страницах -->
+  <link rel="icon" href="msb.png">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:"Montserrat",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+      background-color:#0b0f19;
+      color:#e5e7eb;
+    }
+    a{ color:inherit; }
+
+    .layout{ display:flex; min-height:100vh; }
+
+    /* ===== САЙДБАР ===== */
+    .sidebar{
+      width:260px;
+      background:#020617;
+      padding:24px 20px;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      transition:width .2s ease,padding .2s ease;
+      border-right:1px solid rgba(148,163,184,.12);
+      overflow:hidden;
+    }
+    .logo-box{ display:flex; align-items:center; gap:12px; }
+    .logo-box img{ width:96px; height:96px; border-radius:10px; object-fit:cover; }
+
+    .sidebar-title{
+      font-size:16px;
+      font-weight:600;
+      line-height:1.3;
+    }
+    .sidebar-title span{
+      display:block;
+      font-size:12px;
+      color:#9ca3af;
+      font-weight:400;
+    }
+
+    .server-copy{
+      margin-top:8px;
+      width:100%;
+      text-align:left;
+      border:1px solid rgba(148,163,184,0.22);
+      background:rgba(15,23,42,0.55);
+      color:#e5e7eb;
+      border-radius:14px;
+      padding:10px 12px;
+      cursor:pointer;
+      transition:0.15s;
+      position:relative;
+    }
+    .server-copy:hover{ border-color:#38bdf8; background:rgba(15,23,42,0.7); }
+    .server-ip{ display:block; font-weight:700; letter-spacing:.02em; }
+    .server-ver{ display:block; margin-top:2px; font-size:12px; color:#9ca3af; }
+    .server-tip{
+      position:absolute; right:10px; top:10px;
+      font-size:11px; color:#a5b4fc;
+      opacity:0; transform:translateY(-2px);
+      transition:.18s; pointer-events:none;
+    }
+    .server-copy.copied .server-tip{ opacity:1; transform:translateY(0); }
+
+    .sidebar-nav{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-top:6px;
+    }
+    .sidebar-nav a{
+      color:#e5e7eb;
+      text-decoration:none;
+      font-size:14px;
+      padding:6px 0;
+      border-left:3px solid transparent;
+      padding-left:10px;
+      transition:.15s;
+      white-space:nowrap;
+    }
+    .sidebar-nav a:hover{ color:#38bdf8; border-color:#38bdf8; }
+    .sidebar-nav a.active{ color:#38bdf8; border-color:#38bdf8; font-weight:600; }
+
+    .sidebar-collapsed .sidebar{ width:0; padding:0; border-right:none; }
+
+    /* ===== FAB кнопка сайдбара ===== */
+    .sidebar-fab{
+      position:fixed;
+      left:14px;
+      bottom:14px;
+      z-index:95;
+      width:44px;
+      height:44px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.35);
+      background:rgba(2,6,23,0.78);
+      backdrop-filter:blur(8px);
+      color:#e5e7eb;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      transition:0.15s;
+      box-shadow:0 10px 22px rgba(0,0,0,0.25);
+    }
+    .sidebar-fab:hover{ border-color:#38bdf8; color:#e0f2fe; }
+    .sidebar-fab span{ font-size:18px; line-height:1; transform:translateY(-1px); }
+
+    /* ===== ПРАВАЯ ЧАСТЬ ===== */
+    .content{
+      flex:1;
+      background:
+        linear-gradient(to bottom, rgba(15,23,42,0.9), rgba(15,23,42,1)),
+        url("bg-stone.png");
+      background-size:auto,128px 128px;
+      background-repeat:repeat;
+      padding-bottom:40px;
+    }
+
+    /* ===== HERO ===== */
+    .hero{
+      position:relative;
+      height:240px;
+      overflow:hidden;
+    }
+    .hero img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .hero-overlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to right, rgba(15,23,42,0.78), transparent);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      padding:0 24px 0 40px;
+      gap:10px;
+    }
+    .hero-title{
+      font-family:"Press Start 2P",system-ui;
+      font-size:18px;
+      text-transform:uppercase;
+      color:#f9fafb;
+      text-shadow:0 0 10px rgba(15,23,42,0.9);
+    }
+    .hero-subtitle{
+      font-size:14px;
+      max-width:720px;
+      color:#e5e7eb;
+      line-height:1.45;
+    }
+    .hero-cta-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+    .hero-cta{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid rgba(148,163,184,0.35);
+      background:rgba(2,6,23,0.55);
+      color:#e5e7eb;
+      padding:9px 12px;
+      border-radius:999px;
+      font-size:12px;
+      text-decoration:none;
+      transition:0.15s;
+      font-weight:700;
+    }
+    .hero-cta:hover{ border-color:#38bdf8; color:#e0f2fe; transform:translateY(-1px); }
+
+    .page-section{
+      margin:32px auto 0;
+      max-width:1200px;
+      padding:0 24px;
+    }
+    .section-title{
+      font-family:"Press Start 2P",system-ui;
+      font-size:16px;
+      text-transform:uppercase;
+      text-align:center;
+      padding:12px 16px;
+      margin:0 0 18px;
+      background:linear-gradient(90deg,#7c3aed,#ec4899);
+      color:#0b1120;
+      border-radius:999px;
+      letter-spacing:.08em;
+    }
+
+    /* ===== TABS ===== */
+    .tabs{
+      background:rgba(15,23,42,0.9);
+      border:1px solid rgba(148,163,184,0.35);
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 14px 26px rgba(15,23,42,0.55);
+    }
+    .tabbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      padding:14px 14px 12px;
+      border-bottom:1px solid rgba(148,163,184,0.18);
+      background:rgba(2,6,23,0.55);
+    }
+    .tabbtn{
+      border:1px solid rgba(148,163,184,0.28);
+      background:rgba(15,23,42,0.7);
+      color:#e5e7eb;
+      padding:8px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      font-size:12px;
+      transition:0.15s;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      user-select:none;
+    }
+    .tabbtn:hover{ border-color:#38bdf8; color:#e0f2fe; }
+    .tabbtn.active{
+      border-color:#38bdf8;
+      background:rgba(56,189,248,0.12);
+      color:#e0f2fe;
+    }
+    .tabpanes{ padding:16px 16px 18px; }
+    .pane{ display:none; }
+    .pane.active{ display:block; }
+
+    /* ===== Cards ===== */
+    .card-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:14px;
+    }
+    @media (max-width: 900px){ .card-grid{ grid-template-columns:1fr; } }
+
+    .info-card{
+      background:rgba(2,6,23,0.55);
+      border:1px solid rgba(148,163,184,0.22);
+      border-radius:16px;
+      padding:14px;
+    }
+    .info-card h3{
+      margin:0 0 8px;
+      font-size:13px;
+      color:#e0f2fe;
+      letter-spacing:.02em;
+    }
+    .info-card p{
+      margin:0;
+      color:#cbd5f5;
+      font-size:13px;
+      line-height:1.45;
+    }
+    .kpi{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .pill{
+      display:inline-block;
+      font-size:11px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:rgba(2,6,23,0.65);
+      border:1px solid rgba(148,163,184,0.25);
+      color:#9ca3af;
+    }
+
+    .callout{
+      margin-top:14px;
+      padding:12px;
+      border-radius:14px;
+      border:1px dashed rgba(148,163,184,0.35);
+      background:rgba(15,23,42,0.45);
+      color:#e5e7eb;
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .btn-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+    .btn-link{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid rgba(148,163,184,0.35);
+      background:rgba(15,23,42,0.85);
+      color:#e5e7eb;
+      padding:9px 12px;
+      border-radius:999px;
+      font-size:12px;
+      text-decoration:none;
+      transition:0.15s;
+    }
+    .btn-link:hover{ border-color:#38bdf8; color:#e0f2fe; }
+
+    .muted{ color:#9ca3af; font-size:12px; }
+
+    /* ===== Players ===== */
+    .controls{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      margin:2px 0 14px;
+    }
+    .search{
+      flex:1;
+      min-width:220px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      border:1px solid rgba(148,163,184,0.28);
+      background:rgba(2,6,23,0.45);
+      border-radius:999px;
+      padding:8px 12px;
+    }
+    .search input{
+      width:100%;
+      border:none;
+      outline:none;
+      background:transparent;
+      color:#e5e7eb;
+      font-size:13px;
+    }
+    .chip-row{ display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end; }
+    .chip{
+      border:1px solid rgba(148,163,184,0.28);
+      background:rgba(15,23,42,0.7);
+      color:#e5e7eb;
+      padding:7px 10px;
+      border-radius:999px;
+      cursor:pointer;
+      font-size:12px;
+      transition:0.15s;
+      user-select:none;
+    }
+    .chip:hover{ border-color:#38bdf8; color:#e0f2fe; }
+    .chip.active{
+      border-color:#38bdf8;
+      background:rgba(56,189,248,0.12);
+      color:#e0f2fe;
+    }
+
+    .player-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:14px;
+    }
+    @media (max-width: 900px){ .player-grid{ grid-template-columns:1fr; } }
+
+    .player-card{
+      background:rgba(2,6,23,0.55);
+      border:1px solid rgba(148,163,184,0.22);
+      border-radius:16px;
+      padding:14px;
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+    }
+    .skin{
+      width:72px;
+      height:72px;
+      border-radius:14px;
+      border:1px solid rgba(148,163,184,0.25);
+      background:rgba(15,23,42,0.55);
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .skin img{
+      width:72px;
+      height:72px;
+      object-fit:cover;
+      image-rendering: pixelated;
+      display:block;
+    }
+    .player-main{ flex:1; min-width:0; }
+    .player-top{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:6px;
+    }
+    .nick{
+      font-family:"Press Start 2P",system-ui;
+      font-size:11px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#e0f2fe;
+      margin:0;
+    }
+    .role-badge{
+      font-size:11px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.6);
+      border:1px solid rgba(148,163,184,0.28);
+      color:#cbd5f5;
+      white-space:nowrap;
+    }
+    .about{
+      margin:0;
+      font-size:13px;
+      color:#cbd5f5;
+      line-height:1.45;
+    }
+    .tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      font-size:11px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:rgba(2,6,23,0.65);
+      border:1px solid rgba(148,163,184,0.25);
+      color:#9ca3af;
+    }
+
+    .profile-link{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-top:10px;
+      text-decoration:none;
+      font-size:12px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.35);
+      background:rgba(15,23,42,0.75);
+      color:#e5e7eb;
+      transition:0.15s;
+      width:fit-content;
+    }
+    .profile-link:hover{ border-color:#38bdf8; color:#e0f2fe; transform:translateY(-1px); }
+
+    /* ===== Tops ===== */
+    .top-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:14px;
+    }
+    @media (max-width: 1000px){ .top-grid{ grid-template-columns:1fr; } }
+
+    .top-card{
+      background:rgba(2,6,23,0.55);
+      border:1px solid rgba(148,163,184,0.22);
+      border-radius:16px;
+      padding:14px;
+    }
+    .top-title{
+      margin:0 0 10px;
+      font-size:13px;
+      color:#e0f2fe;
+      font-weight:700;
+      letter-spacing:.02em;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .top-list{
+      list-style:none;
+      margin:0;
+      padding:0;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .top-item{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:10px 10px;
+      border-radius:14px;
+      border:1px solid rgba(148,163,184,0.18);
+      background:rgba(15,23,42,0.45);
+    }
+    .top-left{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      min-width:0;
+    }
+    .rank{
+      width:28px; height:28px;
+      border-radius:999px;
+      display:grid; place-items:center;
+      font-weight:800;
+      background:rgba(2,6,23,0.75);
+      border:1px solid rgba(148,163,184,0.25);
+      color:#e5e7eb;
+      flex:0 0 auto;
+    }
+    .top-name{
+      font-weight:700;
+      color:#e5e7eb;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:220px;
+    }
+    .top-metric{
+      font-size:12px;
+      color:#cbd5f5;
+      white-space:nowrap;
+    }
+
+    /* ===== Adaptive ===== */
+    @media (max-width: 900px){
+      .layout{ flex-direction:column; }
+      .sidebar{
+        width:100%;
+        flex-direction:row;
+        align-items:center;
+        justify-content:space-between;
+        padding:12px 16px;
+        gap:12px;
+      }
+      .sidebar-nav{
+        flex-direction:row;
+        gap:12px;
+        overflow-x:auto;
+        padding-bottom:4px;
+        margin-top:0;
+      }
+      .sidebar-collapsed .sidebar{ width:100%; padding:12px 16px; border-right:0; }
+      .sidebar-fab{ display:none; }
+      .hero-overlay{ padding-left:20px; padding-right:16px; }
+      .hero-title{ font-size:14px; }
+      .hero{ height:220px; }
+    }
+  </style>
+</head>
+
+<body>
+  <button class="sidebar-fab" id="toggleSidebar" type="button" aria-label="Показать/скрыть панель">
+    <span id="sidebarIcon">&lt;</span>
+  </button>
+
+  <div class="layout">
+    <!-- ===== ЛЕВАЯ ПАНЕЛЬ ===== -->
+    <aside class="sidebar">
+      <div>
+        <div class="logo-box">
+          <img src="logo.png" alt="Логотип MS Builders" />
+          <div class="sidebar-title">
+            MS Builders
+            <span>Minecraft сервер</span>
+          </div>
+        </div>
+
+        <button class="server-copy" id="copyIp" type="button" title="Нажмите, чтобы скопировать IP">
+          <span class="server-ip">play.msbuilders2.ru</span>
+          <span class="server-ver">Версия: 1.21.8</span>
+          <span class="server-tip">Скопировано!</span>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="index.html">Главная</a>
+        <a href="news.html">Новости</a>
+        <a href="info.html">Информация</a>
+        <a href="community.html" class="active">Комьюнити</a>
+        <a href="builds.html">Города</a>
+
+        <a href="join.html">Старт игры</a>
+        <a href="enchants.html">Чары</a>
+        <a href="crafts.html">Новые предметы</a>
+        <a href="extra.html">Наши инструменты</a>
+        <a href="projects.html">Наши проекты</a>
+        <a href="story.html">Сюжет</a>
+
+        <a href="about.html">О сервере</a>
+      </nav>
+    </aside>
+
+    <!-- ===== ПРАВАЯ ЧАСТЬ ===== -->
+    <main class="content">
+      <section class="hero">
+        <!-- Можешь заменить на свой баннер комьюнити -->
+        <img src="community-banner.png" alt="Комьюнити MS Builders" />
+        <div class="hero-overlay">
+          <div class="hero-title">комьюнити</div>
+          <div class="hero-subtitle">
+            MS Builders — это не “сервер ради онлайна”. Это вселенная долгих историй, городов и людей.
+            Здесь ценится инициатива: ты можешь стать архитектором города, лидером команды, сценаристом лора,
+            организатором ивентов или легендой технического прогресса — и оставить след навсегда.
+          </div>
+          <div class="hero-cta-row">
+            <a class="hero-cta" href="https://discord.com/invite/Wj8jWS736f" target="_blank" rel="noopener">💬 Вступить в Discord</a>
+            <a class="hero-cta" href="#players">🧑‍🤝‍🧑 Игроки</a>
+            <a class="hero-cta" href="#tops">🏆 Топы</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section">
+        <h2 class="section-title">КОМЬЮНИТИ-ЦЕНТР</h2>
+
+        <div class="tabs" id="tabs">
+          <div class="tabbar" role="tablist" aria-label="Вкладки страницы комьюнити">
+            <button class="tabbtn active" type="button" role="tab" aria-selected="true" data-tab="about">✨ О комьюнити</button>
+            <button class="tabbtn" type="button" role="tab" aria-selected="false" data-tab="players">🧑‍🤝‍🧑 Игроки</button>
+            <button class="tabbtn" type="button" role="tab" aria-selected="false" data-tab="tops">🏆 Топы</button>
+          </div>
+
+          <div class="tabpanes">
+            <!-- ===== О КОМЬЮНИТИ ===== -->
+            <div class="pane active" id="pane-about" role="tabpanel">
+              <div class="card-grid">
+                <div class="info-card">
+                  <h3>Каждый может стать частью истории</h3>
+                  <p>
+                    У нас нет “сезона, который закончится вайпом”. Есть мир, где ценится вклад:
+                    города, инфраструктура, редкие ивенты, лор и технологии. Всё, что ты строишь и создаёшь —
+                    становится частью вселенной MS Builders.
+                  </p>
+                  <div class="kpi">
+                    <span class="pill">Мир без вайпов</span>
+                    <span class="pill">Проекты на годы</span>
+                    <span class="pill">Свобода творчества</span>
+                  </div>
+                </div>
+
+                <div class="info-card">
+                  <h3>Почему стоит проявлять себя</h3>
+                  <p>
+                    Инициатива тут — реальный ресурс. Хочешь команду? Мы поможем найти людей.
+                    Хочешь свой город/фракцию? Мы подскажем, как начать и развивать.
+                    Хочешь делать контент? Поддержим идею и дадим место в “лицах сервера”.
+                  </p>
+                  <div class="kpi">
+                    <span class="pill">Лидерство</span>
+                    <span class="pill">Командная игра</span>
+                    <span class="pill">Признание вклада</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="callout">
+                <b>Куда мы идём:</b> создать “ЛегоСити”-вселенную, где люди взаимодействуют, растут и развивают мир вместе —
+                чтобы сервер жил не “за счёт одного человека”, а стал настоящей экосистемой комьюнити.<br/><br/>
+                <b>Твой путь:</b> новичок → участник → голос/ивенты → автор проектов → лидер/создатель контента.
+              </div>
+
+              <div class="card-grid" style="margin-top:14px;">
+                <div class="info-card">
+                  <h3>Что может каждый игрок</h3>
+                  <p>
+                    • Основать город или присоединиться к существующему<br/>
+                    • Делать инфраструктуру: дороги, порты, торговые точки<br/>
+                    • Организовать ивент: квест, гонку, экспедицию, турнир<br/>
+                    • Писать лор, сценарии, делать ролики/шортсы/скриншоты<br/>
+                    • Собирать команду и масштабировать идеи
+                  </p>
+                </div>
+
+                <div class="info-card">
+                  <h3>Как попасть на эту страницу</h3>
+                  <p>
+                    Это “витрина комьюнити”. Если ты приносишь пользу и делаешь что-то заметное —
+                    мы добавим тебя сюда: с ником, описанием, ссылкой и твоими проектами.
+                  </p>
+                  <div class="btn-row">
+                    <a class="btn-link" href="https://discord.com/invite/Wj8jWS736f" target="_blank" rel="noopener">💬 Подать заявку / написать о себе</a>
+                    <a class="btn-link" href="join.html">🎮 Как начать игру</a>
+                  </div>
+                  <p class="muted" style="margin-top:10px;">
+                    Подсказка: проще всего — скинуть 3–5 скринов своих работ + пару строк “чем занимаюсь”.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ===== ИГРОКИ ===== -->
+            <div class="pane" id="pane-players" role="tabpanel">
+              <a id="players"></a>
+
+              <div class="controls">
+                <div class="search" title="Поиск по нику и описанию">
+                  🔎 <input id="playerSearch" type="text" placeholder="Поиск: ник, роль, чем занимается…" autocomplete="off" />
+                </div>
+
+                <div class="chip-row" aria-label="Фильтры">
+                  <button class="chip active" type="button" data-filter="all">Все</button>
+                  <button class="chip" type="button" data-filter="creator">Контент</button>
+                  <button class="chip" type="button" data-filter="builder">Строители</button>
+                  <button class="chip" type="button" data-filter="tech">Тех. состав</button>
+                  <button class="chip" type="button" data-filter="lore">Сюжет/Лор</button>
+                  <button class="chip" type="button" data-filter="guard">Безопасность</button>
+                </div>
+              </div>
+
+              <div class="player-grid" id="playerGrid">
+                <!-- bob1188 -->
+                <article class="player-card" data-tags="creator">
+                  <div class="skin">
+                    <img src="https://minotar.net/helm/bob1188/72.png" alt="Скин bob1188">
+                  </div>
+                  <div class="player-main">
+                    <div class="player-top">
+                      <h3 class="nick">bob1188</h3>
+                      <span class="role-badge">🎬 Музыка / Монтаж</span>
+                    </div>
+                    <p class="about">
+                      Душа компании. Делает музыку и видеомонтаж, помогает создавать атмосферу и медиа-движ на сервере.
+                    </p>
+                    <div class="tags">
+                      <span class="tag">🎵 Музыка</span>
+                      <span class="tag">🎞️ Монтаж</span>
+                      <span class="tag">🤝 Комьюнити</span>
+                    </div>
+                    <a class="profile-link" href="https://t.me/beaversmusic" target="_blank" rel="noopener">🔗 Telegram</a>
+                  </div>
+                </article>
+
+                <!-- Duing -->
+                <article class="player-card" data-tags="builder">
+                  <div class="skin">
+                    <img src="https://minotar.net/helm/Duing/72.png" alt="Скин Duing">
+                  </div>
+                  <div class="player-main">
+                    <div class="player-top">
+                      <h3 class="nick">Duing</h3>
+                      <span class="role-badge">🧱 Дизайнер / Строитель</span>
+                    </div>
+                    <p class="about">
+                      Идеальный дизайнер сервера: делает оформление, дизайн превью и помогает с постройками и модерированием.
+                    </p>
+                    <div class="tags">
+                      <span class="tag">🎨 Дизайн</span>
+                      <span class="tag">🏗️ Стройка</span>
+                      <span class="tag">🖼️ Превью</span>
+                    </div>
+                    <a class="profile-link" href="https://guns.lol/dying_" target="_blank" rel="noopener">🔗 Профиль</a>
+                  </div>
+                </article>
+
+                <!-- DOGE_agarPRO -->
+                <article class="player-card" data-tags="tech">
+                  <div class="skin">
+                    <img src="https://minotar.net/helm/DOGE_agarPRO/72.png" alt="Скин DOGE_agarPRO">
+                  </div>
+                  <div class="player-main">
+                    <div class="player-top">
+                      <h3 class="nick">DOGE_agarPRO</h3>
+                      <span class="role-badge">🛠️ Тех. админ</span>
+                    </div>
+                    <p class="about">
+                      Технический администратор: помогает с настройкой сервера, оптимизацией и поддержанием проекта в рабочем состоянии.
+                    </p>
+                    <div class="tags">
+                      <span class="tag">⚙️ Настройка</span>
+                      <span class="tag">🧩 Плагины</span>
+                      <span class="tag">🧯 Поддержка</span>
+                    </div>
+                    <!-- TODO: вставь реальную ссылку на сервер/проект DOGE из спонсоров -->
+                    <a class="profile-link" href="#" target="_blank" rel="noopener" title="Вставь ссылку сюда">🔗 Сервер/проект (добавить)</a>
+                  </div>
+                </article>
+
+                <!-- zadrot523 -->
+                <article class="player-card" data-tags="guard">
+                  <div class="skin">
+                    <img src="https://minotar.net/helm/zadrot523/72.png" alt="Скин zadrot523">
+                  </div>
+                  <div class="player-main">
+                    <div class="player-top">
+                      <h3 class="nick">zadrot523</h3>
+                      <span class="role-badge">🛡️ Вивер</span>
+                    </div>
+                    <p class="about">
+                      Вивер сервера: помогает поддерживать безопасность, следит за порядком и защищает комьюнити от проблем.
+                    </p>
+                    <div class="tags">
+                      <span class="tag">🛡️ Безопасность</span>
+                      <span class="tag">🧾 Разбор ситуаций</span>
+                      <span class="tag">🤝 Поддержка</span>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- Kristal_ -->
+                <article class="player-card" data-tags="lore">
+                  <div class="skin">
+                    <img src="https://minotar.net/helm/Kristal_/72.png" alt="Скин Kristal_">
+                  </div>
+                  <div class="player-main">
+                    <div class="player-top">
+                      <h3 class="nick">Kristal_</h3>
+                      <span class="role-badge">📜 Сценарист</span>
+                    </div>
+                    <p class="about">
+                      Помогает писать сценарии к сюжету и видео: идеи, сцены, драматургия, подача истории мира.
+                    </p>
+                    <div class="tags">
+                      <span class="tag">📚 Сюжет</span>
+                      <span class="tag">🎥 Видео</span>
+                      <span class="tag">🧠 Идеи</span>
+                    </div>
+                    <a class="profile-link" href="https://t.me/consequence_of_crystallization" target="_blank" rel="noopener">🔗 Telegram</a>
+                  </div>
+                </article>
+
+                <!-- Rixembourg28 -->
+                <article class="player-card" data-tags="creator">
+                  <div class="skin">
+                    <img src="https://minotar.net/helm/Rixembourg28/72.png" alt="Скин Rixembourg28">
+                  </div>
+                  <div class="player-main">
+                    <div class="player-top">
+                      <h3 class="nick">Rixembourg28</h3>
+                      <span class="role-badge">🖌️ Художник</span>
+                    </div>
+                    <p class="about">
+                      Делает пиксельные рисунки и арты для сервера: оформление, визуал и творческие элементы мира.
+                    </p>
+                    <div class="tags">
+                      <span class="tag">🖼️ Арты</span>
+                      <span class="tag">🧱 Пиксель-арт</span>
+                      <span class="tag">✨ Оформление</span>
+                    </div>
+                    <a class="profile-link" href="https://t.me/krevetkarrrshto" target="_blank" rel="noopener">🔗 Telegram</a>
+                  </div>
+                </article>
+
+                <!-- ПЛЕЙСХОЛДЕРЫ -->
+                <article class="player-card" data-tags="builder">
+                  <div class="skin">
+                    <img src="msb.png" alt="Место для игрока" />
+                  </div>
+                  <div class="player-main">
+                    <div class="player-top">
+                      <h3 class="nick">ТВОЙ НИК</h3>
+                      <span class="role-badge">⭐ Место свободно</span>
+                    </div>
+                    <p class="about">
+                      Хочешь попасть в “лица комьюнити”? Сделай вклад: проект, ивент, лор, инфраструктуру, дизайн или помощь игрокам.
+                      Мы добавим карточку и ссылку на тебя.
+                    </p>
+                    <div class="tags">
+                      <span class="tag">🏗️ Проекты</span>
+                      <span class="tag">🎭 Ивенты</span>
+                      <span class="tag">🤝 Помощь</span>
+                    </div>
+                    <a class="profile-link" href="https://discord.com/invite/Wj8jWS736f" target="_blank" rel="noopener">💬 Подать заявку</a>
+                  </div>
+                </article>
+
+                <article class="player-card" data-tags="creator">
+                  <div class="skin">
+                    <img src="msb.png" alt="Место для игрока" />
+                  </div>
+                  <div class="player-main">
+                    <div class="player-top">
+                      <h3 class="nick">ТВОЙ НИК</h3>
+                      <span class="role-badge">⭐ Место свободно</span>
+                    </div>
+                    <p class="about">
+                      Мы ищем контент-мейкеров и инициативных людей. Снимай ролики, делай шортсы, пиши лор или создавай визуал —
+                      и стань частью витрины MS Builders.
+                    </p>
+                    <div class="tags">
+                      <span class="tag">🎥 Контент</span>
+                      <span class="tag">📷 Скрины</span>
+                      <span class="tag">🧠 Идеи</span>
+                    </div>
+                    <a class="profile-link" href="https://discord.com/invite/Wj8jWS736f" target="_blank" rel="noopener">💬 Подать заявку</a>
+                  </div>
+                </article>
+              </div>
+
+              <div class="callout">
+                <b>Подсказка для добавления игрока:</b> ты можешь копировать одну карточку, менять ник и описание.
+                Картинка скина берётся автоматически по нику через <b>minotar.net</b> (можно заменить на свои изображения).
+              </div>
+            </div>
+
+            <!-- ===== ТОПЫ ===== -->
+            <div class="pane" id="pane-tops" role="tabpanel">
+              <a id="tops"></a>
+
+              <div class="callout" style="margin-top:0;">
+                <b>Топы — это мотивация, а не “давление”.</b> Здесь мы подсвечиваем тех, кто двигает мир вперёд:
+                строит, играет регулярно и побеждает в событиях. (Список можно обновлять вручную или позже автоматизировать.)
+              </div>
+
+              <div class="top-grid" style="margin-top:14px;">
+                <div class="top-card">
+                  <div class="top-title">🏗️ Топ по постройкам</div>
+                  <ol class="top-list">
+                    <li class="top-item"><div class="top-left"><span class="rank">1</span><span class="top-name">Duing</span></div><span class="top-metric">мегапроекты</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">2</span><span class="top-name">freshbread</span></div><span class="top-metric">командные билды</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">3</span><span class="top-name">demo66684</span></div><span class="top-metric">архитектура</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">4</span><span class="top-name">zadrot523</span></div><span class="top-metric">проекты</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">5</span><span class="top-name">bob1188</span></div><span class="top-metric">атмосфера</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">6</span><span class="top-name">Игрок_6</span></div><span class="top-metric">—</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">7</span><span class="top-name">Игрок_7</span></div><span class="top-metric">—</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">8</span><span class="top-name">Игрок_8</span></div><span class="top-metric">—</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">9</span><span class="top-name">Игрок_9</span></div><span class="top-metric">—</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">10</span><span class="top-name">Игрок_10</span></div><span class="top-metric">—</span></li>
+                  </ol>
+                  <p class="muted" style="margin:10px 0 0;">Можно заменить метрику на “кол-во проектов”, “оценка”, “город/роль”.</p>
+                </div>
+
+                <div class="top-card">
+                  <div class="top-title">🔥 Топ по активности</div>
+                  <ol class="top-list">
+                    <li class="top-item"><div class="top-left"><span class="rank">1</span><span class="top-name">zadrot523</span></div><span class="top-metric">стабильность</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">2</span><span class="top-name">Duing</span></div><span class="top-metric">ежедневно</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">3</span><span class="top-name">DOGE_agarPRO</span></div><span class="top-metric">тех. помощь</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">4</span><span class="top-name">freshbread</span></div><span class="top-metric">команда</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">5</span><span class="top-name">demo66684</span></div><span class="top-metric">команда</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">6</span><span class="top-name">Игрок_6</span></div><span class="top-metric">—</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">7</span><span class="top-name">Игрок_7</span></div><span class="top-metric">—</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">8</span><span class="top-name">Игрок_8</span></div><span class="top-metric">—</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">9</span><span class="top-name">Игрок_9</span></div><span class="top-metric">—</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">10</span><span class="top-name">Игрок_10</span></div><span class="top-metric">—</span></li>
+                  </ol>
+                  <p class="muted" style="margin:10px 0 0;">Если у вас есть плагин статистики — можно привязать автообновление позже.</p>
+                </div>
+
+                <div class="top-card">
+                  <div class="top-title">🏆 Победы в ивентах</div>
+                  <ol class="top-list">
+                    <li class="top-item"><div class="top-left"><span class="rank">1</span><span class="top-name">Игрок_1</span></div><span class="top-metric">—</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">2</span><span class="top-name">Игрок_2</span></div><span class="top-metric">—</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">3</span><span class="top-name">Игрок_3</span></div><span class="top-metric">—</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">4</span><span class="top-name">Игрок_4</span></div><span class="top-metric">—</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">5</span><span class="top-name">Игрок_5</span></div><span class="top-metric">—</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">6</span><span class="top-name">Игрок_6</span></div><span class="top-metric">—</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">7</span><span class="top-name">Игрок_7</span></div><span class="top-metric">—</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">8</span><span class="top-name">Игрок_8</span></div><span class="top-metric">—</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">9</span><span class="top-name">Игрок_9</span></div><span class="top-metric">—</span></li>
+                    <li class="top-item"><div class="top-left"><span class="rank">10</span><span class="top-name">Игрок_10</span></div><span class="top-metric">—</span></li>
+                  </ol>
+                  <p class="muted" style="margin:10px 0 0;">Сюда удобно заносить победителей ежемесячных ивентов (и делать “сезонные” списки без вайпа).</p>
+                </div>
+              </div>
+
+              <div class="callout">
+                <b>Как добавить себя в топы:</b> участвуй в ивентах, строй проекты, помогай людям, бери инициативу.
+                Если у тебя есть сильная идея — мы поможем её “упаковать” и запустить.
+              </div>
+            </div>
+          </div><!-- /tabpanes -->
+        </div><!-- /tabs -->
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const root = document.documentElement;
+
+    // ===== САЙДБАР: свернуть/развернуть =====
+    const btnSidebar = document.getElementById("toggleSidebar");
+    const sidebarIcon = document.getElementById("sidebarIcon");
+
+    const sidebarOff = localStorage.getItem("ms_sidebar") === "off";
+    if (sidebarOff) root.classList.add("sidebar-collapsed");
+
+    function syncSidebarIcon() {
+      sidebarIcon.textContent = root.classList.contains("sidebar-collapsed") ? ">" : "<";
+    }
+    syncSidebarIcon();
+
+    btnSidebar.addEventListener("click", () => {
+      root.classList.toggle("sidebar-collapsed");
+      localStorage.setItem("ms_sidebar", root.classList.contains("sidebar-collapsed") ? "off" : "on");
+      syncSidebarIcon();
+    });
+
+    // ===== КОПИРОВАНИЕ IP =====
+    const copyBtn = document.getElementById("copyIp");
+    if (copyBtn) {
+      copyBtn.addEventListener("click", async () => {
+        const ip = "play.msbuilders2.ru";
+        try {
+          await navigator.clipboard.writeText(ip);
+        } catch (e) {
+          const ta = document.createElement("textarea");
+          ta.value = ip;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          document.body.removeChild(ta);
+        }
+        copyBtn.classList.add("copied");
+        setTimeout(() => copyBtn.classList.remove("copied"), 1200);
+      });
+    }
+
+    // ===== ТАБЫ (с поддержкой #hash) =====
+    const tabBtns = Array.from(document.querySelectorAll(".tabbtn"));
+    const panes = {
+      about: document.getElementById("pane-about"),
+      players: document.getElementById("pane-players"),
+      tops: document.getElementById("pane-tops"),
+    };
+
+    function setTab(key, pushHash = true) {
+      tabBtns.forEach((b) => {
+        const is = b.dataset.tab === key;
+        b.classList.toggle("active", is);
+        b.setAttribute("aria-selected", is ? "true" : "false");
+      });
+
+      Object.keys(panes).forEach((k) => panes[k].classList.toggle("active", k === key));
+      if (pushHash) history.replaceState(null, "", "#" + key);
+    }
+
+    tabBtns.forEach((b) => b.addEventListener("click", () => setTab(b.dataset.tab)));
+
+    const hash = (location.hash || "").replace("#", "");
+    if (hash && panes[hash]) setTab(hash, false);
+
+    // ===== ФИЛЬТР + ПОИСК ПО ИГРОКАМ =====
+    const grid = document.getElementById("playerGrid");
+    const cards = Array.from(grid.querySelectorAll(".player-card"));
+    const searchInput = document.getElementById("playerSearch");
+    const chips = Array.from(document.querySelectorAll(".chip"));
+
+    let activeFilter = "all";
+
+    function applyFilters(){
+      const q = (searchInput.value || "").trim().toLowerCase();
+
+      cards.forEach((card) => {
+        const tags = (card.getAttribute("data-tags") || "").split(/\s+/).filter(Boolean);
+        const text = card.textContent.toLowerCase();
+
+        const matchFilter = activeFilter === "all" ? true : tags.includes(activeFilter);
+        const matchSearch = q ? text.includes(q) : true;
+
+        card.style.display = (matchFilter && matchSearch) ? "" : "none";
+      });
+    }
+
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        chips.forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+        activeFilter = chip.getAttribute("data-filter") || "all";
+        applyFilters();
+      });
+    });
+
+    searchInput.addEventListener("input", applyFilters);
+  </script>
+</body>
+</html>

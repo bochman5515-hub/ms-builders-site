@@ -9,6 +9,18 @@
 
   <style>
     * { box-sizing: border-box; }
+  .sidebar-icon {
+    width: 18px;
+    height: 18px;
+    display: block;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z'/%3E%3C/svg%3E") center / contain no-repeat;
+    background-color: currentColor;
+    transition: transform 0.2s ease;
+    }
+
+    .sidebar-collapsed .sidebar-icon {
+      transform: rotate(180deg);
+    }
 
     body {
       margin: 0;
@@ -346,32 +358,6 @@
       100% { opacity: 0.35; filter: brightness(0.85); }
     }
 
-    .garland-toggle {
-      position: fixed;
-      top: 44px;
-      right: 14px;
-      z-index: 90;
-      pointer-events: auto;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.35);
-      background: rgba(2,6,23,0.78);
-      backdrop-filter: blur(8px);
-      color: #e5e7eb;
-      font-size: 12px;
-      cursor: pointer;
-      transition: 0.15s;
-      box-shadow: 0 10px 22px rgba(0,0,0,0.25);
-    }
-
-    .garland-toggle:hover {
-      border-color: #38bdf8;
-      color: #e0f2fe;
-    }
-
     /* ===== КНОПКА < > (СНИЗУ СЛЕВА) ===== */
     .sidebar-fab {
       position: fixed;
@@ -398,10 +384,11 @@
     }
 
     .sidebar-fab span {
-      font-size: 18px;
+      font-size: 20px;
       line-height: 1;
-      transform: translateY(-1px);
+      display: block;
     }
+
 
     /* ===== АДАПТИВ ===== */
     @media (max-width: 900px) {
@@ -527,10 +514,8 @@
     </svg>
   </div>
 
-  <button class="garland-toggle" id="toggleGarland" type="button">🎄 Гирлянда</button>
-
   <button class="sidebar-fab" id="toggleSidebar" type="button" aria-label="Показать/скрыть панель">
-    <span id="sidebarIcon">&lt;</span>
+    <span id="sidebarIcon" class="sidebar-icon"></span>
   </button>
 
   <div class="layout">
@@ -704,7 +689,6 @@
 
     const btnSidebar = document.getElementById("toggleSidebar");
     const sidebarIcon = document.getElementById("sidebarIcon");
-    const btnGarland = document.getElementById("toggleGarland");
 
     // копирование IP по клику
     const copyBtn = document.getElementById("copyIp");
@@ -735,19 +719,9 @@
     if (garlandOff) root.classList.add("garland-off");
 
     function syncSidebarIcon() {
-      sidebarIcon.textContent = root.classList.contains("sidebar-collapsed") ? ">" : "<";
+      // теперь всё через CSS
     }
-    syncSidebarIcon();
 
-    btnSidebar.addEventListener("click", () => {
-      root.classList.toggle("sidebar-collapsed");
-      localStorage.setItem("ms_sidebar", root.classList.contains("sidebar-collapsed") ? "off" : "on");
-      syncSidebarIcon();
-    });
-
-    btnGarland.addEventListener("click", () => {
-      root.classList.toggle("garland-off");
-      localStorage.setItem("ms_garland", root.classList.contains("garland-off") ? "off" : "on");
     });
   </script>
 </body>

@@ -61,19 +61,6 @@
       font-weight: 400;
     }
 
-    /* IP/Версия под названием */
-    .server-meta {
-      margin-top: 10px;
-      font-size: 12px;
-      color: #9ca3af;
-      line-height: 1.5;
-    }
-    .server-meta .ip {
-      font-weight: 700;
-      color: #e5e7eb;
-      letter-spacing: 0.02em;
-    }
-
     .sidebar-nav {
       display: flex;
       flex-direction: column;
@@ -102,7 +89,6 @@
       font-weight: 600;
     }
 
-    /* низ сайдбара теперь пустой */
     .sidebar-footer {
       margin-top: auto;
       font-size: 12px;
@@ -110,7 +96,6 @@
       display: none;
     }
 
-    /* ===== СВЕРНУТЫЙ САЙДБАР ===== */
     .sidebar-collapsed .sidebar {
       width: 0;
       padding: 0;
@@ -154,7 +139,7 @@
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to right, rgba(15,23,42,0.7), transparent);
+      background: linear-gradient(to right, rgba(15,23,42,0.72), transparent);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -172,34 +157,33 @@
 
     .hero-subtitle {
       font-size: 14px;
-      max-width: 420px;
+      max-width: 520px;
       color: #e5e7eb;
+      line-height: 1.45;
     }
 
-    .hero-tags {
-      display: flex;
-      flex-wrap: wrap;
+    /* Кнопка-ссылка в хедере */
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
       gap: 8px;
-      margin-top: 6px;
-    }
-
-    .hero-tag {
-      font-size: 11px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: rgba(15,23,42,0.7);
-      border: 1px solid rgba(148,163,184,0.4);
-      color: inherit;
-    }
-
-    /* Ссылка "Комьюнити" как кнопка */
-    a.hero-tag {
+      margin-top: 8px;
+      width: fit-content;
       text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(2,6,23,0.45);
+      color: #e5e7eb;
       transition: 0.15s;
     }
-    a.hero-tag:hover {
+
+    .hero-cta:hover {
       border-color: #38bdf8;
       color: #e0f2fe;
+      transform: translateY(-1px);
     }
 
     .page-section {
@@ -362,7 +346,6 @@
       100% { opacity: 0.35; filter: brightness(0.85); }
     }
 
-    /* Кнопка гирлянды справа */
     .garland-toggle {
       position: fixed;
       top: 44px;
@@ -440,14 +423,14 @@
         padding-bottom: 4px;
       }
 
-      /* на мобилках не прячем верхнюю панель (иначе сломается) */
       .sidebar-collapsed .sidebar { width: 100%; padding: 12px 16px; border-right: 0; }
       .sidebar-fab { display: none; }
 
-      .hero-overlay { padding-left: 20px; }
+      .hero-overlay { padding-left: 20px; padding-right: 16px; }
       .hero-title { font-size: 14px; }
     }
-        /* ===== IP/Версия под картинкой логотипа + копирование ===== */
+
+    /* ===== IP/Версия под картинкой логотипа + копирование ===== */
     .server-copy {
       margin-top: 8px;
       width: 100%;
@@ -496,12 +479,10 @@
       opacity: 1;
       transform: translateY(0);
     }
-
   </style>
 </head>
 
 <body>
-
   <!-- ГИРЛЯНДА -->
   <div class="garland-top" aria-hidden="true">
     <svg viewBox="0 0 1440 38" preserveAspectRatio="none">
@@ -524,7 +505,7 @@
         <line class="bulb-hanger" x1="390" y1="18" x2="390" y2="22" /><circle class="bulb" cx="390" cy="28" r="5.5" fill="#22c55e"/>
         <line class="bulb-hanger" x1="450" y1="16" x2="450" y2="22" /><circle class="bulb" cx="450" cy="28" r="5.5" fill="#38bdf8"/>
         <line class="bulb-hanger" x1="510" y1="16" x2="510" y2="22" /><circle class="bulb" cx="510" cy="28" r="5.5" fill="#fbbf24"/>
-        <line class="bulb-hanger" x1="570" y1="14" x2="570" y2="22" /><circle class="bulb" cx="570" cy="28" r="5.5" fill="#a855f7"/>
+        <line class="bulb-hanger" x1="570" y1="14" x2="570"  y2="22" /><circle class="bulb" cx="570" cy="28" r="5.5" fill="#a855f7"/>
 
         <line class="bulb-hanger" x1="630" y1="18" x2="630" y2="22" /><circle class="bulb" cx="630" cy="28" r="5.5" fill="#ef4444"/>
         <line class="bulb-hanger" x1="690" y1="16" x2="690" y2="22" /><circle class="bulb" cx="690" cy="28" r="5.5" fill="#22c55e"/>
@@ -568,18 +549,22 @@
           <span class="server-ver">Версия: 1.21.8</span>
           <span class="server-tip" id="copyTip">Скопировано!</span>
         </button>
-
       </div>
 
       <nav class="sidebar-nav">
         <a href="index.html" class="active">Главная</a>
         <a href="news.html">Новости</a>
-        <a href="extra.html">Плагины и датапаки</a>
+        <a href="info.html">Информация</a>
+        <a href="community.html">Комьюнити</a>
+        <a href="builds.html">Города</a>
+
+        <a href="join.html">Старт игры</a>
         <a href="enchants.html">Чары</a>
+        <a href="crafts.html">Новые предметы</a>
+        <a href="extra.html">Наши инструменты</a>
         <a href="projects.html">Наши проекты</a>
-        <a href="builds.html">Постройки</a>
-        <a href="crafts.html">Крафты</a>
         <a href="story.html">Сюжет</a>
+
         <a href="about.html">О сервере</a>
       </nav>
     </aside>
@@ -589,21 +574,15 @@
         <img src="hero-banner.png" alt="MS Builders баннер" />
 
         <div class="hero-overlay">
-          <div class="hero-title">что такое ms builders?</div>
+          <div class="hero-title">MS BUILDERS</div>
           <div class="hero-subtitle">
-            Строительный Minecraft-сервер с архитектурой, городами, ивентами
-            и продуманным сюжетом. Здесь создают проекты, а не просто выживают.
+            Мир без вайпов, где ценятся проекты, инициатива и люди.
+            Строй города, находи союзников, оставляй след в истории и развивайся вместе с комьюнити.
           </div>
 
-          <div class="hero-tags">
-            <span class="hero-tag">Архитектура</span>
-            <span class="hero-tag">Ивенты</span>
-            <span class="hero-tag">Лор</span>
-
-            <a class="hero-tag" href="https://discord.com/invite/Wj8jWS736f" target="_blank" rel="noopener noreferrer">
-              Комьюнити (Discord)
-            </a>
-          </div>
+          <a class="hero-cta" href="https://discord.com/invite/Wj8jWS736f" target="_blank" rel="noopener noreferrer">
+            💬 Вступить в Discord
+          </a>
         </div>
 
         <svg class="hero-wave" viewBox="0 0 1440 90" preserveAspectRatio="none">
@@ -638,24 +617,23 @@
         </svg>
       </section>
 
-      <!-- Дальше твой контент без изменений -->
       <section class="page-section">
-        <h2 class="section-title">ЧТО ТАКОЕ MS BUILDERS</h2>
+        <h2 class="section-title">САМОЕ ГЛАВНОЕ</h2>
 
         <div class="feature-grid">
-          <a class="feature-card" href="builds.html">
-            <img src="feature-architecture.jpg" alt="Архитектура" />
-            <div class="feature-label">АРХИТЕКТУРА</div>
-          </a>
-
           <a class="feature-card" href="builds.html">
             <img src="feature-city.jpg" alt="Города" />
             <div class="feature-label">ГОРОДА</div>
           </a>
 
-          <a class="feature-card" href="news.html">
-            <img src="feature-events.jpg" alt="Ивенты" />
-            <div class="feature-label">ИВЕНТЫ</div>
+          <a class="feature-card" href="community.html">
+            <img src="feature-community.jpg" alt="Комьюнити" />
+            <div class="feature-label">КОМЬЮНИТИ</div>
+          </a>
+
+          <a class="feature-card" href="info.html">
+            <img src="feature-info.jpg" alt="Информация" />
+            <div class="feature-label">ИНФОРМАЦИЯ</div>
           </a>
 
           <a class="feature-card" href="news.html">
@@ -664,32 +642,16 @@
           </a>
         </div>
       </section>
-            <!-- БЛОК: ЧТО ТУТ У НАС -->
+
       <section class="page-section">
-        <h2 class="section-title">ЧТО ТУТ У НАС</h2>
+        <h2 class="section-title">ЧТО У НАС ЕСТЬ</h2>
 
         <div class="icon-grid">
           <a class="icon-link" href="join.html">
             <div class="icon-card">
-              <img src="icon-start.png" alt="Начало игры" />
-              <div class="icon-title">НАЧАЛО ИГРЫ</div>
-              <div class="icon-text">Гайд по входу и первым шагам на сервере.</div>
-            </div>
-          </a>
-
-          <a class="icon-link" href="about.html">
-            <div class="icon-card">
-              <img src="icon-rules.png" alt="Информация" />
-              <div class="icon-title">Информация</div>
-              <div class="icon-text">Всё о сервере и поведении в комьюнити.</div>
-            </div>
-          </a>
-
-          <a class="icon-link" href="crafts.html">
-            <div class="icon-card">
-              <img src="icon-custom-items.png" alt="Кастомные предметы" />
-              <div class="icon-title">НОВЫЕ КРАФТЫ</div>
-              <div class="icon-text">Уникальные крафты и блоки, доступные только на MS Builders.</div>
+              <img src="icon-start.png" alt="Старт игры" />
+              <div class="icon-title">СТАРТ ИГРЫ</div>
+              <div class="icon-text">Вход, whitelist, хаб и первые шаги на сервере.</div>
             </div>
           </a>
 
@@ -697,15 +659,23 @@
             <div class="icon-card">
               <img src="icon-enchants.png" alt="Новые чары" />
               <div class="icon-title">НОВЫЕ ЧАРЫ</div>
-              <div class="icon-text">Особые зачарования для строителей и исследователей.</div>
+              <div class="icon-text">Зачарования для строителей, исследователей и PvP.</div>
             </div>
           </a>
 
-          <a class="icon-link" href="story.html">
+          <a class="icon-link" href="crafts.html">
             <div class="icon-card">
-              <img src="icon-story.png" alt="Сюжет" />
-              <div class="icon-title">СЮЖЕТ</div>
-              <div class="icon-text">История мира по главам: лор, фракции и ключевые события.</div>
+              <img src="icon-custom-items.png" alt="Новые предметы" />
+              <div class="icon-title">НОВЫЕ ПРЕДМЕТЫ</div>
+              <div class="icon-text">Рецепты, блоки и вещи, которые расширяют ванилу.</div>
+            </div>
+          </a>
+
+          <a class="icon-link" href="extra.html">
+            <div class="icon-card">
+              <img src="icon-tools.png" alt="Наши инструменты" />
+              <div class="icon-title">НАШИ ИНСТРУМЕНТЫ</div>
+              <div class="icon-text">Датапаки и плагины: строительные фишки и контент.</div>
             </div>
           </a>
 
@@ -713,12 +683,19 @@
             <div class="icon-card">
               <img src="icon-projects.png" alt="Наши проекты" />
               <div class="icon-title">НАШИ ПРОЕКТЫ</div>
-              <div class="icon-text">Галерея лучших билдов и масштабных архитектурных работ.</div>
+              <div class="icon-text">Портфолио работ и лучшие примеры строительства.</div>
+            </div>
+          </a>
+
+          <a class="icon-link" href="story.html">
+            <div class="icon-card">
+              <img src="icon-story.png" alt="Сюжет" />
+              <div class="icon-title">СЮЖЕТ</div>
+              <div class="icon-text">История мира, главы, фракции и события.</div>
             </div>
           </a>
         </div>
       </section>
-
     </main>
   </div>
 
@@ -728,7 +705,8 @@
     const btnSidebar = document.getElementById("toggleSidebar");
     const sidebarIcon = document.getElementById("sidebarIcon");
     const btnGarland = document.getElementById("toggleGarland");
-        // копирование IP по клику
+
+    // копирование IP по клику
     const copyBtn = document.getElementById("copyIp");
     if (copyBtn) {
       copyBtn.addEventListener("click", async () => {
@@ -738,7 +716,6 @@
           copyBtn.classList.add("copied");
           setTimeout(() => copyBtn.classList.remove("copied"), 1200);
         } catch (e) {
-          // запасной вариант, если clipboard недоступен
           const ta = document.createElement("textarea");
           ta.value = ip;
           document.body.appendChild(ta);
@@ -750,7 +727,6 @@
         }
       });
     }
-
 
     const sidebarOff = localStorage.getItem("ms_sidebar") === "off";
     const garlandOff = localStorage.getItem("ms_garland") === "off";
@@ -774,6 +750,5 @@
       localStorage.setItem("ms_garland", root.classList.contains("garland-off") ? "off" : "on");
     });
   </script>
-
 </body>
 </html>

@@ -22,6 +22,9 @@
       transform: rotate(180deg);
     }
 
+
+    
+
     body {
       margin: 0;
       font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -358,30 +361,50 @@
       100% { opacity: 0.35; filter: brightness(0.85); }
     }
 
-    /* ===== КНОПКА < > (СНИЗУ СЛЕВА) ===== */
-    .sidebar-fab {
-      position: fixed;
-      left: 14px;
-      bottom: 14px;
-      z-index: 95;
-      width: 44px;
-      height: 44px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.35);
-      background: rgba(2,6,23,0.78);
-      backdrop-filter: blur(8px);
-      color: #e5e7eb;
-      cursor: pointer;
-      display: grid;
-      place-items: center;
-      transition: 0.15s;
-      box-shadow: 0 10px 22px rgba(0,0,0,0.25);
-    }
+    /* ===== КНОПКА СВОРАЧИВАНИЯ ПАНЕЛИ ===== */
+.sidebar-fab {
+  position: fixed;
+  left: 14px;
+  bottom: 14px;
+  z-index: 95;
 
-    .sidebar-fab:hover {
-      border-color: #38bdf8;
-      color: #e0f2fe;
-    }
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+
+  border: 1px solid rgba(148,163,184,0.35);
+  background: rgba(2,6,23,0.78);
+  backdrop-filter: blur(8px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #e5e7eb;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.sidebar-fab:hover {
+  border-color: #38bdf8;
+  color: #e0f2fe;
+}
+
+/* сама стрелка */
+.sidebar-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+  background-color: currentColor;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: transform 0.2s ease;
+}
+
+/* поворот при закрытой панели */
+.sidebar-collapsed .sidebar-icon {
+  transform: rotate(180deg);
+}
+
 
     .sidebar-fab span {
       font-size: 20px;
@@ -514,9 +537,10 @@
     </svg>
   </div>
 
-  <button class="sidebar-fab" id="toggleSidebar" type="button" aria-label="Показать/скрыть панель">
-    <span id="sidebarIcon" class="sidebar-icon"></span>
-  </button>
+    <button class="sidebar-fab" id="toggleSidebar" type="button">
+      <span id="sidebarIcon" class="sidebar-icon"></span>
+    </button>
+
 
   <div class="layout">
     <aside class="sidebar">
@@ -685,6 +709,19 @@
   </div>
 
   <script>
+
+    if (btnSidebar) {
+  btnSidebar.addEventListener("click", () => {
+    root.classList.toggle("sidebar-collapsed");
+
+    localStorage.setItem(
+      "ms_sidebar",
+      root.classList.contains("sidebar-collapsed") ? "off" : "on"
+    );
+  });
+}
+
+    
     const root = document.documentElement;
 
     const btnSidebar = document.getElementById("toggleSidebar");
@@ -718,11 +755,14 @@
     if (sidebarOff) root.classList.add("sidebar-collapsed");
     if (garlandOff) root.classList.add("garland-off");
 
+
+    
     function syncSidebarIcon() {
       // теперь всё через CSS
     }
 
-    });
+    ;
   </script>
+  
 </body>
 </html>

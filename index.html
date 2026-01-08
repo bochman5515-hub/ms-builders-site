@@ -299,12 +299,22 @@
     }
 
     .icon-card img {
-      width: 72px;
-      height: 72px;
+      width: 96px;
+      height: 96px;
       image-rendering: pixelated;
       object-fit: contain;
-      margin-bottom: 10px;
+      margin: 10px auto 12px;
+      display: block;
     }
+
+    /* на очень маленьких экранах чуть меньше */
+    @media (max-width: 420px) {
+      .icon-card img {
+        width: 84px;
+        height: 84px;
+      }
+    }
+
 
     .icon-title {
       font-family: "Press Start 2P", system-ui;
@@ -696,73 +706,72 @@
             </div>
           </a>
 
-          <a class="icon-link" href="story.html">
+          <a class="icon-link" href="coalitions.html">
             <div class="icon-card">
-              <img src="icon-story.png" alt="Сюжет" />
-              <div class="icon-title">СЮЖЕТ</div>
-              <div class="icon-text">История мира, главы, фракции и события.</div>
+              <img src="icon-coalitions.png" alt="Коалиции" />
+              <div class="icon-title">КОАЛИЦИИ</div>
+              <div class="icon-text">Север, Центр и Юг: задания, прокачка, награды и влияние на мир.</div>
             </div>
           </a>
+
         </div>
       </section>
     </main>
   </div>
 
   <script>
+  const root = document.documentElement;
 
-    if (btnSidebar) {
-  btnSidebar.addEventListener("click", () => {
-    root.classList.toggle("sidebar-collapsed");
+  // ===== САЙДБАР =====
+  const btnSidebar = document.getElementById("toggleSidebar");
+  const sidebarIcon = document.getElementById("sidebarIcon");
 
-    localStorage.setItem(
-      "ms_sidebar",
-      root.classList.contains("sidebar-collapsed") ? "off" : "on"
-    );
-  });
-}
+  // восстановление состояния
+  if (localStorage.getItem("ms_sidebar") === "off") {
+    root.classList.add("sidebar-collapsed");
+  }
 
-    
-    const root = document.documentElement;
+  if (btnSidebar) {
+    btnSidebar.addEventListener("click", () => {
+      root.classList.toggle("sidebar-collapsed");
 
-    const btnSidebar = document.getElementById("toggleSidebar");
-    const sidebarIcon = document.getElementById("sidebarIcon");
+      localStorage.setItem(
+        "ms_sidebar",
+        root.classList.contains("sidebar-collapsed") ? "off" : "on"
+      );
+    });
+  }
 
-    // копирование IP по клику
-    const copyBtn = document.getElementById("copyIp");
-    if (copyBtn) {
-      copyBtn.addEventListener("click", async () => {
-        const ip = "play.msbuilders2.ru";
-        try {
-          await navigator.clipboard.writeText(ip);
-          copyBtn.classList.add("copied");
-          setTimeout(() => copyBtn.classList.remove("copied"), 1200);
-        } catch (e) {
-          const ta = document.createElement("textarea");
-          ta.value = ip;
-          document.body.appendChild(ta);
-          ta.select();
-          document.execCommand("copy");
-          document.body.removeChild(ta);
-          copyBtn.classList.add("copied");
-          setTimeout(() => copyBtn.classList.remove("copied"), 1200);
-        }
-      });
-    }
+  // ===== КОПИРОВАНИЕ IP =====
+  const copyBtn = document.getElementById("copyIp");
 
-    const sidebarOff = localStorage.getItem("ms_sidebar") === "off";
-    const garlandOff = localStorage.getItem("ms_garland") === "off";
+  if (copyBtn) {
+    copyBtn.addEventListener("click", async () => {
+      const ip = "play.msbuilders2.ru";
 
-    if (sidebarOff) root.classList.add("sidebar-collapsed");
-    if (garlandOff) root.classList.add("garland-off");
+      try {
+        await navigator.clipboard.writeText(ip);
+      } catch (e) {
+        // fallback
+        const ta = document.createElement("textarea");
+        ta.value = ip;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      }
 
+      copyBtn.classList.add("copied");
+      setTimeout(() => copyBtn.classList.remove("copied"), 1200);
+    });
+  }
 
-    
-    function syncSidebarIcon() {
-      // теперь всё через CSS
-    }
+  // ===== ГИРЛЯНДА (если понадобится позже) =====
+  if (localStorage.getItem("ms_garland") === "off") {
+    root.classList.add("garland-off");
+  }
+</script>
 
-    ;
-  </script>
   
 </body>
 </html>

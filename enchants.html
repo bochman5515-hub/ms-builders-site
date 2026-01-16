@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Чары — MS Builders</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Шрифты как на главной -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #0b0f19;
+      color: #e5e7eb;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ЛЕВАЯ ПАНЕЛЬ */
+    .sidebar {
+      width: 260px;
+      background: #020617;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .logo-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-box img {
+      width: 96px;
+      height: 96px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .sidebar-title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .sidebar-title span {
+      display: block;
+      font-size: 12px;
+      color: #9ca3af;
+      font-weight: 400;
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .sidebar-nav a {
+      color: #e5e7eb;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 6px 0;
+      border-left: 3px solid transparent;
+      padding-left: 10px;
+      transition: 0.15s;
+    }
+
+    .sidebar-nav a:hover {
+      color: #38bdf8;
+      border-color: #38bdf8;
+    }
+
+    .sidebar-nav a.active {
+      color: #38bdf8;
+      border-color: #38bdf8;
+      font-weight: 600;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .sidebar-footer .ip {
+      font-weight: 600;
+      color: #e5e7eb;
+    }
+
+    /* ПРАВАЯ ЧАСТЬ */
+    .content {
+      flex: 1;
+      background:
+        linear-gradient(to bottom, rgba(15,23,42,0.9), rgba(15,23,42,1)),
+        url("bg-stone.png");
+      background-size: auto, 128px 128px;
+      background-repeat: repeat;
+      padding-bottom: 40px;
+    }
+
+    .hero {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(15,23,42,0.7), transparent);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 40px;
+      gap: 10px;
+    }
+
+    .hero-title {
+      font-family: "Press Start 2P", system-ui;
+      font-size: 18px;
+      text-transform: uppercase;
+      color: #f9fafb;
+      text-shadow: 0 0 10px rgba(15,23,42,0.9);
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      max-width: 420px;
+      color: #e5e7eb;
+    }
+
+    .page-section {
+      margin: 32px auto 0;
+      max-width: 1200px;
+      padding: 0 24px;
+    }
+
+    .section-title {
+      font-family: "Press Start 2P", system-ui;
+      font-size: 16px;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 12px 16px;
+      margin: 0 0 24px;
+      background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+      color: #0b1120;
+      border-radius: 999px;
+      letter-spacing: 0.08em;
+    }
+
+    /* ПАНЕЛЬ ФИЛЬТРА */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .filter-bar label {
+      font-size: 13px;
+      color: #cbd5f5;
+    }
+
+    .filter-input,
+    .filter-select {
+      background: #020617;
+      border: 1px solid rgba(148,163,184,0.5);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: #e5e7eb;
+      font-size: 13px;
+      outline: none;
+      min-width: 200px;
+    }
+
+    .filter-input::placeholder {
+      color: #6b7280;
+    }
+
+    .filter-input:focus,
+    .filter-select:focus {
+      border-color: #38bdf8;
+    }
+
+    /* СЕТКА ЧАР */
+    .enchant-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .enchant-card {
+      background: rgba(15,23,42,0.95);
+      border-radius: 16px;
+      padding: 14px 14px 16px;
+      border: 1px solid rgba(148,163,184,0.4);
+      box-shadow: 0 10px 24px rgba(15,23,42,0.7);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s;
+    }
+
+    .enchant-card:hover {
+      transform: translateY(-3px);
+      border-color: #38bdf8;
+      box-shadow: 0 16px 30px rgba(15,23,42,0.9);
+    }
+
+    .enchant-name {
+      font-family: "Press Start 2P", system-ui;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      color: #38bdf8;
+    }
+
+    .enchant-items {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-bottom: 6px;
+    }
+
+    .enchant-effect {
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .enchant-source {
+      font-size: 12px;
+      color: #a5b4fc;
+    }
+
+    /* АДАПТИВ */
+    @media (max-width: 900px) {
+      .layout {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px;
+      }
+
+      .sidebar-nav {
+        flex-direction: row;
+        gap: 12px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+
+      .sidebar-footer {
+        display: none;
+      }
+
+      .hero-overlay {
+        padding-left: 20px;
+      }
+
+      .hero-title {
+        font-size: 14px;
+      }
+    }
+    /* ===== ЦВЕТА РАМОК ПО РЕДКОСТИ (АКТУАЛЬНАЯ СИСТЕМА) ===== */
+
+/* Вечные (legendary) — золотой */
+.enchant-card[data-rarity="legendary"] {
+  border-color: #facc15;
+  box-shadow: 0 0 18px rgba(250, 204, 21, 0.35);
+}
+
+/* Образцовые (epic) — фиолетовый */
+.enchant-card[data-rarity="epic"] {
+  border-color: #a855f7;
+  box-shadow: 0 0 18px rgba(168, 85, 247, 0.35);
+}
+
+/* Ситуативные (rare) — голубой */
+.enchant-card[data-rarity="rare"] {
+  border-color: #38bdf8;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.35);
+}
+
+/* Распространённые (uncommon) — бежевый */
+.enchant-card[data-rarity="uncommon"] {
+  border-color: #e7d3a1;
+  box-shadow: 0 0 14px rgba(231, 211, 161, 0.25);
+}
+
+/* Обыкновенные (common) — белый */
+.enchant-card[data-rarity="common"] {
+  border-color: #e5e7eb;
+  box-shadow: 0 0 10px rgba(229, 231, 235, 0.2);
+}
+
+/* Проклятые (special) — бордовый */
+.enchant-card[data-rarity="special"] {
+  border-color: #7f1d1d;
+  box-shadow: 0 0 20px rgba(127, 29, 29, 0.45);
+}
+
+/* Запретные (veryspecial) — почти чёрный */
+.enchant-card[data-rarity="veryspecial"] {
+  border-color: #111827;
+  box-shadow: 0 0 22px rgba(17, 24, 39, 0.55);
+}
+
+/* Проклятия (отдельная категория) — красный */
+.enchant-card[data-rarity="curse"] {
+  border-color: #dc2626;
+  box-shadow: 0 0 22px rgba(220, 38, 38, 0.5);
+}
+
+.enchant-card:hover {
+  filter: brightness(1.08);
+}
+
+/* Доп. поля для новых чар */
+.enchant-conflicts,
+.enchant-obtain {
+  font-size: 12px;
+  color: #cbd5f5;
+  margin-top: 6px;
+  line-height: 1.35;
+}
+
+.enchant-conflicts span,
+.enchant-obtain span {
+  color: #9ca3af;
+}
+
+/* Блок редкостей в шапке */
+.rarity-panel {
+  margin-top: 12px;
+  max-width: 680px;
+  background: rgba(2, 6, 23, 0.65);
+  border: 1px solid rgba(148,163,184,0.35);
+  border-radius: 14px;
+  padding: 12px 14px;
+  backdrop-filter: blur(6px);
+}
+
+.rarity-panel-title {
+  font-family: "Press Start 2P", system-ui;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f9fafb;
+  margin-bottom: 8px;
+}
+
+.rarity-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rarity-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(148,163,184,0.35);
+  background: rgba(15,23,42,0.55);
+  font-size: 12px;
+  color: #e5e7eb;
+}
+
+.rarity-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.rarity-dot.common { background: #e5e7eb; }
+.rarity-dot.uncommon { background: #e7d3a1; }
+.rarity-dot.rare { background: #38bdf8; }
+.rarity-dot.epic { background: #a855f7; }
+.rarity-dot.legendary { background: #facc15; }
+.rarity-dot.special { background: #7f1d1d; }
+.rarity-dot.veryspecial { background: #111827; border: 1px solid rgba(255,255,255,0.18); }
+
+  </style>
+</head>
+<body>
+
+<div class="layout">
+  <!-- ЛЕВАЯ ПАНЕЛЬ -->
+  <aside class="sidebar">
+    <div class="logo-box">
+      <img src="logo.png" alt="Логотип MS Builders" />
+      <div class="sidebar-title">
+        MS Builders
+        <span>Minecraft сервер</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <a href="index.html">Главная</a>
+        <a href="news.html">Новости</a>
+        <a href="extra.html">Плагины и датапаки</a>
+        <a href="enchants.html" class="active">Чары</a>
+        <a href="projects.html">Наши проекты</a>
+        <a href="builds.html">Постройки</a>
+        <a href="crafts.html">Крафты</a>
+        <a href="story.html">Сюжет</a>
+        <a href="about.html">О сервере</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      IP: <span class="ip">play.msbuilders2.ru</span><br />
+      Версия: 1.21.8
+    </div>
+  </aside>
+
+  <!-- ПРАВАЯ ЧАСТЬ -->
+  <main class="content">
+    <!-- БАННЕР ДЛЯ ЧАР -->
+    <section class="hero">
+      <!-- Замените enchants-banner.png на красивый скрин с чарами/столом чар -->
+      <img src="enchants-banner.png" alt="Чары MS Builders" />
+      <div class="hero-overlay">
+        <div class="hero-title">чары ms builders</div>
+        <div class="hero-subtitle">
+          Уникальные зачарования для строителей, исследователей и игроков,
+          которые хотят больше, чем ванильный Minecraft.
+        </div>
+
+        <!-- Редкость и шансы появления (как в конфиге сервера) -->
+        <div class="rarity-panel">
+          <div class="rarity-panel-title">Редкость и шанс появления</div>
+          <div class="rarity-pills">
+            <div class="rarity-pill"><span class="rarity-dot common"></span><b>Обыкновенные</b> — стол: 30% · лут: 20% · с 1 ур.</div>
+            <div class="rarity-pill"><span class="rarity-dot uncommon"></span><b>Распространённые</b> — стол: 20% · лут: 20% · с 5 ур.</div>
+            <div class="rarity-pill"><span class="rarity-dot rare"></span><b>Ситуативные</b> — стол: 15% · лут: 20% · с 15 ур.</div>
+            <div class="rarity-pill"><span class="rarity-dot epic"></span><b>Образцовые</b> — стол: 10% · лут: 10% · с 16 ур.</div>
+            <div class="rarity-pill"><span class="rarity-dot legendary"></span><b>Вечные</b> — стол: 2% · лут: 5% · с 25 ур.</div>
+            <div class="rarity-pill"><span class="rarity-dot special"></span><b>Проклятые</b> — стол: 1% · лут: 5% · с 30 ур.</div>
+            <div class="rarity-pill"><span class="rarity-dot veryspecial"></span><b>Запретные</b> — стол: 0.5% · лут: 5% · с 30 ур.</div>
+          </div>
+        </div>
+
+
+              </div>
+    </section>
+
+    <!-- СПИСОК ЧАР -->
+    <section class="page-section">
+      <h2 class="section-title">ЧАРЫ СЕРВЕРА</h2>
+
+      <!-- ПАНЕЛЬ ПОИСКА И ФИЛЬТРА -->
+      <div class="filter-bar">
+        <label>
+          Поиск:
+          <input
+            id="enchant-search"
+            class="filter-input"
+            type="text"
+            placeholder="Введите название чара или предмет..."
+          />
+        </label>
+
+        <label>
+          Тип предмета:
+          <select id="enchant-type" class="filter-select">
+            <option value="all">Все</option>
+            <option value="sword">Меч</option>
+            <option value="armor">Броня</option>
+            <option value="tool">Инструменты</option>
+            <option value="bow">Лук / арбалет</option>
+            <option value="other">Прочее</option>
+          </select>
+        </label>
+        
+        <label>
+          Редкость:
+          <select id="enchant-rarity" class="filter-select">
+            <option value="all">Все</option>
+            <option value="common">Обыкновенные</option>
+            <option value="uncommon">Распространённые</option>
+            <option value="rare">Ситуативные</option>
+            <option value="epic">Образцовые</option>
+            <option value="legendary">Вечные</option>
+            <option value="special">Проклятые</option>
+            <option value="veryspecial">Запретные</option>
+            <option value="curse">Проклятия</option>
+        </select>
+    </label>
+
+      </div>
+
+      <!-- КАРТОЧКИ ЧАР (ПРИМЕРЫ, МОЖНО РЕДАКТИРОВАТЬ) -->
+      <div class="enchant-grid" id="enchant-grid">
+        <!-- ====== Enchantments Encore ====== -->
+        <div class="enchant-card" data-type="tool" data-rarity="common" data-name="плуг" data-items="мотыги, enchantments encore">
+                  <div class="enchant-name">ПЛУГ III</div>
+                  <div class="enchant-items">Предметы: Мотыги</div>
+                  <div class="enchant-effect">Вспахивает большую область при ударе левой кнопкой.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Шёлковое касание, Эффективность, Отрастание</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="tool" data-rarity="common" data-name="отрастание" data-items="мотыги, enchantments encore">
+                  <div class="enchant-name">ОТРАСТАНИЕ I</div>
+                  <div class="enchant-items">Предметы: Мотыги</div>
+                  <div class="enchant-effect">Пересаживает полностью выросшие культуры при сборе.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Шёлковое касание, Эффективность, Плуг</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="проклятие владельца" data-items="броня, enchantments encore">
+                  <div class="enchant-name">ПРОКЛЯТИЕ ВЛАДЕЛЬЦА I</div>
+                  <div class="enchant-items">Предметы: Броня</div>
+                  <div class="enchant-effect">Wearer takes damage when their pets do</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> —</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Снаряжение мобов, Сундуки/добыча, Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="проклятие каравана" data-items="броня, enchantments encore">
+                  <div class="enchant-name">ПРОКЛЯТИЕ КАРАВАНА I</div>
+                  <div class="enchant-items">Предметы: Броня</div>
+                  <div class="enchant-effect">Wearer gets slowed down when leashing entities</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> —</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Снаряжение мобов, Сундуки/добыча, Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="пропеллер" data-items="упряжь, enchantments encore">
+                  <div class="enchant-name">ПРОПЕЛЛЕР V</div>
+                  <div class="enchant-items">Предметы: Упряжь</div>
+                  <div class="enchant-effect">Увеличивает скорость полёта счастливых гастов.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> —</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (книги), Торговля у жителей (предметы)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="bow" data-rarity="common" data-name="метка-пинг" data-items="арбалеты, луки, топоры, мечи, трезубцы, булавы, enchantments encore">
+                  <div class="enchant-name">МЕТКА-ПИНГ I</div>
+                  <div class="enchant-items">Предметы: Арбалеты, Луки, Топоры, Мечи, Трезубцы, Булавы</div>
+                  <div class="enchant-effect">Проигрывает «пинг», когда существо было задето.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> —</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="bow" data-rarity="common" data-name="стойкость" data-items="арбалеты, луки, enchantments encore">
+                  <div class="enchant-name">СТОЙКОСТЬ I</div>
+                  <div class="enchant-items">Предметы: Арбалеты, Луки</div>
+                  <div class="enchant-effect">Leaves behind a lingering cloud with the effect of the shot tipped arrow when hitting a block</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> —</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="аура испытаний" data-items="шлемы, enchantments encore">
+                  <div class="enchant-name">АУРА ИСПЫТАНИЙ I</div>
+                  <div class="enchant-items">Предметы: Шлемы</div>
+                  <div class="enchant-effect">Добавляет косметическую ауру испытаний носителю, его питомцам и большинству выпускаемых снарядов.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Любые чары «Аура»</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="липкая аура" data-items="шлемы, enchantments encore">
+                  <div class="enchant-name">ЛИПКАЯ АУРА I</div>
+                  <div class="enchant-items">Предметы: Шлемы</div>
+                  <div class="enchant-effect">Добавляет косметическую липкую ауру носителю, его питомцам и большинству выпускаемых снарядов.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Любые чары «Аура»</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="искрящаяся аура" data-items="шлемы, enchantments encore">
+                  <div class="enchant-name">ИСКРЯЩАЯСЯ АУРА I</div>
+                  <div class="enchant-items">Предметы: Шлемы</div>
+                  <div class="enchant-effect">Добавляет косметическую искрящуюся ауру носителю, его питомцам и большинству выпускаемых снарядов.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Любые чары «Аура»</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="бледная аура" data-items="шлемы, enchantments encore">
+                  <div class="enchant-name">БЛЕДНАЯ АУРА I</div>
+                  <div class="enchant-items">Предметы: Шлемы</div>
+                  <div class="enchant-effect">Добавляет косметическую бледную ауру носителю, его питомцам и большинству выпускаемых снарядов.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Любые чары «Аура»</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="зловещая аура" data-items="шлемы, enchantments encore">
+                  <div class="enchant-name">ЗЛОВЕЩАЯ АУРА I</div>
+                  <div class="enchant-items">Предметы: Шлемы</div>
+                  <div class="enchant-effect">Добавляет косметическую зловещую ауру носителю, его питомцам и большинству выпускаемых снарядов.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Любые чары «Аура»</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="грязевая аура" data-items="шлемы, enchantments encore">
+                  <div class="enchant-name">ГРЯЗЕВАЯ АУРА I</div>
+                  <div class="enchant-items">Предметы: Шлемы</div>
+                  <div class="enchant-effect">Добавляет косметическую грязевую ауру носителю, его питомцам и большинству выпускаемых снарядов.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Любые чары «Аура»</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="пышная аура" data-items="шлемы, enchantments encore">
+                  <div class="enchant-name">ПЫШНАЯ АУРА I</div>
+                  <div class="enchant-items">Предметы: Шлемы</div>
+                  <div class="enchant-effect">Добавляет косметическую пышную ауру носителю, его питомцам и большинству выпускаемых снарядов.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Любые чары «Аура»</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="милая аура" data-items="шлемы, enchantments encore">
+                  <div class="enchant-name">МИЛАЯ АУРА I</div>
+                  <div class="enchant-items">Предметы: Шлемы</div>
+                  <div class="enchant-effect">Добавляет косметическую милую ауру носителю, его питомцам и большинству выпускаемых снарядов.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Любые чары «Аура»</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="небесная аура" data-items="шлемы, enchantments encore">
+                  <div class="enchant-name">НЕБЕСНАЯ АУРА I</div>
+                  <div class="enchant-items">Предметы: Шлемы</div>
+                  <div class="enchant-effect">Добавляет косметическую небесную ауру носителю, его питомцам и большинству выпускаемых снарядов.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Любые чары «Аура»</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="пламенная аура" data-items="шлемы, enchantments encore">
+                  <div class="enchant-name">ПЛАМЕННАЯ АУРА I</div>
+                  <div class="enchant-items">Предметы: Шлемы</div>
+                  <div class="enchant-effect">Добавляет косметическую пламенную ауру носителю, его питомцам и большинству выпускаемых снарядов.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Любые чары «Аура»</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="эндер-аура" data-items="шлемы, enchantments encore">
+                  <div class="enchant-name">ЭНДЕР-АУРА I</div>
+                  <div class="enchant-items">Предметы: Шлемы</div>
+                  <div class="enchant-effect">Добавляет косметическую эндер-ауру носителю, его питомцам и большинству выпускаемых снарядов.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Любые чары «Аура»</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="зачарованная аура" data-items="шлемы, enchantments encore">
+                  <div class="enchant-name">ЗАЧАРОВАННАЯ АУРА I</div>
+                  <div class="enchant-items">Предметы: Шлемы</div>
+                  <div class="enchant-effect">Добавляет косметическую зачарованную ауру носителю, его питомцам и большинству выпускаемых снарядов.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Любые чары «Аура»</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="эхо-аура" data-items="шлемы, enchantments encore">
+                  <div class="enchant-name">ЭХО-АУРА I</div>
+                  <div class="enchant-items">Предметы: Шлемы</div>
+                  <div class="enchant-effect">Добавляет косметическую эхо-ауру носителю, его питомцам и большинству выпускаемых снарядов.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Любые чары «Аура»</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="водная аура" data-items="шлемы, enchantments encore">
+                  <div class="enchant-name">ВОДНАЯ АУРА I</div>
+                  <div class="enchant-items">Предметы: Шлемы</div>
+                  <div class="enchant-effect">Добавляет косметическую водную ауру носителю, его питомцам и большинству выпускаемых снарядов.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Любые чары «Аура»</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="злая аура" data-items="шлемы, enchantments encore">
+                  <div class="enchant-name">ЗЛАЯ АУРА I</div>
+                  <div class="enchant-items">Предметы: Шлемы</div>
+                  <div class="enchant-effect">Добавляет косметическую злую ауру носителю, его питомцам и большинству выпускаемых снарядов.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Любые чары «Аура»</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="common" data-name="блок" data-items="мечи, топоры, булавы, enchantments encore">
+                  <div class="enchant-name">БЛОК I</div>
+                  <div class="enchant-items">Предметы: Мечи, Топоры, Булавы</div>
+                  <div class="enchant-effect">Позволяет блокировать атаки ближнего боя зачарованным предметом.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Острота, Любые чары «Аспект», Усмиритель</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="other" data-rarity="rare" data-name="галоп" data-items="сёдла, enchantments encore">
+                  <div class="enchant-name">ГАЛОП III</div>
+                  <div class="enchant-items">Предметы: Сёдла</div>
+                  <div class="enchant-effect">Существо получает ускорение, когда на нём едут.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> —</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="амортизатор" data-items="элитра, enchantments encore">
+                  <div class="enchant-name">АМОРТИЗАТОР IV</div>
+                  <div class="enchant-items">Предметы: Элитра</div>
+                  <div class="enchant-effect">Защищает от урона при столкновении со стенами в полёте.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Безопасная посадка</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные, Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="защита от иссушения" data-items="броня, enchantments encore">
+                  <div class="enchant-name">ЗАЩИТА ОТ ИССУШЕНИЯ IV</div>
+                  <div class="enchant-items">Предметы: Броня</div>
+                  <div class="enchant-effect">Защита от эффекта «Иссушение» и черепов иссушителя.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Защита от шипов, Ночная защита, Защита Незера, Защита Края, Дневная защита, Защита, Огнеупорность, Взрывоустойчивость, Защита от снарядов</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные, Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="защита от шипов" data-items="броня, enchantments encore">
+                  <div class="enchant-name">ЗАЩИТА ОТ ШИПОВ IV</div>
+                  <div class="enchant-items">Предметы: Броня</div>
+                  <div class="enchant-effect">Защита от урона шипами, включая сладкие ягоды и кактусы.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Защита от иссушения, Ночная защита, Защита Незера, Защита Края, Дневная защита, Защита, Огнеупорность, Взрывоустойчивость, Защита от снарядов</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные, Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="призрачный дух" data-items="волчья броня, enchantments encore">
+                  <div class="enchant-name">ПРИЗРАЧНЫЙ ДУХ I</div>
+                  <div class="enchant-items">Предметы: Волчья броня</div>
+                  <div class="enchant-effect">Делает вашего волка почти неуязвимым, но его урон равен 0.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Дух вепря, Дух медведя, Дух скорпиона</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="bow" data-rarity="common" data-name="имплозия" data-items="арбалеты, луки, enchantments encore">
+                  <div class="enchant-name">ИМПЛОЗИЯ I</div>
+                  <div class="enchant-items">Предметы: Арбалеты, Луки</div>
+                  <div class="enchant-effect">Притягивает враждебных существ в радиусе 5 блоков.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Бесконечность, Подрывник, Эндер-выстрел, Кузнечный выстрел, Гнев призывателя, Удар молнии, Вспышка, Жало</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные, Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="корона героя" data-items="шлемы, enchantments encore">
+                  <div class="enchant-name">КОРОНА ГЕРОЯ I</div>
+                  <div class="enchant-items">Предметы: Шлемы</div>
+                  <div class="enchant-effect">Даёт носителю эффект «Герой деревни», но расходует прочность.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Ночное зрение</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="бегун испытаний" data-items="ботинки, enchantments encore">
+                  <div class="enchant-name">БЕГУН ИСПЫТАНИЙ I</div>
+                  <div class="enchant-items">Предметы: Ботинки</div>
+                  <div class="enchant-effect">Даёт носителю эффект «Знамение испытаний», но расходует прочность.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> —</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="листопрыгун" data-items="ботинки, enchantments encore">
+                  <div class="enchant-name">ЛИСТОПРЫГУН I</div>
+                  <div class="enchant-items">Предметы: Ботинки</div>
+                  <div class="enchant-effect">Создаёт лиственные блоки при прыжке в воздухе.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Плащ невидимости, Скорость души, Соник, Скорость по песку, Скорость в Крае, Скорость по тропе, Стрейф</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Сокровищные</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="стрейф" data-items="ботинки, enchantments encore">
+                  <div class="enchant-name">СТРЕЙФ I</div>
+                  <div class="enchant-items">Предметы: Ботинки</div>
+                  <div class="enchant-effect">Спринт + влево/вправо позволяет быстро стрейфиться в сторону.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Плащ невидимости, Скорость души, Соник, Скорость по песку, Скорость в Крае, Скорость по тропе, Листопрыгун</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="tool" data-rarity="rare" data-name="проклятие бессмертия" data-items="инструменты, enchantments encore">
+                  <div class="enchant-name">ПРОКЛЯТИЕ БЕССМЕРТИЯ I</div>
+                  <div class="enchant-items">Предметы: Инструменты</div>
+                  <div class="enchant-effect">Превращает инструмент в Тотем бессмертия.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> —</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Снаряжение мобов, Сундуки/добыча, Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="чутьё" data-items="волчья броня, enchantments encore">
+                  <div class="enchant-name">ЧУТЬЁ 3</div>
+                  <div class="enchant-items">Предметы: Волчья броня</div>
+                  <div class="enchant-effect">Wolves make nearby entities glow when they move</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Апорт!</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="апорт!" data-items="волчья броня, enchantments encore">
+                  <div class="enchant-name">АПОРТ! 1</div>
+                  <div class="enchant-items">Предметы: Волчья броня</div>
+                  <div class="enchant-effect">Небольшой шанс, что волк принесёт добычу.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Чутьё</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="дух вепря" data-items="волчья броня, enchantments encore">
+                  <div class="enchant-name">ДУХ ВЕПРЯ I</div>
+                  <div class="enchant-items">Предметы: Волчья броня</div>
+                  <div class="enchant-effect">Наделяет волка силой вепря.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Дух медведя, Дух скорпиона, Призрачный дух</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="дух медведя" data-items="волчья броня, enchantments encore">
+                  <div class="enchant-name">ДУХ МЕДВЕДЯ I</div>
+                  <div class="enchant-items">Предметы: Волчья броня</div>
+                  <div class="enchant-effect">Наделяет волка силой медведя.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Дух вепря, Дух скорпиона, Призрачный дух</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="дух скорпиона" data-items="волчья броня, enchantments encore">
+                  <div class="enchant-name">ДУХ СКОРПИОНА I</div>
+                  <div class="enchant-items">Предметы: Волчья броня</div>
+                  <div class="enchant-effect">Наделяет волка силой скорпиона.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Дух медведя, Дух вепря, Призрачный дух</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные, Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="bow" data-rarity="common" data-name="вспышка" data-items="арбалеты, луки, enchantments encore">
+                  <div class="enchant-name">ВСПЫШКА V</div>
+                  <div class="enchant-items">Предметы: Арбалеты, Луки</div>
+                  <div class="enchant-effect">Стрелы взрываются как фейерверки при попадании в блок или существо.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Бесконечность, Подрывник, Жало, Кузнечный выстрел, Эндер-выстрел, Гнев призывателя, Удар молнии</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Сокровищные</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="дневная защита" data-items="броня, enchantments encore">
+                  <div class="enchant-name">ДНЕВНАЯ ЗАЩИТА IV</div>
+                  <div class="enchant-items">Предметы: Броня</div>
+                  <div class="enchant-effect">Вдвое сильнее обычной защиты, но работает только днём (Верхний мир).</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Защита от шипов, Ночная защита, Защита Незера, Защита Края, Защита, Огнеупорность, Взрывоустойчивость, Защита от снарядов, Защита от иссушения</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="ночная защита" data-items="броня, enchantments encore">
+                  <div class="enchant-name">НОЧНАЯ ЗАЩИТА IV</div>
+                  <div class="enchant-items">Предметы: Броня</div>
+                  <div class="enchant-effect">Вдвое сильнее обычной защиты, но работает только ночью (Верхний мир).</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Защита от шипов, Дневная защита, Защита Незера, Защита Края, Защита, Огнеупорность, Взрывоустойчивость, Защита от снарядов, Защита от иссушения</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="защита незера" data-items="броня, enchantments encore">
+                  <div class="enchant-name">ЗАЩИТА НЕЗЕРА IV</div>
+                  <div class="enchant-items">Предметы: Броня</div>
+                  <div class="enchant-effect">Вдвое сильнее обычной защиты, но работает только в Незере.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Защита от шипов, Ночная защита, Дневная защита, Защита Края, Защита, Огнеупорность, Взрывоустойчивость, Защита от снарядов, Защита от иссушения</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="защита края" data-items="броня, enchantments encore">
+                  <div class="enchant-name">ЗАЩИТА КРАЯ IV</div>
+                  <div class="enchant-items">Предметы: Броня</div>
+                  <div class="enchant-effect">Вдвое сильнее обычной защиты, но работает только в Крае.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Защита от шипов, Ночная защита, Защита Незера, Дневная защита, Защита, Огнеупорность, Взрывоустойчивость, Защита от снарядов, Защита от иссушения</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="сплав крипера" data-items="нагрудники, enchantments encore">
+                  <div class="enchant-name">СПЛАВ КРИПЕРА III</div>
+                  <div class="enchant-items">Предметы: Нагрудники</div>
+                  <div class="enchant-effect">Вызывает взрыв, когда вас ударили.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Пуленепробиваемость, Огненный сплав, Ледяной сплав, Сплав тьмы, Панцирь шалкера</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Сундуки/добыча, Торговля у жителей (книги), Сокровищные</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="огненный сплав" data-items="нагрудники, enchantments encore">
+                  <div class="enchant-name">ОГНЕННЫЙ СПЛАВ III</div>
+                  <div class="enchant-items">Предметы: Нагрудники</div>
+                  <div class="enchant-effect">Поджигает атакующих.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Пуленепробиваемость, Сплав крипера, Ледяной сплав, Сплав тьмы, Панцирь шалкера, Ocean Heart</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Сундуки/добыча, Торговля у жителей (книги), Сокровищные</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="ледяной сплав" data-items="нагрудники, enchantments encore">
+                  <div class="enchant-name">ЛЕДЯНОЙ СПЛАВ III</div>
+                  <div class="enchant-items">Предметы: Нагрудники</div>
+                  <div class="enchant-effect">Замораживает атакующих.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Пуленепробиваемость, Огненный сплав, Сплав крипера, Сплав тьмы, Панцирь шалкера, Ocean Heart</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Сундуки/добыча, Торговля у жителей (книги), Сокровищные</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="сплав тьмы" data-items="нагрудники, enchantments encore">
+                  <div class="enchant-name">СПЛАВ ТЬМЫ III</div>
+                  <div class="enchant-items">Предметы: Нагрудники</div>
+                  <div class="enchant-effect">Накладывает на атакующих эффект «Тьма».</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Пуленепробиваемость, Огненный сплав, Ледяной сплав, Сплав крипера, Панцирь шалкера</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Сундуки/добыча, Торговля у жителей (книги), Сокровищные</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="панцирь шалкера" data-items="нагрудники, enchantments encore">
+                  <div class="enchant-name">ПАНЦИРЬ ШАЛКЕРА I</div>
+                  <div class="enchant-items">Предметы: Нагрудники</div>
+                  <div class="enchant-effect">Фейерверки, трезубцы и (спектральные) стрелы, летящие в носителя, падают на землю, если он стоит неподвижно.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Пуленепробиваемость, Огненный сплав, Ледяной сплав, Сплав тьмы, Сплав крипера</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="кроличий прыжок" data-items="поножи, enchantments encore">
+                  <div class="enchant-name">КРОЛИЧИЙ ПРЫЖОК III</div>
+                  <div class="enchant-items">Предметы: Поножи</div>
+                  <div class="enchant-effect">Позволяет прыгать выше.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Эндерскейп, Проворство</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Сокровищные</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="скорость в крае" data-items="ботинки, enchantments encore">
+                  <div class="enchant-name">СКОРОСТЬ В КРАЕ III</div>
+                  <div class="enchant-items">Предметы: Ботинки</div>
+                  <div class="enchant-effect">Увеличивает скорость передвижения в Крае.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Плащ невидимости, Скорость души, Скорость по тропе, Соник, Скорость по песку, Стрейф, Листопрыгун, Web Walker</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="скорость по тропе" data-items="ботинки, enchantments encore">
+                  <div class="enchant-name">СКОРОСТЬ ПО ТРОПЕ III</div>
+                  <div class="enchant-items">Предметы: Ботинки</div>
+                  <div class="enchant-effect">Увеличивает скорость передвижения по блокам тропы.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Плащ невидимости, Скорость души, Соник, Скорость по песку, Скорость в Крае, Стрейф, Листопрыгун, Web Walker</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="скорость по песку" data-items="ботинки, enchantments encore">
+                  <div class="enchant-name">СКОРОСТЬ ПО ПЕСКУ III</div>
+                  <div class="enchant-items">Предметы: Ботинки</div>
+                  <div class="enchant-effect">Увеличивает скорость передвижения по песку.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Плащ невидимости, Скорость души, Скорость в Крае, Скорость по тропе, Соник, Стрейф, Листопрыгун, Web Walker</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="хрустящий хлеб" data-items="щиты, enchantments encore">
+                  <div class="enchant-name">ХРУСТЯЩИЙ ХЛЕБ III</div>
+                  <div class="enchant-items">Предметы: Щиты</div>
+                  <div class="enchant-effect">Даёт эффект «Насыщение», пока предмет экипирован.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Очищение, Омоложение, Закалка, Зловещее исцеление</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="танец урожая" data-items="ботинки, enchantments encore">
+                  <div class="enchant-name">ТАНЕЦ УРОЖАЯ I</div>
+                  <div class="enchant-items">Предметы: Ботинки</div>
+                  <div class="enchant-effect">Танцуйте в приседе, чтобы ускорить рост культур вокруг.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Лавоход, Летняя поступь, Травоход, Электроход, Ледоход, Подводная ходьба</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные, Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="bow" data-rarity="common" data-name="эндер-выстрел" data-items="арбалеты, луки, enchantments encore">
+                  <div class="enchant-name">ЭНДЕР-ВЫСТРЕЛ I</div>
+                  <div class="enchant-items">Предметы: Арбалеты, Луки</div>
+                  <div class="enchant-effect">Случайно телепортирует поражённую цель по поверхности.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Бесконечность, Подрывник, Жало, Кузнечный выстрел, Гнев призывателя, Удар молнии, Имплозия, Вспышка</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="эндерскейп" data-items="поножи, enchantments encore">
+                  <div class="enchant-name">ЭНДЕРСКЕЙП I</div>
+                  <div class="enchant-items">Предметы: Поножи</div>
+                  <div class="enchant-effect">При ударе по поверхности случайно телепортирует вас в радиусе 5 блоков.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Проворство, Кроличий прыжок</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="bow" data-rarity="common" data-name="гнев призывателя" data-items="арбалеты, enchantments encore">
+                  <div class="enchant-name">ГНЕВ ПРИЗЫВАТЕЛЯ I</div>
+                  <div class="enchant-items">Предметы: Арбалеты</div>
+                  <div class="enchant-effect">Стрелы призывают клыки призывателя при попадании в блок.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Быстрая перезарядка, Бесконечность, Жало, Удар молнии, Кузнечный выстрел, Эндер-выстрел, Имплозия, Вспышка</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="bow" data-rarity="common" data-name="кузнечный выстрел" data-items="арбалеты, луки, enchantments encore">
+                  <div class="enchant-name">КУЗНЕЧНЫЙ ВЫСТРЕЛ I</div>
+                  <div class="enchant-items">Предметы: Арбалеты, Луки</div>
+                  <div class="enchant-effect">Стрелы призывают падающие наковальни при попадании в блок.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Быстрая перезарядка, Бесконечность, Жало, Удар молнии, Гнев призывателя, Эндер-выстрел, Имплозия, Вспышка</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="закалка" data-items="щиты, enchantments encore">
+                  <div class="enchant-name">ЗАКАЛКА V</div>
+                  <div class="enchant-items">Предметы: Щиты</div>
+                  <div class="enchant-effect">Даёт дополнительную броню, пока предмет экипирован.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Хрустящий хлеб, Омоложение, Очищение, Зловещее исцеление</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="bow" data-rarity="common" data-name="угроза фантомов" data-items="арбалеты, луки, enchantments encore">
+                  <div class="enchant-name">УГРОЗА ФАНТОМОВ V</div>
+                  <div class="enchant-items">Предметы: Арбалеты, Луки</div>
+                  <div class="enchant-effect">Увеличивает урон по фантомам.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> —</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="other" data-rarity="common" data-name="иглобрюх" data-items="pufferfish, enchantments encore">
+                  <div class="enchant-name">ИГЛОБРЮХ I</div>
+                  <div class="enchant-items">Предметы: Pufferfish</div>
+                  <div class="enchant-effect">С шансом призывает иглобрюха, если цель находится в воде.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Тягун, Громовержец, Обмен, Зловещий дождь, Морской бриз</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="tool" data-rarity="common" data-name="обжорство" data-items="инструменты, enchantments encore">
+                  <div class="enchant-name">ОБЖОРСТВО V</div>
+                  <div class="enchant-items">Предметы: Инструменты</div>
+                  <div class="enchant-effect">Притягивает предметы в радиусе 2–10 блоков (по уровню).</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Клешня краба, Проклятие утилизации</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Сокровищные</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="other" data-rarity="common" data-name="мастер на все руки" data-items="любой зачаровываемый, enchantments encore">
+                  <div class="enchant-name">МАСТЕР НА ВСЕ РУКИ I</div>
+                  <div class="enchant-items">Предметы: Любой зачаровываемый</div>
+                  <div class="enchant-effect">Снижает стоимость ремонта.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Починка, Жертва, Curse of Crystal, Safekeep</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (книги), Торговля у жителей (предметы)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="other" data-rarity="common" data-name="жертва" data-items="любой зачаровываемый, enchantments encore">
+                  <div class="enchant-name">ЖЕРТВА V</div>
+                  <div class="enchant-items">Предметы: Любой зачаровываемый</div>
+                  <div class="enchant-effect">Чинит инструменты/броню, когда носителя бьют существа.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Починка, Мастер на все руки, Safekeep, Curse of Crystal</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные, Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="common" data-name="пиявка" data-items="мечи, топоры, трезубцы, булавы, enchantments encore">
+                  <div class="enchant-name">ПИЯВКА I</div>
+                  <div class="enchant-items">Предметы: Мечи, Топоры, Трезубцы, Булавы</div>
+                  <div class="enchant-effect">Восстанавливает здоровье при ударах по существам.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> —</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Сокровищные</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="ночное зрение" data-items="шлемы, enchantments encore">
+                  <div class="enchant-name">НОЧНОЕ ЗРЕНИЕ I</div>
+                  <div class="enchant-items">Предметы: Шлемы</div>
+                  <div class="enchant-effect">Даёт «Ночное зрение» ночью или при уровне света 5 и ниже.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Корона героя</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Торговля у жителей (предметы)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="common" data-name="усмиритель" data-items="мечи, булавы, enchantments encore">
+                  <div class="enchant-name">УСМИРИТЕЛЬ I</div>
+                  <div class="enchant-items">Предметы: Мечи, Булавы</div>
+                  <div class="enchant-effect">С шансом делает цель безобидной на короткое время.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Блок, Любые чары «Аспект»</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Сокровищные, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="common" data-name="бич боссов" data-items="топоры, мечи, булавы, трезубцы, enchantments encore">
+                  <div class="enchant-name">БИЧ БОССОВ V</div>
+                  <div class="enchant-items">Предметы: Топоры, Мечи, Булавы, Трезубцы</div>
+                  <div class="enchant-effect">Наносит больше урона боссам.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Бич порождённых Незером, Бич налётчиков, Бич порождённых Краем, Стремительный удар, Острота, Небесная кара, Бич членистоногих, Пронзатель, Плотность, Пробитие, Blunt</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="common" data-name="бич налётчиков" data-items="топоры, мечи, булавы, трезубцы, enchantments encore">
+                  <div class="enchant-name">БИЧ НАЛЁТЧИКОВ V</div>
+                  <div class="enchant-items">Предметы: Топоры, Мечи, Булавы, Трезубцы</div>
+                  <div class="enchant-effect">Наносит больше урона мобам рейда.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Бич порождённых Незером, Бич боссов, Бич порождённых Краем, Стремительный удар, Острота, Небесная кара, Бич членистоногих, Пронзатель, Плотность, Пробитие, Blunt</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="common" data-name="бич порождённых незером" data-items="топоры, мечи, булавы, трезубцы, enchantments encore">
+                  <div class="enchant-name">БИЧ ПОРОЖДЁННЫХ НЕЗЕРОМ V</div>
+                  <div class="enchant-items">Предметы: Топоры, Мечи, Булавы, Трезубцы</div>
+                  <div class="enchant-effect">Наносит больше урона мобам Незера.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Бич боссов, Бич налётчиков, Бич порождённых Краем, Стремительный удар, Острота, Небесная кара, Бич членистоногих, Пронзатель, Плотность, Пробитие, Blunt</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="common" data-name="бич порождённых краем" data-items="топоры, мечи, булавы, трезубцы, enchantments encore">
+                  <div class="enchant-name">БИЧ ПОРОЖДЁННЫХ КРАЕМ V</div>
+                  <div class="enchant-items">Предметы: Топоры, Мечи, Булавы, Трезубцы</div>
+                  <div class="enchant-effect">Наносит больше урона мобам Края.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Бич боссов, Бич налётчиков, Бич порождённых Незером, Стремительный удар, Острота, Небесная кара, Бич членистоногих, Пронзатель, Плотность, Пробитие</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="common" data-name="аспект заражения" data-items="мечи, булавы, enchantments encore">
+                  <div class="enchant-name">АСПЕКТ ЗАРАЖЕНИЯ II</div>
+                  <div class="enchant-items">Предметы: Мечи, Булавы</div>
+                  <div class="enchant-effect">Накладывает эффект «Заражение» на цель.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Блок, Любые чары «Аспект», Усмиритель</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="common" data-name="аспект ветра" data-items="мечи, булавы, enchantments encore">
+                  <div class="enchant-name">АСПЕКТ ВЕТРА II</div>
+                  <div class="enchant-items">Предметы: Мечи, Булавы</div>
+                  <div class="enchant-effect">wind charges hit entities away</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Блок, Любые чары «Аспект», Усмиритель, Heavy</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="common" data-name="аспект левитации" data-items="мечи, булавы, enchantments encore">
+                  <div class="enchant-name">АСПЕКТ ЛЕВИТАЦИИ II</div>
+                  <div class="enchant-items">Предметы: Мечи, Булавы</div>
+                  <div class="enchant-effect">Накладывает «Левитацию» на цель.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Блок, Любые чары «Аспект», Усмиритель, Heavy</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="common" data-name="аспект сочения" data-items="мечи, булавы, enchantments encore">
+                  <div class="enchant-name">АСПЕКТ СОЧЕНИЯ II</div>
+                  <div class="enchant-items">Предметы: Мечи, Булавы</div>
+                  <div class="enchant-effect">Накладывает эффект «Сочение» на цель.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Блок, Любые чары «Аспект», Усмиритель</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="common" data-name="аспект яда" data-items="мечи, булавы, enchantments encore">
+                  <div class="enchant-name">АСПЕКТ ЯДА II</div>
+                  <div class="enchant-items">Предметы: Мечи, Булавы</div>
+                  <div class="enchant-effect">Накладывает «Отравление» на цель.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Блок, Любые чары «Аспект», Усмиритель</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="common" data-name="аспект замедления" data-items="мечи, булавы, enchantments encore">
+                  <div class="enchant-name">АСПЕКТ ЗАМЕДЛЕНИЯ II</div>
+                  <div class="enchant-items">Предметы: Мечи, Булавы</div>
+                  <div class="enchant-effect">Applies slowness effect to hit entities</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Блок, Любые чары «Аспект», Усмиритель</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="common" data-name="аспект слабости" data-items="мечи, булавы, enchantments encore">
+                  <div class="enchant-name">АСПЕКТ СЛАБОСТИ II</div>
+                  <div class="enchant-items">Предметы: Мечи, Булавы</div>
+                  <div class="enchant-effect">Накладывает «Слабость» на цель.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Блок, Любые чары «Аспект», Усмиритель</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="common" data-name="аспект плетения" data-items="мечи, булавы, enchantments encore">
+                  <div class="enchant-name">АСПЕКТ ПЛЕТЕНИЯ II</div>
+                  <div class="enchant-items">Предметы: Мечи, Булавы</div>
+                  <div class="enchant-effect">Накладывает эффект «Плетение» на цель.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Блок, Любые чары «Аспект», Усмиритель</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги), Arachne Boss Drop (Katters Structures)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="common" data-name="аспект иссушения" data-items="мечи, булавы, enchantments encore">
+                  <div class="enchant-name">АСПЕКТ ИССУШЕНИЯ II</div>
+                  <div class="enchant-items">Предметы: Мечи, Булавы</div>
+                  <div class="enchant-effect">Накладывает «Иссушение» на цель.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Блок, Любые чары «Аспект», Усмиритель</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="common" data-name="аспект голода" data-items="мечи, булавы, enchantments encore">
+                  <div class="enchant-name">АСПЕКТ ГОЛОДА II</div>
+                  <div class="enchant-items">Предметы: Мечи, Булавы</div>
+                  <div class="enchant-effect">Накладывает «Голод» на поражённые существа.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Блок, Любые чары «Аспект», Усмиритель</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="bow" data-rarity="rare" data-name="подрывник" data-items="арбалеты, луки, enchantments encore">
+                  <div class="enchant-name">ПОДРЫВНИК II</div>
+                  <div class="enchant-items">Предметы: Арбалеты, Луки</div>
+                  <div class="enchant-effect">Стрелы взрываются при попадании в существо.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Бесконечность, Жало, Кузнечный выстрел, Эндер-выстрел, Гнев призывателя, Удар молнии, Имплозия, Вспышка</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="пуленепробиваемость" data-items="броня, enchantments encore">
+                  <div class="enchant-name">ПУЛЕНЕПРОБИВАЕМОСТЬ I</div>
+                  <div class="enchant-items">Предметы: Броня</div>
+                  <div class="enchant-effect">С шансом 10% защищает носителя от снарядов шалкера.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Сплав крипера, Огненный сплав, Ледяной сплав, Сплав тьмы</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="зловещее исцеление" data-items="щиты, enchantments encore">
+                  <div class="enchant-name">ЗЛОВЕЩЕЕ ИСЦЕЛЕНИЕ I</div>
+                  <div class="enchant-items">Предметы: Щиты</div>
+                  <div class="enchant-effect">С шансом 60% создаёт облако исцеления при получении урона, если у вас 3,5 сердца или меньше.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Хрустящий хлеб, Омоложение, Закалка, Очищение</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="rare" data-name="зловещий дождь" data-items="трезубцы, enchantments encore">
+                  <div class="enchant-name">ЗЛОВЕЩИЙ ДОЖДЬ I</div>
+                  <div class="enchant-items">Предметы: Трезубцы</div>
+                  <div class="enchant-effect">Призывает зловещие снаряды, когда снаряд приземляется.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Тягун, Громовержец, Обмен, Иглобрюх, Морской бриз</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="rare" data-name="обмен" data-items="трезубцы, enchantments encore">
+                  <div class="enchant-name">ОБМЕН I</div>
+                  <div class="enchant-items">Предметы: Трезубцы</div>
+                  <div class="enchant-effect">Меняет вас местами с поражённой целью.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Тягун, Громовержец, Зловещий дождь, Иглобрюх, Морской бриз</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="tool" data-rarity="common" data-name="спешка" data-items="инструменты, enchantments encore">
+                  <div class="enchant-name">СПЕШКА III</div>
+                  <div class="enchant-items">Предметы: Инструменты</div>
+                  <div class="enchant-effect">Даёт эффект «Спешка», пока предмет в основной руке.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Удача</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные, Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="безопасная посадка" data-items="элитра, enchantments encore">
+                  <div class="enchant-name">БЕЗОПАСНАЯ ПОСАДКА V</div>
+                  <div class="enchant-items">Предметы: Элитра</div>
+                  <div class="enchant-effect">Увеличивает безопасную высоту приземления.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Амортизатор</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="tool" data-rarity="common" data-name="знаток блоков" data-items="инструменты, enchantments encore">
+                  <div class="enchant-name">ЗНАТОК БЛОКОВ III</div>
+                  <div class="enchant-items">Предметы: Инструменты</div>
+                  <div class="enchant-effect">Даёт больше опыта за добычу блоков.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Знаток мобов</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="other" data-rarity="common" data-name="знаток мобов" data-items="оружие ближнего боя, enchantments encore">
+                  <div class="enchant-name">ЗНАТОК МОБОВ III</div>
+                  <div class="enchant-items">Предметы: Оружие ближнего боя</div>
+                  <div class="enchant-effect">Даёт больше опыта за убийство существ.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Знаток блоков</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="other" data-rarity="common" data-name="маковый мир" data-items="оружие ближнего боя, enchantments encore">
+                  <div class="enchant-name">МАКОВЫЙ МИР I</div>
+                  <div class="enchant-items">Предметы: Оружие ближнего боя</div>
+                  <div class="enchant-effect">Железные големы не злятся на вас, если их ударить.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Карманник, Heavy</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="карманник" data-items="нагрудники, enchantments encore">
+                  <div class="enchant-name">КАРМАННИК I</div>
+                  <div class="enchant-items">Предметы: Нагрудники</div>
+                  <div class="enchant-effect">ПКМ — украсть предметы из инвентаря жителя.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Маковый мир</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="омоложение" data-items="щиты, enchantments encore">
+                  <div class="enchant-name">ОМОЛОЖЕНИЕ V</div>
+                  <div class="enchant-items">Предметы: Щиты</div>
+                  <div class="enchant-effect">Увеличивает максимальное здоровье.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Хрустящий хлеб, Очищение, Закалка, Зловещее исцеление</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="искатель" data-items="шлемы, enchantments encore">
+                  <div class="enchant-name">ИСКАТЕЛЬ III</div>
+                  <div class="enchant-items">Предметы: Шлемы</div>
+                  <div class="enchant-effect">Подсвечивает предметы в радиусе 4–12 блоков (в зависимости от уровня).</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> —</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные, Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="common" data-name="морской бриз" data-items="трезубцы, enchantments encore">
+                  <div class="enchant-name">МОРСКОЙ БРИЗ III</div>
+                  <div class="enchant-items">Предметы: Трезубцы</div>
+                  <div class="enchant-effect">Ветровые заряды отбрасывают существ, поражённых брошенным трезубцем.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Тягун, Громовержец, Обмен, Зловещий дождь, Иглобрюх</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные, Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="rare" data-name="громовержец" data-items="булавы, enchantments encore">
+                  <div class="enchant-name">ГРОМОВЕРЖЕЦ I</div>
+                  <div class="enchant-items">Предметы: Булавы</div>
+                  <div class="enchant-effect">Призывает молнию, если существо было ударено игроком, упавшим минимум на 8 блоков.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> —</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="соник" data-items="ботинки, enchantments encore">
+                  <div class="enchant-name">СОНИК III</div>
+                  <div class="enchant-items">Предметы: Ботинки</div>
+                  <div class="enchant-effect">Ускоряет ходьбу, но замедляет приседание.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Плащ невидимости, Скорость души, Скорость в Крае, Скорость по тропе, Скорость по песку, Стрейф, Листопрыгун, Web Walker</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Сокровищные</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="tool" data-rarity="rare" data-name="клешня краба" data-items="инструменты, enchantments encore">
+                  <div class="enchant-name">КЛЕШНЯ КРАБА III</div>
+                  <div class="enchant-items">Предметы: Инструменты</div>
+                  <div class="enchant-effect">Увеличивает дальность взаимодействия с блоками/существами.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Проклятие дальности, Обжорство</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="рост" data-items="нагрудник, элитры, wolf/конская броня, enchantments encore">
+                  <div class="enchant-name">РОСТ V</div>
+                  <div class="enchant-items">Предметы: Нагрудник, Элитры, Wolf/Конская броня</div>
+                  <div class="enchant-effect">Увеличивает размер игрока и высоту шага.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Уменьшение</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="уменьшение" data-items="нагрудники, элитры, wolf/конская броня, упряжь, enchantments encore">
+                  <div class="enchant-name">УМЕНЬШЕНИЕ V</div>
+                  <div class="enchant-items">Предметы: Нагрудники, Элитры, Wolf/Конская броня, Упряжь</div>
+                  <div class="enchant-effect">Decreases entity scale and step height</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Рост</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="пегас" data-items="конская броня, enchantments encore">
+                  <div class="enchant-name">ПЕГАС I</div>
+                  <div class="enchant-items">Предметы: Конская броня</div>
+                  <div class="enchant-effect">Лошадь взлетает до 30 блоков вверх при езде. Слезая, вы получаете «Медленное падение» для безопасной посадки.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Лунная походка</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="other" data-rarity="rare" data-name="стремительный удар" data-items="оружие ближнего боя, enchantments encore">
+                  <div class="enchant-name">СТРЕМИТЕЛЬНЫЙ УДАР V</div>
+                  <div class="enchant-items">Предметы: Оружие ближнего боя</div>
+                  <div class="enchant-effect">Увеличивает скорость атаки.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Бич порождённых Незером, Бич налётчиков, Бич боссов, Острота, Небесная кара, Бич членистоногих, Пронзатель, Плотность, Пробитие, Heavy</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="лунная походка" data-items="элитра, конская броня, enchantments encore">
+                  <div class="enchant-name">ЛУННАЯ ПОХОДКА III</div>
+                  <div class="enchant-items">Предметы: Элитра, Конская броня</div>
+                  <div class="enchant-effect">Уменьшает гравитацию, пока предмет экипирован.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> —</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Торговля у жителей (книги), Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="плащ невидимости" data-items="ботинки, enchantments encore">
+                  <div class="enchant-name">ПЛАЩ НЕВИДИМОСТИ I</div>
+                  <div class="enchant-items">Предметы: Ботинки</div>
+                  <div class="enchant-effect">Приседание делает вас невидимым.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Соник, Скорость души, Скорость в Крае, Скорость по тропе, Скорость по песку, Стрейф, Листопрыгун</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Торговля у жителей (книги), Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="очищение" data-items="щиты, enchantments encore">
+                  <div class="enchant-name">ОЧИЩЕНИЕ I</div>
+                  <div class="enchant-items">Предметы: Щиты</div>
+                  <div class="enchant-effect">Снимает все эффекты, но расходует прочность.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Хрустящий хлеб, Омоложение, Закалка, Зловещее исцеление</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Торговля у жителей (книги), Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="лавоход" data-items="ботинки, enchantments encore">
+                  <div class="enchant-name">ЛАВОХОД II</div>
+                  <div class="enchant-items">Предметы: Ботинки</div>
+                  <div class="enchant-effect">Преобразует лаву в магмовые блоки, когда вы по ней идёте.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Танец урожая, Летняя поступь, Травоход, Электроход, Ледоход, Подводная ходьба</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Торговля у жителей (книги), Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="травоход" data-items="ботинки, enchantments encore">
+                  <div class="enchant-name">ТРАВОХОД II</div>
+                  <div class="enchant-items">Предметы: Ботинки</div>
+                  <div class="enchant-effect">Преобразует землю в дёрн, когда вы по ней идёте.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Лавоход, Летняя поступь, Танец урожая, Электроход, Ледоход, Подводная ходьба</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Торговля у жителей (книги), Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="летняя поступь" data-items="ботинки, enchantments encore">
+                  <div class="enchant-name">ЛЕТНЯЯ ПОСТУПЬ II</div>
+                  <div class="enchant-items">Предметы: Ботинки</div>
+                  <div class="enchant-effect">Топит снег, когда вы по нему идёте.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Лавоход, Танец урожая, Травоход, Электроход, Ледоход, Подводная ходьба</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Торговля у жителей (книги), Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="электроход" data-items="ботинки, enchantments encore">
+                  <div class="enchant-name">ЭЛЕКТРОХОД I</div>
+                  <div class="enchant-items">Предметы: Ботинки</div>
+                  <div class="enchant-effect">Коротко запитывает редстоун, когда вы проходите по нему.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Лавоход, Летняя поступь, Травоход, Танец урожая, Ледоход, Подводная ходьба</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Торговля у жителей (книги), Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="rare" data-name="проклятие сокрытия" data-items="мечи, enchantments encore">
+                  <div class="enchant-name">ПРОКЛЯТИЕ СОКРЫТИЯ I</div>
+                  <div class="enchant-items">Предметы: Мечи</div>
+                  <div class="enchant-effect">Поражённые существа становятся невидимыми.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> —</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Снаряжение мобов, Сундуки/добыча, Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="tool" data-rarity="rare" data-name="проклятие дальности" data-items="инструменты, enchantments encore">
+                  <div class="enchant-name">ПРОКЛЯТИЕ ДАЛЬНОСТИ I</div>
+                  <div class="enchant-items">Предметы: Инструменты</div>
+                  <div class="enchant-effect">Уменьшает дальность взаимодействия с блоками/существами.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Клешня краба</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Снаряжение мобов, Сундуки/добыча, Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="other" data-rarity="rare" data-name="проклятие хрупкости" data-items="оружие ближнего боя, enchantments encore">
+                  <div class="enchant-name">ПРОКЛЯТИЕ ХРУПКОСТИ I</div>
+                  <div class="enchant-items">Предметы: Оружие ближнего боя</div>
+                  <div class="enchant-effect">Быстрее расходует прочность.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> —</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Снаряжение мобов, Сундуки/добыча, Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="tool" data-rarity="rare" data-name="проклятие утилизации" data-items="инструменты, enchantments encore">
+                  <div class="enchant-name">ПРОКЛЯТИЕ УТИЛИЗАЦИИ I</div>
+                  <div class="enchant-items">Предметы: Инструменты</div>
+                  <div class="enchant-effect">Уничтожает предметы в радиусе 3 блоков.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Обжорство</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Снаряжение мобов, Сундуки/добыча, Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="tool" data-rarity="rare" data-name="проклятие случайности" data-items="all инструменты, enchantments encore">
+                  <div class="enchant-name">ПРОКЛЯТИЕ СЛУЧАЙНОСТИ I</div>
+                  <div class="enchant-items">Предметы: All Инструменты</div>
+                  <div class="enchant-effect">Перебрасывает зачарования оружия при каждом ударе.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> —</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Снаряжение мобов, Сундуки/добыча, Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="rare" data-name="проклятие смерти" data-items="мечи, enchantments encore">
+                  <div class="enchant-name">ПРОКЛЯТИЕ СМЕРТИ I</div>
+                  <div class="enchant-items">Предметы: Мечи</div>
+                  <div class="enchant-effect">Небольшой шанс умереть при атаке.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> —</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Снаряжение мобов, Сундуки/добыча, Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="sword" data-rarity="rare" data-name="проклятие бриза" data-items="мечи, enchantments encore">
+                  <div class="enchant-name">ПРОКЛЯТИЕ БРИЗА I</div>
+                  <div class="enchant-items">Предметы: Мечи</div>
+                  <div class="enchant-effect">При атаке накладывает эффект «Ветровой заряд» на цель.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> —</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Снаряжение мобов, Сундуки/добыча, Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="rare" data-name="проклятие заводилы" data-items="броня, enchantments encore">
+                  <div class="enchant-name">ПРОКЛЯТИЕ ЗАВОДИЛЫ I</div>
+                  <div class="enchant-items">Предметы: Броня</div>
+                  <div class="enchant-effect">Наносит урон носителю, если он не двигается.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> —</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Снаряжение мобов, Сундуки/добыча, Сокровищные</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="bow" data-rarity="rare" data-name="жало" data-items="арбалеты, enchantments encore">
+                  <div class="enchant-name">ЖАЛО I</div>
+                  <div class="enchant-items">Предметы: Арбалеты</div>
+                  <div class="enchant-effect">Призывает злую пчелу при попадании по существу.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Бесконечность, Подрывник, Эндер-выстрел, Кузнечный выстрел, Гнев призывателя, Удар молнии, Имплозия, Вспышка</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="bow" data-rarity="rare" data-name="удар молнии" data-items="арбалеты, луки, enchantments encore">
+                  <div class="enchant-name">УДАР МОЛНИИ I</div>
+                  <div class="enchant-items">Предметы: Арбалеты, Луки</div>
+                  <div class="enchant-effect">С шансом призывает молнию при ударе по цели, если она видит небо.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Бесконечность, Подрывник, Эндер-выстрел, Кузнечный выстрел, Гнев призывателя, Жало, Имплозия, Вспышка</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Ситуативные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="armor" data-rarity="common" data-name="освещение" data-items="шлемы, enchantments encore">
+                  <div class="enchant-name">ОСВЕЩЕНИЕ III</div>
+                  <div class="enchant-items">Предметы: Шлемы</div>
+                  <div class="enchant-effect">Освещает область вокруг вас, если над головой нет блока.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Ночное зрение</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+
+        <div class="enchant-card" data-type="bow" data-rarity="common" data-name="восполнение" data-items="арбалеты, луки, enchantments encore">
+                  <div class="enchant-name">ВОСПОЛНЕНИЕ I</div>
+                  <div class="enchant-items">Предметы: Арбалеты, Луки</div>
+                  <div class="enchant-effect">С шансом 50% не расходует стрелу (обычную/с зельем/спектральную) или фейерверк при выстреле.</div>
+                  <div class="enchant-conflicts"><span>Конфликты:</span> Бесконечность</div>
+                  <div class="enchant-obtain"><span>Где встречается:</span> Чародейский стол, Снаряжение мобов, Сундуки/добыча, Торговля у жителей (предметы), Торговля у жителей (книги)</div>
+                  <div class="enchant-source">Редкость: Обыкновенные • Пак: Enchantments Encore</div>
+                </div>
+        <!-- ====== /Enchantments Encore ====== -->
+
+
+        

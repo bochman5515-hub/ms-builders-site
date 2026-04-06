@@ -188,63 +188,15 @@
       .hero-title { font-size: 14px; }
     }
 
-    /* ===== рамки по редкости (id из конфига) ===== */
-    .enchant-card[data-rarity="legendary"] { border-color: #facc15; box-shadow: 0 0 18px rgba(250, 204, 21, 0.35); }
-    .enchant-card[data-rarity="epic"] { border-color: #a855f7; box-shadow: 0 0 18px rgba(168, 85, 247, 0.35); }
-    .enchant-card[data-rarity="rare"] { border-color: #38bdf8; box-shadow: 0 0 18px rgba(56, 189, 248, 0.35); }
-    .enchant-card[data-rarity="uncommon"] { border-color: #e7d3a1; box-shadow: 0 0 14px rgba(231, 211, 161, 0.25); }
-    .enchant-card[data-rarity="common"] { border-color: #e5e7eb; box-shadow: 0 0 10px rgba(229, 231, 235, 0.2); }
-    .enchant-card[data-rarity="special"] { border-color: #7f1d1d; box-shadow: 0 0 20px rgba(127, 29, 29, 0.45); }
-    .enchant-card[data-rarity="veryspecial"] { border-color: #111827; box-shadow: 0 0 18px rgba(17, 24, 39, 0.55); }
-    .enchant-card[data-rarity="curse"] { border-color: #dc2626; box-shadow: 0 0 22px rgba(220, 38, 38, 0.5); }
+    .enchant-card[data-pack="neo"] {
+      border-color: #a855f7;
+      box-shadow: 0 0 18px rgba(168,85,247,0.35);
+     }
 
-    /* ===== панель редкостей (НЕ в баннере, чтобы не пряталась) ===== */
-    .rarity-panel {
-      width: 100%;
-      margin: 0 auto 20px;
-      padding: 14px 14px 12px;
-      border: 1px solid rgba(148,163,184,0.35);
-      border-radius: 18px;
-      background: rgba(2,6,23,0.55);
-      backdrop-filter: blur(6px);
+    .enchant-card[data-pack="encore"] {
+      border-color: #facc15;
+      box-shadow: 0 0 18px rgba(250,204,21,0.35);
     }
-
-    .rarity-panel-title {
-      font-family: "Press Start 2P", system-ui;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #f9fafb;
-      margin-bottom: 12px;
-    }
-
-    .rarity-pills {
-      display: grid;
-      gap: 10px;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    }
-
-    .rarity-pill {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      padding: 10px 12px;
-      border-radius: 999px;
-      background: rgba(15,23,42,0.7);
-      border: 1px solid rgba(148,163,184,0.28);
-      color: #e5e7eb;
-      font-size: 13px;
-      line-height: 1.2;
-    }
-
-    .rarity-dot { width: 10px; height: 10px; border-radius: 999px; flex: 0 0 10px; }
-    .rarity-dot.common { background: #e5e7eb; }
-    .rarity-dot.uncommon { background: #e7d3a1; }
-    .rarity-dot.rare { background: #38bdf8; }
-    .rarity-dot.epic { background: #a855f7; }
-    .rarity-dot.legendary { background: #facc15; }
-    .rarity-dot.special { background: #7f1d1d; }
-    .rarity-dot.veryspecial { background: #111827; border: 1px solid rgba(255,255,255,0.18); }
   </style>
 </head>
 <body>
@@ -292,51 +244,36 @@
     <section class="page-section">
       <h2 class="section-title">ЧАРЫ СЕРВЕРА</h2>
 
-      <div class="rarity-panel">
-        <div class="rarity-panel-title">Редкость и шанс появления</div>
-        <div class="rarity-pills">
-          <div class="rarity-pill"><span class="rarity-dot common"></span><b>Обыкновенные</b> — стол: 30% · лут: 20% · с 1 ур.</div>
-          <div class="rarity-pill"><span class="rarity-dot uncommon"></span><b>Распространённые</b> — стол: 20% · лут: 20% · с 5 ур.</div>
-          <div class="rarity-pill"><span class="rarity-dot rare"></span><b>Ситуативные</b> — стол: 15% · лут: 20% · с 15 ур.</div>
-          <div class="rarity-pill"><span class="rarity-dot epic"></span><b>Образцовые</b> — стол: 10% · лут: 10% · с 16 ур.</div>
-          <div class="rarity-pill"><span class="rarity-dot legendary"></span><b>Вечные</b> — стол: 2% · лут: 5% · с 25 ур.</div>
-          <div class="rarity-pill"><span class="rarity-dot special"></span><b>Проклятые</b> — стол: 1% · лут: 5% · с 30 ур.</div>
-          <div class="rarity-pill"><span class="rarity-dot veryspecial"></span><b>Запретные</b> — стол: 0.5% · лут: 5% · с 30 ур.</div>
-        </div>
-      </div>
+      
 
       <div class="filter-bar">
+
         <label>
           Поиск:
-          <input id="enchant-search" class="filter-input" type="text" placeholder="Введите название чара или предмет..." />
+          <input id="enchant-search" class="filter-input" type="text" placeholder="Введите название..." />
         </label>
 
         <label>
-          Тип предмета:
+          Тип:
           <select id="enchant-type" class="filter-select">
             <option value="all">Все</option>
             <option value="sword">Меч</option>
             <option value="armor">Броня</option>
             <option value="tool">Инструменты</option>
-            <option value="bow">Лук / арбалет</option>
-            <option value="other">Прочее</option>
           </select>
         </label>
 
         <label>
-          Редкость:
-          <select id="enchant-rarity" class="filter-select">
+          Получение:
+          <select id="enchant-obtain" class="filter-select">
             <option value="all">Все</option>
-            <option value="common">Обыкновенные</option>
-            <option value="uncommon">Распространённые</option>
-            <option value="rare">Ситуативные</option>
-            <option value="epic">Образцовые</option>
-            <option value="legendary">Вечные</option>
-            <option value="special">Проклятые</option>
-            <option value="veryspecial">Запретные</option>
-            <option value="curse">Проклятия</option>
+            <option value="table">Чародейский стол</option>
+            <option value="loot">Сундуки</option>
+            <option value="villager">Жители</option>
+            <option value="mob">Мобы</option>
           </select>
         </label>
+
       </div>
 
         <!-- ====== Enchantments Encore (новые чары) ====== -->
@@ -1443,41 +1380,37 @@
   </main>
 </div>
 
+  
 <script>
-  const searchInput = document.getElementById("enchant-search");
-  const typeSelect = document.getElementById("enchant-type");
-  const raritySelect = document.getElementById("enchant-rarity");
+const search = document.getElementById("enchant-search");
+const type = document.getElementById("enchant-type");
+const obtain = document.getElementById("enchant-obtain");
 
-  function getCards() {
-    return Array.from(document.querySelectorAll(".enchant-card"));
-  }
+const cards = document.querySelectorAll(".enchant-card");
 
-  function updateEnchantFilter() {
-    const q = searchInput.value.trim().toLowerCase();
-    const type = typeSelect.value;
-    const rarity = raritySelect.value;
+function filter() {
+  const s = search.value.toLowerCase();
+  const t = type.value;
+  const o = obtain.value;
 
-    getCards().forEach((card) => {
-      const name = (card.dataset.name || "").toLowerCase();
-      const items = (card.dataset.items || "").toLowerCase();
-      const cardType = card.dataset.type || "all";
-      const cardRarity = card.dataset.rarity || "all";
+  cards.forEach(card => {
+    const name = card.dataset.name || "";
+    const cardType = card.dataset.type;
+    const cardObtain = card.dataset.obtain;
 
-      let ok = true;
-      if (q && !name.includes(q) && !items.includes(q)) ok = false;
-      if (type !== "all" && cardType !== type) ok = false;
-      if (rarity !== "all" && cardRarity !== rarity) ok = false;
+    let visible = true;
 
-      card.style.display = ok ? "block" : "none";
-    });
-  }
+    if (s && !name.includes(s)) visible = false;
+    if (t !== "all" && cardType !== t) visible = false;
+    if (o !== "all" && !cardObtain.includes(o)) visible = false;
 
-  searchInput.addEventListener("input", updateEnchantFilter);
-  typeSelect.addEventListener("change", updateEnchantFilter);
-  raritySelect.addEventListener("change", updateEnchantFilter);
+    card.style.display = visible ? "block" : "none";
+  });
+}
 
-  updateEnchantFilter();
+search.oninput = filter;
+type.onchange = filter;
+obtain.onchange = filter;
 </script>
-
 </body>
 </html>

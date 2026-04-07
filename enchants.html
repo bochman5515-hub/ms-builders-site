@@ -134,7 +134,29 @@
     .filter-input:focus,
     .filter-select:focus { border-color: #38bdf8; }
 
-    .enchant-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .enchant-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media (max-width: 1200px) {
+      .enchant-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .enchant-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .enchant-grid {
+        grid-template-columns: 1fr;
+      }
+    }
 
     .enchant-card {
       background: rgba(15,23,42,0.95);
@@ -273,9 +295,9 @@
             <option value="mob">Мобы</option>
           </select>
         </label>
-
       </div>
-
+      <div class="enchant-grid">
+        
         <!-- ====== Enchantments Encore (новые чары) ====== -->
         <div class="enchant-card" data-type="tool" data-pack="encore" data-obtain="table villager" data-name="плуг">
           <div class="enchant-name">ПЛУГ III</div>
@@ -1380,6 +1402,7 @@
         <div class="enchant-source">Пак: Enchantments Encore</div>
         </div>
         <!-- ====== /Enchantments Encore ====== -->
+      </div>  
       </div>
     </section>
   </main>

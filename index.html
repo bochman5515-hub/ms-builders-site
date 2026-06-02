@@ -1,779 +1,1162 @@
+```html
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
-  <meta charset="UTF-8" />
-  <title>MS Builders</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="msb.png">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
 
-  <style>
-    * { box-sizing: border-box; }
-    .sidebar-icon {
-    width: 18px;
-    height: 18px;
-    display: block;
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z'/%3E%3C/svg%3E") center / contain no-repeat;
-    background-color: currentColor;
-    transition: transform 0.2s ease;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    .sidebar-collapsed .sidebar-icon {
-      transform: rotate(180deg);
-    }
+<title>MS Builders</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    
+<style>
 
-    body {
-      margin: 0;
-      font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: #0b0f19;
-      color: #e5e7eb;
-    }
-
-    .layout {
-      display: flex;
-      min-height: 100vh;
-    }
-
-    /* ===== ЛЕВАЯ ПАНЕЛЬ ===== */
-    .sidebar {
-      width: 260px;
-      background: #020617;
-      padding: 24px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      transition: width 0.2s ease, padding 0.2s ease;
-      border-right: 1px solid rgba(148,163,184,0.12);
-      overflow: hidden;
-    }
-
-    .logo-box {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo-box img {
-      width: 96px;
-      height: 96px;
-      border-radius: 10px;
-      object-fit: cover;
-    }
-
-    .sidebar-title {
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 1.3;
-    }
-
-    .sidebar-title span {
-      display: block;
-      font-size: 12px;
-      color: #9ca3af;
-      font-weight: 400;
-    }
-
-    .sidebar-nav {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 6px;
-    }
-
-    .sidebar-nav a {
-      color: #e5e7eb;
-      text-decoration: none;
-      font-size: 14px;
-      padding: 6px 0;
-      border-left: 3px solid transparent;
-      padding-left: 10px;
-      transition: 0.15s;
-    }
-
-    .sidebar-nav a:hover {
-      color: #38bdf8;
-      border-color: #38bdf8;
-    }
-
-    .sidebar-nav a.active {
-      color: #38bdf8;
-      border-color: #38bdf8;
-      font-weight: 600;
-    }
-
-    .sidebar-footer {
-      margin-top: auto;
-      font-size: 12px;
-      color: #9ca3af;
-      display: none;
-    }
-
-    .sidebar-collapsed .sidebar {
-      width: 0;
-      padding: 0;
-      border-right: none;
-    }
-
-    /* ===== ПРАВАЯ ЧАСТЬ ===== */
-    .content {
-      flex: 1;
-      background:
-        linear-gradient(to bottom, rgba(15,23,42,0.9), rgba(15,23,42,1)),
-        url("bg-stone.png");
-      background-size: auto, 128px 128px;
-      background-repeat: repeat;
-      padding-bottom: 40px;
-      padding-top: 0;
-    }
-
-    .hero {
-      position: relative;
-      height: 260px;
-      overflow: hidden;
-    }
-
-    .hero img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .hero-wave {
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      width: 100%;
-      height: 90px;
-      pointer-events: none;
-    }
-
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to right, rgba(15,23,42,0.72), transparent);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding-left: 40px;
-      gap: 10px;
-    }
-
-    .hero-title {
-      font-family: "Press Start 2P", system-ui;
-      font-size: 18px;
-      text-transform: uppercase;
-      color: #f9fafb;
-      text-shadow: 0 0 10px rgba(15,23,42,0.9);
-    }
-
-    .hero-subtitle {
-      font-size: 14px;
-      max-width: 520px;
-      color: #e5e7eb;
-      line-height: 1.45;
-    }
-
-    /* Кнопка-ссылка в хедере */
-    .hero-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 8px;
-      width: fit-content;
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 9px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.35);
-      background: rgba(2,6,23,0.45);
-      color: #e5e7eb;
-      transition: 0.15s;
-    }
-
-    .hero-cta:hover {
-      border-color: #38bdf8;
-      color: #e0f2fe;
-      transform: translateY(-1px);
-    }
-
-    .page-section {
-      margin: 32px auto 0;
-      max-width: 1200px;
-      padding: 0 24px;
-    }
-
-    .section-title {
-      font-family: "Press Start 2P", system-ui;
-      font-size: 16px;
-      text-transform: uppercase;
-      text-align: center;
-      padding: 12px 16px;
-      margin: 0 0 24px;
-      background: linear-gradient(90deg, #7c3aed, #ec4899);
-      color: #0b1120;
-      border-radius: 999px;
-      letter-spacing: 0.08em;
-    }
-
-    /* ===== ВЕРХНИЕ КАРТОЧКИ ===== */
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
-
-    .feature-card {
-      background: rgba(15,23,42,0.9);
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid rgba(148,163,184,0.35);
-      cursor: pointer;
-      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 18px 35px rgba(15,23,42,0.8);
-      border-color: #38bdf8;
-    }
-
-    .feature-card img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .feature-label {
-      padding: 10px 14px 12px;
-      text-align: center;
-      font-family: "Press Start 2P", system-ui;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      background: #020617;
-    }
-
-    /* ===== НИЖНИЕ ИКОНКИ ===== */
-    .icon-grid {
-      display: grid;
-      gap: 20px;
-      margin-top: 8px;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
-
-    @media (min-width: 1024px) {
-      .icon-grid {
-        max-width: 980px;
-        margin-left: auto;
-        margin-right: auto;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-    }
-
-    .icon-link { display: block; text-decoration: none; color: inherit; }
-    .icon-link:visited { color: inherit; }
-    .icon-link:hover .icon-title { color: #38bdf8; }
-    .icon-link:hover .icon-text { color: #e0f2fe; }
-
-    .icon-card {
-      background: rgba(15,23,42,0.9);
-      border-radius: 18px;
-      padding: 16px 14px 18px;
-      text-align: center;
-      border: 1px solid rgba(148,163,184,0.3);
-      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s;
-    }
-
-    .icon-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 14px 26px rgba(15,23,42,0.8);
-      border-color: #22d3ee;
-    }
-
-    .icon-card img {
-      width: 100%;
-      height: 110px;              /* высота как у превью */
-      object-fit: cover;          /* обрезка как у верхних */
-      border-radius: 12px;
-      margin: 0 0 12px 0;
-      display: block;
-      overflow: hidden;
-    }
-
-
-    /* на очень маленьких экранах чуть меньше */
-    @media (max-width: 420px) {
-      .icon-card img {
-        width: 92px;
-        height: 92px;
-      }
-    }
-
-
-    .icon-title {
-      font-family: "Press Start 2P", system-ui;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 6px;
-    }
-
-    .icon-text { font-size: 13px; color: #cbd5f5; }
-
-    /* ===== ГИРЛЯНДА ===== */
-    .garland-top {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 38px;
-      z-index: 80;
-      pointer-events: none;
-      opacity: 1;
-      transition: opacity 0.2s ease;
-    }
-
-    .garland-off .garland-top { opacity: 0; }
-    .garland-top svg { width: 100%; height: 38px; display: block; }
-
-    .garland-wire {
-      stroke: rgba(2, 6, 23, 0.95);
-      stroke-width: 3.5;
-      fill: none;
-      filter: drop-shadow(0 2px 0 rgba(0,0,0,0.45));
-    }
-
-    .bulb-hanger {
-      stroke: rgba(148,163,184,0.7);
-      stroke-width: 1.8;
-      filter: drop-shadow(0 1px 0 rgba(0,0,0,0.35));
-    }
-
-    .bulb {
-      opacity: 0.95;
-      filter: drop-shadow(0 2px 0 rgba(0,0,0,0.35));
-      animation: blink 1.5s infinite steps(2, end);
-    }
-
-    .bulb:nth-child(2n) { animation-delay: 0.2s; }
-    .bulb:nth-child(3n) { animation-delay: 0.35s; }
-    .bulb:nth-child(5n) { animation-delay: 0.55s; }
-
-    @keyframes blink {
-      0% { opacity: 0.35; filter: brightness(0.85); }
-      50% { opacity: 1; filter: brightness(1.25); }
-      100% { opacity: 0.35; filter: brightness(0.85); }
-    }
-
-    /* ===== КНОПКА СВОРАЧИВАНИЯ ПАНЕЛИ ===== */
-.sidebar-fab {
-  position: fixed;
-  left: 14px;
-  bottom: 14px;
-  z-index: 95;
-
-  width: 44px;
-  height: 44px;
-  border-radius: 999px;
-
-  border: 1px solid rgba(148,163,184,0.35);
-  background: rgba(2,6,23,0.78);
-  backdrop-filter: blur(8px);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  color: #e5e7eb;
-  cursor: pointer;
-  transition: border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-.sidebar-fab:hover {
-  border-color: #38bdf8;
-  color: #e0f2fe;
+html{
+    scroll-behavior:smooth;
 }
 
-/* сама стрелка */
-.sidebar-icon {
-  width: 18px;
-  height: 18px;
-  display: block;
-  background-color: currentColor;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z'/%3E%3C/svg%3E") center / contain no-repeat;
-  transition: transform 0.2s ease;
+body{
+
+    font-family:'Montserrat',sans-serif;
+
+    background:
+    radial-gradient(circle at top,#10213d 0%,#070b14 45%,#05070d 100%);
+
+    color:white;
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+    padding:18px;
+    padding-bottom:120px;
 }
 
-/* поворот при закрытой панели */
-.sidebar-collapsed .sidebar-icon {
-  transform: rotate(180deg);
+/* ===== Scrollbar ===== */
+
+::-webkit-scrollbar{
+    width:8px;
 }
 
+::-webkit-scrollbar-thumb{
+    background:#d4a63a;
+    border-radius:20px;
+}
 
-    .sidebar-fab span {
-      font-size: 20px;
-      line-height: 1;
-      display: block;
+/* ===== Container ===== */
+
+.container{
+    max-width:1500px;
+    margin:auto;
+}
+
+/* ===== TOPBAR ===== */
+
+.topbar{
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:18px 24px;
+
+    border-radius:26px;
+
+    background:rgba(10,15,28,.82);
+
+    border:1px solid rgba(255,255,255,.06);
+
+    backdrop-filter:blur(16px);
+
+    box-shadow:
+    0 0 40px rgba(0,0,0,.35),
+    inset 0 0 50px rgba(255,255,255,.02);
+
+    margin-bottom:34px;
+}
+
+.server-box{
+
+    display:flex;
+    align-items:center;
+
+    gap:16px;
+
+    cursor:pointer;
+}
+
+.server-box img{
+
+    width:48px;
+    height:48px;
+
+    border-radius:14px;
+}
+
+.server-info{
+    display:flex;
+    flex-direction:column;
+}
+
+.server-ip{
+
+    font-size:30px;
+    font-weight:800;
+}
+
+.server-ip span{
+    color:#8d99ae;
+}
+
+.server-version{
+
+    margin-top:2px;
+
+    font-size:13px;
+
+    color:#8d99ae;
+}
+
+.menu-btn{
+
+    width:62px;
+    height:62px;
+
+    border:none;
+
+    border-radius:20px;
+
+    background:rgba(212,166,58,.08);
+
+    border:1px solid rgba(212,166,58,.25);
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    position:relative;
+}
+
+.menu-btn:hover{
+    transform:scale(1.04);
+}
+
+.menu-btn::before{
+
+    content:"☰";
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    color:#d4a63a;
+
+    font-size:30px;
+}
+
+/* ===== HERO ===== */
+
+.hero{
+
+    text-align:center;
+
+    margin-bottom:50px;
+}
+
+.hero h1{
+
+    font-size:clamp(60px,10vw,170px);
+
+    font-weight:800;
+
+    line-height:1;
+
+    letter-spacing:4px;
+}
+
+.hero h1 span{
+    color:#d4a63a;
+}
+
+.hero p{
+
+    margin-top:12px;
+
+    color:#95a1b8;
+
+    font-size:22px;
+
+    letter-spacing:2px;
+}
+
+/* ===== GRID ===== */
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:1.2fr 1fr;
+
+    gap:24px;
+}
+
+.left-column,
+.right-column{
+
+    display:flex;
+    flex-direction:column;
+
+    gap:24px;
+}
+
+/* ===== CARD ===== */
+
+.card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:30px;
+
+    background:#0d1424;
+
+    border:1px solid rgba(255,255,255,.05);
+
+    min-height:320px;
+
+    box-shadow:
+    0 0 40px rgba(0,0,0,.35),
+    inset 0 0 60px rgba(255,255,255,.02);
+
+    transition:.25s;
+
+    text-decoration:none;
+
+    color:white;
+}
+
+.card:hover{
+
+    transform:translateY(-4px);
+
+    border-color:rgba(212,166,58,.35);
+}
+
+.big-card{
+    min-height:720px;
+}
+
+.card img{
+
+    position:absolute;
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    opacity:.82;
+}
+
+.card::after{
+
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:
+    linear-gradient(to top,
+    rgba(4,7,14,.97),
+    rgba(4,7,14,.2));
+}
+
+.card-content{
+
+    position:relative;
+    z-index:2;
+
+    height:100%;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+
+    padding:36px;
+}
+
+.card h2{
+
+    font-size:58px;
+
+    line-height:.95;
+
+    margin-bottom:18px;
+
+    font-weight:800;
+}
+
+.card h2 span{
+    color:#d4a63a;
+}
+
+.card p{
+
+    max-width:380px;
+
+    font-size:22px;
+
+    line-height:1.5;
+
+    color:#d2dae9;
+}
+
+.arrow-btn{
+
+    width:72px;
+    height:72px;
+
+    border-radius:22px;
+
+    border:1px solid rgba(212,166,58,.35);
+
+    background:rgba(212,166,58,.08);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:34px;
+
+    color:#d4a63a;
+
+    transition:.2s;
+}
+
+.card:hover .arrow-btn{
+
+    background:#d4a63a;
+
+    color:black;
+}
+
+/* ===== STATS ===== */
+
+.stats{
+
+    margin-top:24px;
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    background:#0b111f;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    border:1px solid rgba(255,255,255,.05);
+}
+
+.stat{
+
+    padding:30px;
+
+    text-align:center;
+}
+
+.stat:not(:last-child){
+    border-right:1px solid rgba(255,255,255,.06);
+}
+
+.stat h3{
+
+    color:#d4a63a;
+
+    font-size:42px;
+
+    margin-bottom:6px;
+}
+
+.stat p{
+
+    color:#96a4bb;
+
+    font-size:18px;
+}
+
+/* ===== Bottom Nav ===== */
+
+.bottom-nav{
+
+    position:fixed;
+
+    left:50%;
+    bottom:16px;
+
+    transform:translateX(-50%);
+
+    width:min(950px,96%);
+
+    height:92px;
+
+    border-radius:28px;
+
+    background:rgba(10,15,28,.92);
+
+    border:1px solid rgba(255,255,255,.06);
+
+    backdrop-filter:blur(14px);
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    z-index:100;
+}
+
+.nav-item{
+
+    display:flex;
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:8px;
+
+    text-decoration:none;
+
+    color:#c8d2e4;
+
+    transition:.2s;
+}
+
+.nav-item:hover{
+    color:#d4a63a;
+}
+
+.nav-item.active{
+    color:#d4a63a;
+}
+
+.nav-icon{
+    font-size:30px;
+}
+
+/* ===== SIDEBAR ===== */
+
+.sidebar{
+
+    position:fixed;
+
+    top:0;
+    right:-340px;
+
+    width:320px;
+    height:100vh;
+
+    background:rgba(8,12,22,.97);
+
+    backdrop-filter:blur(18px);
+
+    border-left:1px solid rgba(255,255,255,.06);
+
+    z-index:1000;
+
+    transition:.35s cubic-bezier(.77,0,.18,1);
+
+    padding:28px;
+
+    display:flex;
+    flex-direction:column;
+}
+
+.sidebar.active{
+    right:0;
+}
+
+.sidebar-top{
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:35px;
+}
+
+.sidebar-logo{
+
+    display:flex;
+    align-items:center;
+
+    gap:14px;
+}
+
+.sidebar-logo img{
+
+    width:56px;
+    height:56px;
+
+    border-radius:16px;
+}
+
+.sidebar-logo h3{
+    font-size:18px;
+}
+
+.sidebar-logo p{
+
+    color:#8d99ae;
+
+    font-size:13px;
+
+    margin-top:3px;
+}
+
+.close-sidebar{
+
+    width:44px;
+    height:44px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.05);
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:18px;
+}
+
+.sidebar-nav{
+
+    display:flex;
+    flex-direction:column;
+
+    gap:10px;
+}
+
+.sidebar-nav a{
+
+    display:flex;
+    align-items:center;
+
+    gap:14px;
+
+    padding:16px 18px;
+
+    border-radius:18px;
+
+    text-decoration:none;
+
+    color:#d4dcec;
+
+    font-weight:600;
+
+    transition:.2s;
+}
+
+.sidebar-nav a span{
+    font-size:22px;
+}
+
+.sidebar-nav a:hover{
+
+    background:rgba(212,166,58,.12);
+
+    color:#d4a63a;
+}
+
+.sidebar-nav a.active{
+
+    background:rgba(212,166,58,.16);
+
+    color:#d4a63a;
+}
+
+/* ===== Overlay ===== */
+
+.mobile-overlay{
+
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    backdrop-filter:blur(6px);
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.3s;
+
+    z-index:900;
+}
+
+.mobile-overlay.active{
+
+    opacity:1;
+    visibility:visible;
+}
+
+/* ===== Reveal Animation ===== */
+
+.reveal{
+
+    opacity:0;
+
+    transform:translateY(40px);
+
+    transition:
+    opacity .8s ease,
+    transform .8s ease;
+}
+
+.reveal.visible{
+
+    opacity:1;
+
+    transform:translateY(0);
+}
+
+/* ===== Responsive ===== */
+
+@media(max-width:1100px){
+
+    .grid{
+        grid-template-columns:1fr;
     }
 
-
-    /* ===== АДАПТИВ ===== */
-    @media (max-width: 900px) {
-      .layout { flex-direction: column; }
-
-      .sidebar {
-        width: 100%;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        padding: 12px 16px;
-        gap: 12px;
-      }
-
-      .sidebar-nav {
-        flex-direction: row;
-        gap: 12px;
-        overflow-x: auto;
-        padding-bottom: 4px;
-      }
-
-      .sidebar-collapsed .sidebar { width: 100%; padding: 12px 16px; border-right: 0; }
-      .sidebar-fab { display: none; }
-
-      .hero-overlay { padding-left: 20px; padding-right: 16px; }
-      .hero-title { font-size: 14px; }
+    .big-card{
+        min-height:560px;
     }
 
-    /* ===== IP/Версия под картинкой логотипа + копирование ===== */
-    .server-copy {
-      margin-top: 8px;
-      width: 100%;
-      text-align: left;
-      border: 1px solid rgba(148,163,184,0.22);
-      background: rgba(15,23,42,0.55);
-      color: #e5e7eb;
-      border-radius: 14px;
-      padding: 10px 12px;
-      cursor: pointer;
-      transition: 0.15s;
-      position: relative;
+}
+
+@media(max-width:850px){
+
+    body{
+        padding:12px;
+        padding-bottom:110px;
     }
 
-    .server-copy:hover {
-      border-color: #38bdf8;
-      background: rgba(15,23,42,0.7);
+    .topbar{
+        padding:16px;
     }
 
-    .server-ip {
-      display: block;
-      font-weight: 700;
-      letter-spacing: 0.02em;
+    .server-ip{
+        font-size:18px;
     }
 
-    .server-ver {
-      display: block;
-      margin-top: 2px;
-      font-size: 12px;
-      color: #9ca3af;
+    .hero h1{
+        font-size:58px;
     }
 
-    .server-tip {
-      position: absolute;
-      right: 10px;
-      top: 10px;
-      font-size: 11px;
-      color: #a5b4fc;
-      opacity: 0;
-      transform: translateY(-2px);
-      transition: 0.18s;
-      pointer-events: none;
+    .hero p{
+        font-size:15px;
     }
 
-    .server-copy.copied .server-tip {
-      opacity: 1;
-      transform: translateY(0);
+    .card{
+        min-height:300px;
     }
-  </style>
+
+    .card-content{
+        padding:28px;
+    }
+
+    .card h2{
+        font-size:40px;
+    }
+
+    .card p{
+        font-size:17px;
+    }
+
+    .arrow-btn{
+        width:58px;
+        height:58px;
+        font-size:28px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .stat:not(:last-child){
+
+        border-right:none;
+
+        border-bottom:1px solid rgba(255,255,255,.06);
+    }
+
+}
+
+@media(max-width:600px){
+
+    .hero h1{
+        font-size:44px;
+    }
+
+    .card{
+        min-height:260px;
+    }
+
+    .card h2{
+        font-size:32px;
+    }
+
+    .card p{
+        font-size:15px;
+    }
+
+    .sidebar{
+
+        width:100%;
+
+        right:-100%;
+    }
+
+    .bottom-nav{
+
+        height:82px;
+
+        border-radius:24px;
+    }
+
+    .nav-icon{
+        font-size:24px;
+    }
+
+}
+
+</style>
+
 </head>
 
 <body>
-  <!-- ГИРЛЯНДА -->
-  <div class="garland-top" aria-hidden="true">
-    <svg viewBox="0 0 1440 38" preserveAspectRatio="none">
-      <path class="garland-wire"
-        d="M0,16
-           C90,6 180,26 270,16
-           C360,6 450,26 540,16
-           C630,6 720,26 810,16
-           C900,6 990,26 1080,16
-           C1170,6 1260,26 1440,16" />
 
-      <g>
-        <line class="bulb-hanger" x1="30"  y1="16" x2="30"  y2="22" /><circle class="bulb" cx="30"  cy="28" r="5.5" fill="#ef4444"/>
-        <line class="bulb-hanger" x1="90"  y1="14" x2="90"  y2="22" /><circle class="bulb" cx="90"  cy="28" r="5.5" fill="#22c55e"/>
-        <line class="bulb-hanger" x1="150" y1="18" x2="150" y2="22" /><circle class="bulb" cx="150" cy="28" r="5.5" fill="#38bdf8"/>
-        <line class="bulb-hanger" x1="210" y1="16" x2="210" y2="22" /><circle class="bulb" cx="210" cy="28" r="5.5" fill="#fbbf24"/>
-        <line class="bulb-hanger" x1="270" y1="16" x2="270" y2="22" /><circle class="bulb" cx="270" cy="28" r="5.5" fill="#a855f7"/>
+<div class="mobile-overlay" id="mobileOverlay"></div>
 
-        <line class="bulb-hanger" x1="330" y1="14" x2="330" y2="22" /><circle class="bulb" cx="330" cy="28" r="5.5" fill="#ef4444"/>
-        <line class="bulb-hanger" x1="390" y1="18" x2="390" y2="22" /><circle class="bulb" cx="390" cy="28" r="5.5" fill="#22c55e"/>
-        <line class="bulb-hanger" x1="450" y1="16" x2="450" y2="22" /><circle class="bulb" cx="450" cy="28" r="5.5" fill="#38bdf8"/>
-        <line class="bulb-hanger" x1="510" y1="16" x2="510" y2="22" /><circle class="bulb" cx="510" cy="28" r="5.5" fill="#fbbf24"/>
-        <line class="bulb-hanger" x1="570" y1="14" x2="570"  y2="22" /><circle class="bulb" cx="570" cy="28" r="5.5" fill="#a855f7"/>
+<!-- ===== SIDEBAR ===== -->
 
-        <line class="bulb-hanger" x1="630" y1="18" x2="630" y2="22" /><circle class="bulb" cx="630" cy="28" r="5.5" fill="#ef4444"/>
-        <line class="bulb-hanger" x1="690" y1="16" x2="690" y2="22" /><circle class="bulb" cx="690" cy="28" r="5.5" fill="#22c55e"/>
-        <line class="bulb-hanger" x1="750" y1="16" x2="750" y2="22" /><circle class="bulb" cx="750" cy="28" r="5.5" fill="#38bdf8"/>
-        <line class="bulb-hanger" x1="810" y1="14" x2="810" y2="22" /><circle class="bulb" cx="810" cy="28" r="5.5" fill="#fbbf24"/>
-        <line class="bulb-hanger" x1="870" y1="18" x2="870" y2="22" /><circle class="bulb" cx="870" cy="28" r="5.5" fill="#a855f7"/>
+<aside class="sidebar" id="sidebar">
 
-        <line class="bulb-hanger" x1="930" y1="16" x2="930" y2="22" /><circle class="bulb" cx="930" cy="28" r="5.5" fill="#ef4444"/>
-        <line class="bulb-hanger" x1="990" y1="16" x2="990" y2="22" /><circle class="bulb" cx="990" cy="28" r="5.5" fill="#22c55e"/>
-        <line class="bulb-hanger" x1="1050" y1="14" x2="1050" y2="22" /><circle class="bulb" cx="1050" cy="28" r="5.5" fill="#38bdf8"/>
-        <line class="bulb-hanger" x1="1110" y1="18" x2="1110" y2="22" /><circle class="bulb" cx="1110" cy="28" r="5.5" fill="#fbbf24"/>
-        <line class="bulb-hanger" x1="1170" y1="16" x2="1170" y2="22" /><circle class="bulb" cx="1170" cy="28" r="5.5" fill="#a855f7"/>
+    <div class="sidebar-top">
 
-        <line class="bulb-hanger" x1="1230" y1="16" x2="1230" y2="22" /><circle class="bulb" cx="1230" cy="28" r="5.5" fill="#ef4444"/>
-        <line class="bulb-hanger" x1="1290" y1="14" x2="1290" y2="22" /><circle class="bulb" cx="1290" cy="28" r="5.5" fill="#22c55e"/>
-        <line class="bulb-hanger" x1="1350" y1="18" x2="1350" y2="22" /><circle class="bulb" cx="1350" cy="28" r="5.5" fill="#38bdf8"/>
-        <line class="bulb-hanger" x1="1410" y1="16" x2="1410" y2="22" /><circle class="bulb" cx="1410" cy="28" r="5.5" fill="#fbbf24"/>
-      </g>
-    </svg>
-  </div>
+        <div class="sidebar-logo">
 
-    <button class="sidebar-fab" id="toggleSidebar" type="button">
-      <span id="sidebarIcon" class="sidebar-icon"></span>
-    </button>
+            <img src="logo.png">
 
+            <div>
 
-  <div class="layout">
-    <aside class="sidebar">
-      <div>
-        <div class="logo-box">
-          <img src="logo.png" alt="Логотип MS Builders" />
-          <div class="sidebar-title">
-            MS Builders
-            <span>Minecraft сервер</span>
-          </div>
+                <h3>MS BUILDERS</h3>
+                <p>Minecraft сервер</p>
+
+            </div>
+
         </div>
 
-        <button class="server-copy" id="copyIp" type="button" title="Нажмите, чтобы скопировать IP">
-          <span class="server-ip">play.msbuilders.name</span>
-          <span class="server-ver">Версия: 1.21.10</span>
-          <span class="server-tip" id="copyTip">Скопировано!</span>
+        <button class="close-sidebar" id="closeMenu">
+            ✕
         </button>
-      </div>
 
-      <nav class="sidebar-nav">
-        <a href="index.html" class="active">Главная</a>
-        <a href="news.html">Новости</a>
-        <a href="about.html">Информация</a>
-        <a href="community.html">Комьюнити</a>
-        <a href="builds.html">Города</a>
+    </div>
 
-        <a href="join.html">Старт игры</a>
-        <a href="enchants.html">Чары</a>
-        <a href="crafts.html">Новые предметы</a>
-        <a href="extra.html">Наши инструменты</a>
-        <a href="projects.html">Наши проекты</a>
-        <a href="story.html">Сюжет</a>
+    <nav class="sidebar-nav">
 
-        <a href="about.html">О сервере</a>
-      </nav>
-    </aside>
+        <a href="index.html" class="active">
+            <span>⌂</span>
+            Главная
+        </a>
 
-    <main class="content">
-      <section class="hero">
-        <img src="hero-banner.png" alt="MS Builders баннер" />
+        <a href="about.html">
+            <span>◈</span>
+            Информация
+        </a>
 
-        <div class="hero-overlay">
-          <div class="hero-title">MS BUILDERS</div>
-          <div class="hero-subtitle">
-            Мир без вайпов, где ценятся проекты, инициатива и люди.
-            Строй города, находи союзников, оставляй след в истории и развивайся вместе с комьюнити.
-          </div>
+        <a href="projects.html">
+            <span>▣</span>
+            Проекты
+        </a>
 
-          <a class="hero-cta" href="https://discord.com/invite/Wj8jWS736f" target="_blank" rel="noopener noreferrer">
-            💬 Вступить в Discord
-          </a>
+        <a href="shop.html">
+            <span>🛒</span>
+            Магазин
+        </a>
+
+        <a href="community.html">
+            <span>◎</span>
+            Соцсети
+        </a>
+
+        <a href="join.html">
+            <span>▶</span>
+            Начать играть
+        </a>
+
+        <a href="news.html">
+            <span>✦</span>
+            Новости
+        </a>
+
+    </nav>
+
+</aside>
+
+<div class="container">
+
+    <!-- ===== TOPBAR ===== -->
+
+    <header class="topbar">
+
+        <div class="server-box" onclick="copyIP()">
+
+            <img src="logo.png">
+
+            <div class="server-info">
+
+                <div class="server-ip">
+                    play.<span>msbuilders.name</span>
+                </div>
+
+                <div class="server-version">
+                    Java Edition 1.21.1
+                </div>
+
+            </div>
+
         </div>
 
-        <svg class="hero-wave" viewBox="0 0 1440 90" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="darkBlend" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#0f172a" stop-opacity="0.85" />
-              <stop offset="100%" stop-color="#0b0f19" />
-            </linearGradient>
-          </defs>
+        <button class="menu-btn" id="openMenu"></button>
 
-          <path
-            d="M0,40 C180,65 360,65 540,45
-               720,25 900,25 1080,40
-               1260,55 1440,40 1440,40
-               L1440,90 L0,90 Z"
-            fill="rgba(124, 58, 237, 0.35)"
-          />
-          <path
-            d="M0,50 C200,75 400,75 600,55
-               800,35 1000,35 1200,50
-               1320,60 1440,50 1440,50
-               L1440,90 L0,90 Z"
-            fill="rgba(236, 72, 153, 0.25)"
-          />
-          <path
-            d="M0,60 C220,80 440,80 660,65
-               880,50 1100,50 1320,60
-               1440,65 1440,65 1440,65
-               L1440,90 L0,90 Z"
-            fill="url(#darkBlend)"
-          />
-        </svg>
-      </section>
+    </header>
 
-      <section class="page-section">
-        <h2 class="section-title">САМОЕ ГЛАВНОЕ</h2>
+    <!-- ===== HERO ===== -->
 
-        <div class="feature-grid">
-          <a class="feature-card" href="builds.html">
-            <img src="feature-city.jpg" alt="Города" />
-            <div class="feature-label">ГОРОДА</div>
-          </a>
+    <section class="hero">
 
-          <a class="feature-card" href="community.html">
-            <img src="feature-community.jpg" alt="Комьюнити" />
-            <div class="feature-label">КОМЬЮНИТИ</div>
-          </a>
+        <h1>
+            <span>MS</span> BUILDERS
+        </h1>
 
-          <a class="feature-card" href="about.html">
-            <img src="feature-about.jpg" alt="Информация" />
-            <div class="feature-label">ИНФОРМАЦИЯ</div>
-          </a>
+        <p>
+            СТРОИМ ВМЕСТЕ. СОЗДАЁМ БУДУЩЕЕ.
+        </p>
 
-          <a class="feature-card" href="news.html">
-            <img src="feature-news.jpg" alt="Новости" />
-            <div class="feature-label">НОВОСТИ</div>
-          </a>
-        </div>
-      </section>
+    </section>
 
-      <section class="page-section">
-        <h2 class="section-title">ЧТО У НАС ЕСТЬ</h2>
+    <!-- ===== GRID ===== -->
 
-        <div class="icon-grid">
-          <a class="icon-link" href="join.html">
-            <div class="icon-card">
-              <img src="icon-start.png" alt="Старт игры" />
-              <div class="icon-title">СТАРТ ИГРЫ</div>
-              <div class="icon-text">Вход, whitelist, хаб и первые шаги на сервере.</div>
-            </div>
-          </a>
+    <div class="grid">
 
-          <a class="icon-link" href="enchants.html">
-            <div class="icon-card">
-              <img src="icon-enchants.png" alt="Новые чары" />
-              <div class="icon-title">НОВЫЕ ЧАРЫ</div>
-              <div class="icon-text">Зачарования для строителей, исследователей и PvP.</div>
-            </div>
-          </a>
+        <!-- LEFT -->
 
-          <a class="icon-link" href="crafts.html">
-            <div class="icon-card">
-              <img src="icon-custom-items.png" alt="Новые предметы" />
-              <div class="icon-title">НОВЫЕ ПРЕДМЕТЫ</div>
-              <div class="icon-text">Рецепты, блоки и вещи, которые расширяют ванилу.</div>
-            </div>
-          </a>
+        <div class="left-column">
 
-          <a class="icon-link" href="extra.html">
-            <div class="icon-card">
-              <img src="icon-tools.png" alt="Наши инструменты" />
-              <div class="icon-title">НАШИ ИНСТРУМЕНТЫ</div>
-              <div class="icon-text">Датапаки и плагины: строительные фишки и контент.</div>
-            </div>
-          </a>
+            <a href="about.html" class="card big-card reveal">
 
-          <a class="icon-link" href="projects.html">
-            <div class="icon-card">
-              <img src="icon-projects.png" alt="Наши проекты" />
-              <div class="icon-title">НАШИ ПРОЕКТЫ</div>
-              <div class="icon-text">Портфолио работ и лучшие примеры строительства.</div>
-            </div>
-          </a>
+                <img src="feature-city.jpg">
 
-          <a class="icon-link" href="coalitions.html">
-            <div class="icon-card">
-              <img src="icon-coalitions.png" alt="Коалиции" />
-              <div class="icon-title">КОАЛИЦИИ</div>
-              <div class="icon-text">Север, Центр и Юг: задания, прокачка, награды и влияние на мир.</div>
-            </div>
-          </a>
+                <div class="card-content">
+
+                    <div>
+
+                        <h2>
+                            СЕРВЕР<br>
+                            <span>ИНФОРМАЦИЯ</span>
+                        </h2>
+
+                        <p>
+                            Узнай всё о нашем сервере,
+                            правилах, возможностях,
+                            механиках и истории проекта.
+                        </p>
+
+                    </div>
+
+                    <div class="arrow-btn">
+                        →
+                    </div>
+
+                </div>
+
+            </a>
 
         </div>
-      </section>
-    </main>
-  </div>
 
-  <script>
-  const root = document.documentElement;
+        <!-- RIGHT -->
 
-  // ===== САЙДБАР =====
-  const btnSidebar = document.getElementById("toggleSidebar");
-  const sidebarIcon = document.getElementById("sidebarIcon");
+        <div class="right-column">
 
-  // восстановление состояния
-  if (localStorage.getItem("ms_sidebar") === "off") {
-    root.classList.add("sidebar-collapsed");
-  }
+            <a href="shop.html" class="card reveal">
 
-  if (btnSidebar) {
-    btnSidebar.addEventListener("click", () => {
-      root.classList.toggle("sidebar-collapsed");
+                <img src="feature-about.jpg">
 
-      localStorage.setItem(
-        "ms_sidebar",
-        root.classList.contains("sidebar-collapsed") ? "off" : "on"
-      );
+                <div class="card-content">
+
+                    <div>
+
+                        <h2>
+                            КУПИТЬ<br>
+                            <span>ПОСТРОЙКУ</span>
+                        </h2>
+
+                        <p>
+                            Готовые постройки
+                            для вашего сервера.
+                        </p>
+
+                    </div>
+
+                    <div class="arrow-btn">
+                        →
+                    </div>
+
+                </div>
+
+            </a>
+
+            <a href="projects.html" class="card reveal">
+
+                <img src="feature-projects.jpg">
+
+                <div class="card-content">
+
+                    <div>
+
+                        <h2>
+                            НАШИ<br>
+                            <span>ПРОЕКТЫ</span>
+                        </h2>
+
+                        <p>
+                            Лучшие проекты
+                            и работы сообщества.
+                        </p>
+
+                    </div>
+
+                    <div class="arrow-btn">
+                        →
+                    </div>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- ===== SECOND GRID ===== -->
+
+    <div class="grid" style="margin-top:24px;">
+
+        <div class="left-column">
+
+            <a href="community.html" class="card reveal">
+
+                <img src="feature-community.jpg">
+
+                <div class="card-content">
+
+                    <div>
+
+                        <h2>
+                            СОЦСЕТИ<br>
+                            <span>И ССЫЛКИ</span>
+                        </h2>
+
+                        <p>
+                            Discord, Telegram,
+                            YouTube и все
+                            официальные ресурсы.
+                        </p>
+
+                    </div>
+
+                    <div class="arrow-btn">
+                        →
+                    </div>
+
+                </div>
+
+            </a>
+
+        </div>
+
+        <div class="right-column">
+
+            <a href="join.html" class="card reveal">
+
+                <img src="icon-start.png">
+
+                <div class="card-content">
+
+                    <div>
+
+                        <h2>
+                            НАЧАТЬ<br>
+                            <span>ИГРАТЬ</span>
+                        </h2>
+
+                        <p>
+                            Подключайся к серверу
+                            и начни своё приключение.
+                        </p>
+
+                    </div>
+
+                    <div class="arrow-btn">
+                        →
+                    </div>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- ===== STATS ===== -->
+
+    <section class="stats">
+
+        <div class="stat">
+
+            <h3>1287+</h3>
+            <p>Активных игроков</p>
+
+        </div>
+
+        <div class="stat">
+
+            <h3>3500+</h3>
+            <p>Уникальных построек</p>
+
+        </div>
+
+        <div class="stat">
+
+            <h3>2 ГОДА</h3>
+            <p>Онлайн 24/7</p>
+
+        </div>
+
+    </section>
+
+</div>
+
+<!-- ===== Bottom Navigation ===== -->
+
+<nav class="bottom-nav">
+
+    <a href="index.html" class="nav-item active">
+
+        <div class="nav-icon">⌂</div>
+        <div>Главная</div>
+
+    </a>
+
+    <a href="shop.html" class="nav-item">
+
+        <div class="nav-icon">🛒</div>
+        <div>Купить</div>
+
+    </a>
+
+    <a href="join.html" class="nav-item">
+
+        <div class="nav-icon">▶</div>
+        <div>Играть</div>
+
+    </a>
+
+    <a href="profile.html" class="nav-item">
+
+        <div class="nav-icon">◎</div>
+        <div>Профиль</div>
+
+    </a>
+
+</nav>
+
+<script>
+
+/* ===== COPY IP ===== */
+
+function copyIP(){
+
+    navigator.clipboard.writeText("play.msbuilders.name");
+
+}
+
+/* ===== Sidebar ===== */
+
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("mobileOverlay");
+
+document.getElementById("openMenu").onclick = () => {
+
+    sidebar.classList.add("active");
+    overlay.classList.add("active");
+
+}
+
+document.getElementById("closeMenu").onclick = closeMenu;
+overlay.onclick = closeMenu;
+
+function closeMenu(){
+
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
+
+}
+
+/* ===== Reveal Animation ===== */
+
+const reveals = document.querySelectorAll(".reveal");
+
+const observer = new IntersectionObserver(entries => {
+
+    entries.forEach(entry => {
+
+        if(entry.isIntersecting){
+
+            entry.target.classList.add("visible");
+
+        }
+
     });
-  }
 
-  // ===== КОПИРОВАНИЕ IP =====
-  const copyBtn = document.getElementById("copyIp");
+},{
+    threshold:0.12
+});
 
-  if (copyBtn) {
-    copyBtn.addEventListener("click", async () => {
-      const ip = "play.msbuilders.name";
+reveals.forEach(el => observer.observe(el));
 
-      try {
-        await navigator.clipboard.writeText(ip);
-      } catch (e) {
-        // fallback
-        const ta = document.createElement("textarea");
-        ta.value = ip;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        document.body.removeChild(ta);
-      }
-
-      copyBtn.classList.add("copied");
-      setTimeout(() => copyBtn.classList.remove("copied"), 1200);
-    });
-  }
-
-  // ===== ГИРЛЯНДА (если понадобится позже) =====
-  if (localStorage.getItem("ms_garland") === "off") {
-    root.classList.add("garland-off");
-  }
 </script>
 
-  
 </body>
 </html>
+```

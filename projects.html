@@ -313,19 +313,6 @@ body{
     border-color:rgba(212,166,58,.35);
 }
 
-.project-card img{
-
-    position:absolute;
-    inset:0;
-
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
-
-    transition:transform .4s ease;
-}
-
 .project-card:hover img{
     transform:scale(1.06);
 }
@@ -1050,101 +1037,56 @@ body{
 </div>
 
 <!-- ===== PROJECTS ===== -->
-<article class="project-card reveal">
 
-    <img class="project-main-image"
-    src="project1_main.jpg">
+<div class="projects-grid">
 
-    <div class="project-content">
+    <!-- CARD 1 -->
 
-        <div>
+    <article class="project-card reveal">
 
-            <div class="project-title">
-                Imperial City
-            </div>
-
-            <div class="project-description">
-
-                Масштабный средневековый город
-                с уникальной архитектурой
-                и атмосферой.
-
-            </div>
-
-            <div class="tags">
-
-                <div class="tag">#город</div>
-                <div class="tag">#medieval</div>
-                <div class="tag">#fantasy</div>
-
-            </div>
-
-        </div>
-
-        <div class="project-buttons">
-
-            <button class="project-btn view-btn"
-
-            onclick="openGallery([
-            'project1_main.jpg',
-            'project1_2.jpg',
-            'project1_3.jpg',
-            'project1_4.jpg'
-            ])">
-
-                Смотреть
-
-            </button>
-
-            <a class="project-btn link-btn"
-            href="https://www.planetminecraft.com/member/boatswain_msb/"
-            target="_blank">
-
-                🔗 PMC
-
-            </a>
-
-        </div>
-
-    </div>
-
-</article>
-
-
-
-
-    <!-- CARD -->
-
-    <div class="project-card reveal">
-
-        <img src="project2.jpg">
+        <img class="project-main-image"
+        src="project1_main.jpg">
 
         <div class="project-content">
 
-            <div class="project-title">
-                Викторианский район MSB2
-            </div>
+            <div>
 
-            <div class="project-description">
-                Большой фэнтезийный район с детализированными улицами и игдрасилем в центре.
-            </div>
+                <div class="project-title">
+                    Imperial City
+                </div>
 
-            <div class="tags">
+                <div class="project-description">
 
-                <div class="tag">#район</div>
-                <div class="tag">#город</div>
+                    Масштабный средневековый город
+                    с уникальной архитектурой
+                    и атмосферой.
+
+                </div>
+
+                <div class="tags">
+
+                    <div class="tag">#город</div>
+                    <div class="tag">#medieval</div>
+                    <div class="tag">#fantasy</div>
+
+                </div>
 
             </div>
 
             <div class="project-buttons">
 
-                <a class="project-btn view-btn"
-                href="https://www.planetminecraft.com/member/boatswain_msb/"
-                target="_blank">
+                <button class="project-btn view-btn"
+
+                onclick="openGallery([
+                'project1_main.jpg',
+                'project1_2.jpg',
+                'project1_3.jpg',
+                'project1_4.jpg'
+                ])">
 
                     Смотреть
 
-                </a>
+                </button>
 
                 <a class="project-btn link-btn"
                 href="https://www.planetminecraft.com/member/boatswain_msb/"
@@ -1158,40 +1100,54 @@ body{
 
         </div>
 
-    </div>
+    </article>
 
-    <!-- CARD -->
+    <!-- CARD 2 -->
 
-    <div class="project-card reveal">
+    <article class="project-card reveal">
 
-        <img src="project3.jpg">
+        <img class="project-main-image"
+        src="project2.jpg">
 
         <div class="project-content">
 
-            <div class="project-title">
-                Royal Castle
-            </div>
+            <div>
 
-            <div class="project-description">
-                Детализированный замок с интерьерами и авторским ландшафтом.
-            </div>
+                <div class="project-title">
+                    Викторианский район MSB2
+                </div>
 
-            <div class="tags">
+                <div class="project-description">
 
-                <div class="tag">#castle</div>
-                <div class="tag">#fantasy</div>
+                    Большой фэнтезийный район
+                    с детализированными улицами
+                    и Иггдрасилем в центре.
+
+                </div>
+
+                <div class="tags">
+
+                    <div class="tag">#район</div>
+                    <div class="tag">#город</div>
+
+                </div>
 
             </div>
 
             <div class="project-buttons">
 
-                <a class="project-btn view-btn"
-                href="https://www.planetminecraft.com/member/boatswain_msb/"
-                target="_blank">
+                <button class="project-btn view-btn"
+
+                onclick="openGallery([
+                'project2.jpg',
+                'project2_2.jpg',
+                'project2_3.jpg',
+                'project2_4.jpg'
+                ])">
 
                     Смотреть
 
-                </a>
+                </button>
 
                 <a class="project-btn link-btn"
                 href="https://www.planetminecraft.com/member/boatswain_msb/"
@@ -1205,40 +1161,54 @@ body{
 
         </div>
 
-    </div>
+    </article>
 
-    <!-- CARD -->
+    <!-- CARD 3 -->
 
-    <div class="project-card reveal">
+    <article class="project-card reveal">
 
-        <img src="project4.jpg">
+        <img class="project-main-image"
+        src="project3.jpg">
 
         <div class="project-content">
 
-            <div class="project-title">
-                Nordic Village
-            </div>
+            <div>
 
-            <div class="project-description">
-                Северная деревня с атмосферными постройками и природой.
-            </div>
+                <div class="project-title">
+                    Royal Castle
+                </div>
 
-            <div class="tags">
+                <div class="project-description">
 
-                <div class="tag">#nordic</div>
-                <div class="tag">#village</div>
+                    Детализированный замок
+                    с интерьерами и авторским
+                    ландшафтом.
+
+                </div>
+
+                <div class="tags">
+
+                    <div class="tag">#castle</div>
+                    <div class="tag">#fantasy</div>
+
+                </div>
 
             </div>
 
             <div class="project-buttons">
 
-                <a class="project-btn view-btn"
-                href="https://www.planetminecraft.com/member/boatswain_msb/"
-                target="_blank">
+                <button class="project-btn view-btn"
+
+                onclick="openGallery([
+                'project3.jpg',
+                'project3_2.jpg',
+                'project3_3.jpg',
+                'project3_4.jpg'
+                ])">
 
                     Смотреть
 
-                </a>
+                </button>
 
                 <a class="project-btn link-btn"
                 href="https://www.planetminecraft.com/member/boatswain_msb/"
@@ -1252,11 +1222,71 @@ body{
 
         </div>
 
-    </div>
+    </article>
+
+    <!-- CARD 4 -->
+
+    <article class="project-card reveal">
+
+        <img class="project-main-image"
+        src="project4.jpg">
+
+        <div class="project-content">
+
+            <div>
+
+                <div class="project-title">
+                    Nordic Village
+                </div>
+
+                <div class="project-description">
+
+                    Северная деревня
+                    с атмосферными постройками
+                    и природой.
+
+                </div>
+
+                <div class="tags">
+
+                    <div class="tag">#nordic</div>
+                    <div class="tag">#village</div>
+
+                </div>
+
+            </div>
+
+            <div class="project-buttons">
+
+                <button class="project-btn view-btn"
+
+                onclick="openGallery([
+                'project4.jpg',
+                'project4_2.jpg',
+                'project4_3.jpg',
+                'project4_4.jpg'
+                ])">
+
+                    Смотреть
+
+                </button>
+
+                <a class="project-btn link-btn"
+                href="https://www.planetminecraft.com/member/boatswain_msb/"
+                target="_blank">
+
+                    🔗 PMC
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </article>
 
 </div>
 
-</div>
 
 <!-- ===== Bottom Navigation ===== -->
 

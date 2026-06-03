@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -40,7 +41,7 @@ body{
     padding-bottom:120px;
 }
 
-/* ===== Scroll ===== */
+/* ===== SCROLL ===== */
 
 ::-webkit-scrollbar{
     width:8px;
@@ -51,7 +52,7 @@ body{
     border-radius:20px;
 }
 
-/* ===== Container ===== */
+/* ===== CONTAINER ===== */
 
 .container{
     max-width:1700px;
@@ -85,8 +86,6 @@ body{
     align-items:center;
 
     gap:16px;
-
-    cursor:pointer;
 }
 
 .server-box img{
@@ -164,7 +163,7 @@ body{
 
 .hero{
 
-    margin-bottom:40px;
+    margin-bottom:50px;
 
     text-align:center;
 }
@@ -175,7 +174,7 @@ body{
 
     font-weight:800;
 
-    margin-bottom:14px;
+    margin-bottom:16px;
 }
 
 .hero h1 span{
@@ -192,17 +191,18 @@ body{
 
     line-height:1.7;
 
-    font-size:20px;
+    font-size:19px;
 }
 
 /* ===== LINKS ===== */
 
 .hero-links{
 
-    margin-top:20px;
+    margin-top:26px;
 
     display:flex;
     justify-content:center;
+
     gap:14px;
 
     flex-wrap:wrap;
@@ -218,9 +218,9 @@ body{
 
     border-radius:18px;
 
-    background:rgba(212,166,58,.1);
+    background:rgba(212,166,58,.08);
 
-    border:1px solid rgba(212,166,58,.25);
+    border:1px solid rgba(212,166,58,.22);
 
     transition:.2s;
 }
@@ -238,11 +238,12 @@ body{
 
     display:flex;
     justify-content:center;
+
     gap:12px;
 
     flex-wrap:wrap;
 
-    margin-bottom:34px;
+    margin-bottom:60px;
 }
 
 .filter-btn{
@@ -270,7 +271,35 @@ body{
     color:#d4a63a;
 }
 
-/* ===== PROJECT GRID ===== */
+/* ===== SECTION ===== */
+
+.projects-section{
+    margin-top:40px;
+}
+
+/* ===== SECTION TITLE ===== */
+
+.section-title{
+    margin-bottom:24px;
+}
+
+.section-title h2{
+
+    font-size:42px;
+
+    font-weight:800;
+
+    margin-bottom:6px;
+}
+
+.section-title p{
+
+    color:#9ca8bf;
+
+    font-size:17px;
+}
+
+/* ===== GRID ===== */
 
 .projects-grid{
 
@@ -278,7 +307,9 @@ body{
 
     grid-template-columns:repeat(4,1fr);
 
-    gap:22px;
+    gap:18px;
+
+    margin-bottom:60px;
 }
 
 /* ===== CARD ===== */
@@ -287,21 +318,19 @@ body{
 
     position:relative;
 
+    height:460px;
+
     overflow:hidden;
 
-    border-radius:28px;
+    border-radius:26px;
 
-    background:#0d1424;
+    background:#111827;
 
     border:1px solid rgba(255,255,255,.05);
 
-    min-height:420px;
+    transition:.25s ease;
 
-    transition:.25s;
-
-    box-shadow:
-    0 0 40px rgba(0,0,0,.35),
-    inset 0 0 50px rgba(255,255,255,.02);
+    cursor:pointer;
 }
 
 .project-card:hover{
@@ -310,14 +339,36 @@ body{
     translateY(-6px)
     scale(1.01);
 
-    border-color:rgba(212,166,58,.35);
+    border-color:rgba(212,166,58,.3);
+
+    box-shadow:
+    0 20px 50px rgba(0,0,0,.4);
 }
 
-.project-card:hover img{
+/* ===== IMAGE ===== */
+
+.project-preview{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    transition:transform .45s ease;
+}
+
+.project-card:hover .project-preview{
+
     transform:scale(1.06);
 }
 
-.project-card::after{
+/* ===== OVERLAY ===== */
+
+.project-card::before{
 
     content:"";
 
@@ -325,42 +376,59 @@ body{
     inset:0;
 
     background:
-    linear-gradient(to top,
-    rgba(4,7,14,.97),
-    rgba(4,7,14,.2));
+    linear-gradient(
+    to top,
+    rgba(4,7,14,.96) 10%,
+    rgba(4,7,14,.45) 45%,
+    rgba(4,7,14,.1) 100%
+    );
+
+    z-index:1;
 }
 
-/* ===== Content ===== */
+/* ===== CONTENT ===== */
 
 .project-content{
 
-    position:relative;
+    position:absolute;
+
+    inset:0;
+
     z-index:2;
 
-    height:100%;
-
     display:flex;
+
     flex-direction:column;
+
     justify-content:flex-end;
 
-    padding:24px;
+    padding:22px;
 }
+
+/* ===== TITLE ===== */
 
 .project-title{
 
-    font-size:30px;
+    font-size:24px;
+
     font-weight:800;
+
+    line-height:1.1;
 
     margin-bottom:10px;
 }
 
+/* ===== DESCRIPTION ===== */
+
 .project-description{
 
-    color:#d2dae9;
+    color:#d5deee;
+
+    font-size:14px;
 
     line-height:1.5;
 
-    margin-bottom:18px;
+    margin-bottom:16px;
 }
 
 /* ===== TAGS ===== */
@@ -368,6 +436,7 @@ body{
 .tags{
 
     display:flex;
+
     flex-wrap:wrap;
 
     gap:8px;
@@ -377,24 +446,25 @@ body{
 
 .tag{
 
-    padding:7px 12px;
+    padding:6px 10px;
 
     border-radius:999px;
 
     background:rgba(212,166,58,.12);
 
-    border:1px solid rgba(212,166,58,.2);
+    border:1px solid rgba(212,166,58,.22);
 
     color:#d4a63a;
 
-    font-size:13px;
+    font-size:12px;
 }
 
-/* ===== Buttons ===== */
+/* ===== BUTTONS ===== */
 
 .project-buttons{
 
     display:flex;
+
     gap:10px;
 }
 
@@ -402,15 +472,19 @@ body{
 
     flex:1;
 
+    border:none;
+
     text-decoration:none;
 
-    padding:13px 16px;
+    padding:12px 14px;
 
-    border-radius:16px;
+    border-radius:14px;
 
     text-align:center;
 
-    font-weight:600;
+    font-size:14px;
+
+    font-weight:700;
 
     transition:.2s;
 }
@@ -423,21 +497,25 @@ body{
 }
 
 .view-btn:hover{
+
     transform:translateY(-2px);
+
+    background:#e6b84f;
 }
 
 .link-btn{
 
-    background:rgba(255,255,255,.06);
+    background:rgba(255,255,255,.08);
 
     color:white;
 }
 
 .link-btn:hover{
-    background:rgba(255,255,255,.12);
+
+    background:rgba(255,255,255,.14);
 }
 
-/* ===== Sidebar ===== */
+/* ===== SIDEBAR ===== */
 
 .sidebar{
 
@@ -521,6 +599,8 @@ body{
     font-size:18px;
 }
 
+/* ===== NAV ===== */
+
 .sidebar-nav{
 
     display:flex;
@@ -557,7 +637,7 @@ body{
     color:#d4a63a;
 }
 
-/* ===== Overlay ===== */
+/* ===== OVERLAY ===== */
 
 .mobile-overlay{
 
@@ -582,7 +662,7 @@ body{
     visibility:visible;
 }
 
-/* ===== Bottom Nav ===== */
+/* ===== BOTTOM NAV ===== */
 
 .bottom-nav{
 
@@ -638,7 +718,7 @@ body{
     font-size:28px;
 }
 
-/* ===== Reveal ===== */
+/* ===== REVEAL ===== */
 
 .reveal{
 
@@ -656,99 +736,6 @@ body{
     opacity:1;
 
     transform:translateY(0);
-}
-
-/* ===== Responsive ===== */
-
-@media(max-width:1400px){
-
-    .projects-grid{
-        grid-template-columns:repeat(3,1fr);
-    }
-
-}
-
-@media(max-width:900px){
-
-    .projects-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .hero-text{
-        font-size:16px;
-    }
-
-    .project-title{
-        font-size:24px;
-    }
-
-}
-
-@media(max-width:600px){
-
-    body{
-        padding:10px;
-        padding-bottom:110px;
-    }
-
-    .projects-grid{
-        grid-template-columns:repeat(2,1fr);
-        gap:14px;
-    }
-
-    .project-card{
-        min-height:320px;
-    }
-
-    .project-content{
-        padding:16px;
-    }
-
-    .project-title{
-        font-size:18px;
-    }
-
-    .project-description{
-        font-size:13px;
-    }
-
-    .hero h1{
-        font-size:42px;
-    }
-
-    .hero-text{
-        font-size:14px;
-    }
-
-    .sidebar{
-        width:100%;
-        right:-100%;
-    }
-
-    .project-buttons{
-        flex-direction:column;
-    }
-
-}
-
-/* ===== MAIN CARD IMAGE ===== */
-
-.project-main-image{
-
-    position:absolute;
-    inset:0;
-
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
-
-    transition:transform .45s ease;
-}
-
-.project-card:hover .project-main-image{
-
-    transform:scale(1.05);
 }
 
 /* ===== GALLERY ===== */
@@ -789,6 +776,15 @@ body{
     border-radius:18px;
 
     transition:.25s;
+
+    cursor:zoom-in;
+}
+
+.gallery-image.zoomed{
+
+    transform:scale(1.8);
+
+    cursor:zoom-out;
 }
 
 /* ===== GALLERY CONTROLS ===== */
@@ -871,18 +867,69 @@ body{
     background:rgba(255,255,255,.14);
 }
 
-/* ===== ZOOM ===== */
+/* ===== RESPONSIVE ===== */
 
-.gallery-image.zoomed{
+@media(max-width:1400px){
 
-    transform:scale(1.8);
+    .projects-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
 
-    cursor:zoom-out;
 }
 
-.gallery-image{
+@media(max-width:950px){
 
-    cursor:zoom-in;
+    .projects-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:600px){
+
+    body{
+        padding:10px;
+        padding-bottom:110px;
+    }
+
+    .projects-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:12px;
+    }
+
+    .project-card{
+        height:300px;
+    }
+
+    .project-content{
+        padding:14px;
+    }
+
+    .project-title{
+        font-size:16px;
+    }
+
+    .project-description{
+        font-size:12px;
+    }
+
+    .project-buttons{
+        flex-direction:column;
+    }
+
+    .hero h1{
+        font-size:42px;
+    }
+
+    .hero-text{
+        font-size:14px;
+    }
+
+    .sidebar{
+        width:100%;
+        right:-100%;
+    }
+
 }
 
 </style>
@@ -914,6 +961,7 @@ body{
 
         <button class="close-sidebar" id="closeMenu">
             ✕
+
         </button>
 
     </div>
@@ -984,11 +1032,11 @@ body{
 
     <div class="hero-text">
 
-        Мы студия MS Builders, занимаемся проектами и работами любой трудности в сфере майнкрафта, на этой странице вы можете ознакомиться с частью наших проектов и работ, от разных авторов.
+        Мы студия MS Builders, занимаемся проектами и работами любой трудности в сфере майнкрафта, на этой странице вы можете ознакомиться с частью наших проектов и работ.
 
         <br><br>
 
-        Если хотите заказать у нас постройку — пишите нам в ВК и Telegram. По стоимости подберём под ваш бюджет! Сделаем быстро и качественно!
+        Если хотите заказать у нас постройку — пишите нам в ВК и Telegram. Подберём стоимость под ваш бюджет и сделаем быстро и качественно.
 
     </div>
 
@@ -1014,34 +1062,17 @@ body{
 
 <div class="filters">
 
-    <button class="filter-btn active">
-        Все
-    </button>
-
-    <button class="filter-btn">
-        Города
-    </button>
-
-    <button class="filter-btn">
-        Средневековье
-    </button>
-
-    <button class="filter-btn">
-        Фэнтези
-    </button>
-
-    <button class="filter-btn">
-        Интерьеры
-    </button>
+    <button class="filter-btn active">Все</button>
+    <button class="filter-btn">Города</button>
+    <button class="filter-btn">Средневековье</button>
+    <button class="filter-btn">Фэнтези</button>
+    <button class="filter-btn">Интерьеры</button>
 
 </div>
 
-
-<!-- ===== PROJECTS Проекты ===== -->
+<!-- ===== PROJECTS ===== -->
 
 <section class="projects-section">
-
-    <!-- ===== SECTION TITLE ===== -->
 
     <div class="section-title">
 
@@ -1055,11 +1086,7 @@ body{
 
     </div>
 
-    <!-- ===== GRID ===== -->
-
     <div class="projects-grid">
-
-        <!-- CARD -->
 
         <article class="project-card reveal"
 
@@ -1067,8 +1094,7 @@ body{
         images/images/projects/pr1_1.png,
         images/images/projects/pr1_2.png,
         images/images/projects/pr1_3.png,
-        images/images/projects/pr1_4.png,
-        images/images/projects/pr1_5.png
+        images/images/projects/pr1_4.png
         ">
 
             <img class="project-preview"
@@ -1115,301 +1141,13 @@ body{
 
         </article>
 
-        <!-- CARD -->
-
-        <article class="project-card reveal"
-
-        data-images="
-        images/images/projects/pr3_1.png,
-        images/images/projects/pr3_2.png,
-        images/images/projects/pr3_3.png,
-        images/images/projects/pr3_4.png,
-        images/images/projects/pr3_5.png
-        ">
-
-            <img class="project-preview"
-            src="images/images/projects/pr3_1.png">
-
-            <div class="project-content">
-
-                <div>
-
-                    <div class="project-title">
-                        ПРОЕКТ ГОРОДА
-                    </div>
-
-                    <div class="project-description">
-                        Масштабный городской проект с архитектурными зонами.
-                    </div>
-
-                    <div class="tags">
-
-                        <div class="tag">#город</div>
-                        <div class="tag">#архитектура</div>
-
-                    </div>
-
-                </div>
-
-                <div class="project-buttons">
-
-                    <button class="project-btn view-btn">
-                        Смотреть
-                    </button>
-
-                    <a class="project-btn link-btn"
-                    href="https://www.planetminecraft.com/member/boatswain_msb/"
-                    target="_blank">
-
-                        🔗 PMC
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </article>
-
-        <!-- CARD -->
-
-        <article class="project-card reveal"
-
-        data-images="
-        images/images/projects/z1.png,
-        images/images/projects/z2.png,
-        images/images/projects/z3.png
-        ">
-
-            <img class="project-preview"
-            src="images/images/projects/z1.png">
-
-            <div class="project-content">
-
-                <div>
-
-                    <div class="project-title">
-                        ЗДАНИЯ MSB2
-                    </div>
-
-                    <div class="project-description">
-                        Подборка городских зданий и фасадов на MSB2.
-                    </div>
-
-                    <div class="tags">
-
-                        <div class="tag">#город</div>
-                        <div class="tag">#здания</div>
-
-                    </div>
-
-                </div>
-
-                <div class="project-buttons">
-
-                    <button class="project-btn view-btn">
-                        Смотреть
-                    </button>
-
-                    <a class="project-btn link-btn"
-                    href="https://www.planetminecraft.com/member/boatswain_msb/"
-                    target="_blank">
-
-                        🔗 PMC
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </article>
-
-        <!-- CARD -->
-
-        <article class="project-card reveal"
-
-        data-images="
-        images/images/projects/pr4_1.png,
-        images/images/projects/pr4_2.png,
-        images/images/projects/pr4_3.png
-        ">
-
-            <img class="project-preview"
-            src="images/images/projects/pr4_1.png">
-
-            <div class="project-content">
-
-                <div>
-
-                    <div class="project-title">
-                        ПРОЕКТ БАГРАТИОНА
-                    </div>
-
-                    <div class="project-description">
-                        Неоклассический проект с монументальной архитектурой.
-                    </div>
-
-                    <div class="tags">
-
-                        <div class="tag">#неоклассика</div>
-                        <div class="tag">#здания</div>
-
-                    </div>
-
-                </div>
-
-                <div class="project-buttons">
-
-                    <button class="project-btn view-btn">
-                        Смотреть
-                    </button>
-
-                    <a class="project-btn link-btn"
-                    href="https://www.planetminecraft.com/member/boatswain_msb/"
-                    target="_blank">
-
-                        🔗 PMC
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </article>
-
-    </div>
-
-    <!-- ===== SECOND SECTION ===== -->
-
-    <div class="section-title">
-
-        <h2>
-            СПАВНЫ И ЛОББИ
-        </h2>
-
-        <p>
-            Спавны, лобби и серверные хабы.
-        </p>
-
-    </div>
-
-    <div class="projects-grid">
-
-        <!-- CARD -->
-
-        <article class="project-card reveal"
-
-        data-images="
-        images/images/projects/sp1_1.png,
-        images/images/projects/sp1_2.png,
-        images/images/projects/sp1_3.png
-        ">
-
-            <img class="project-preview"
-            src="images/images/projects/sp1_1.png">
-
-            <div class="project-content">
-
-                <div>
-
-                    <div class="project-title">
-                        СПАВН: КОСМОС
-                    </div>
-
-                    <div class="project-description">
-                        Спавн с тематикой космоса и футуризма.
-                    </div>
-
-                    <div class="tags">
-
-                        <div class="tag">#спавн</div>
-                        <div class="tag">#футуризм</div>
-
-                    </div>
-
-                </div>
-
-                <div class="project-buttons">
-
-                    <button class="project-btn view-btn">
-                        Смотреть
-                    </button>
-
-                    <a class="project-btn link-btn"
-                    href="https://www.planetminecraft.com/member/boatswain_msb/"
-                    target="_blank">
-
-                        🔗 PMC
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </article>
-
-        <!-- CARD -->
-
-        <article class="project-card reveal"
-
-        data-images="
-        images/images/projects/sp7_1.png,
-        images/images/projects/sp7_2.png,
-        images/images/projects/sp7_3.png,
-        images/images/projects/sp7_4.png,
-        images/images/projects/sp7_5.png,
-        images/images/projects/sp7_6.png
-        ">
-
-            <img class="project-preview"
-            src="images/images/projects/sp7_1.png">
-
-            <div class="project-content">
-
-                <div>
-
-                    <div class="project-title">
-                        СПАВН: ЯПОНИЯ
-                    </div>
-
-                    <div class="project-description">
-                        Японский стиль с атмосферной композицией.
-                    </div>
-
-                    <div class="tags">
-
-                        <div class="tag">#япония</div>
-                        <div class="tag">#спавн</div>
-
-                    </div>
-
-                </div>
-
-                <div class="project-buttons">
-
-                    <button class="project-btn view-btn">
-                        Смотреть
-                    </button>
-
-                    <a class="project-btn link-btn"
-                    href="https://www.planetminecraft.com/member/boatswain_msb/"
-                    target="_blank">
-
-                        🔗 PMC
-
-                    </a>
-                </div>
-            </div>
-        </article>
-
     </div>
 
 </section>
 
-<!-- ===== Bottom Navigation ===== -->
+</div>
+
+<!-- ===== BOTTOM NAV ===== -->
 
 <nav class="bottom-nav">
 
@@ -1442,54 +1180,6 @@ body{
     </a>
 
 </nav>
-
-<script>
-
-/* ===== Sidebar ===== */
-
-const sidebar = document.getElementById("sidebar");
-const overlay = document.getElementById("mobileOverlay");
-
-document.getElementById("openMenu").onclick = () => {
-
-    sidebar.classList.add("active");
-    overlay.classList.add("active");
-
-}
-
-document.getElementById("closeMenu").onclick = closeMenu;
-overlay.onclick = closeMenu;
-
-function closeMenu(){
-
-    sidebar.classList.remove("active");
-    overlay.classList.remove("active");
-
-}
-
-/* ===== Reveal ===== */
-
-const reveals = document.querySelectorAll(".reveal");
-
-const observer = new IntersectionObserver(entries => {
-
-    entries.forEach(entry => {
-
-        if(entry.isIntersecting){
-
-            entry.target.classList.add("visible");
-
-        }
-
-    });
-
-},{
-    threshold:0.1
-});
-
-reveals.forEach(el => observer.observe(el));
-
-</script>
 
 <!-- ===== GALLERY ===== -->
 
@@ -1534,6 +1224,50 @@ reveals.forEach(el => observer.observe(el));
 
 <script>
 
+/* ===== SIDEBAR ===== */
+
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("mobileOverlay");
+
+document.getElementById("openMenu").onclick = () => {
+
+    sidebar.classList.add("active");
+    overlay.classList.add("active");
+
+}
+
+document.getElementById("closeMenu").onclick = closeMenu;
+overlay.onclick = closeMenu;
+
+function closeMenu(){
+
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
+
+}
+
+/* ===== REVEAL ===== */
+
+const reveals = document.querySelectorAll(".reveal");
+
+const observer = new IntersectionObserver(entries => {
+
+    entries.forEach(entry => {
+
+        if(entry.isIntersecting){
+
+            entry.target.classList.add("visible");
+
+        }
+
+    });
+
+},{
+    threshold:0.08
+});
+
+reveals.forEach(el => observer.observe(el));
+
 /* ===== GALLERY ===== */
 
 const gallery = document.getElementById("gallery");
@@ -1543,18 +1277,41 @@ const galleryCounter = document.getElementById("galleryCounter");
 let galleryImages = [];
 let currentImage = 0;
 
-/* ===== OPEN ===== */
+/* ===== AUTO GALLERY ===== */
 
-function openGallery(images){
+document.querySelectorAll(".project-card").forEach(card => {
 
-    galleryImages = images;
-    currentImage = 0;
+    const button = card.querySelector(".view-btn");
 
-    updateGallery();
+    button.addEventListener("click", e => {
 
-    gallery.classList.add("active");
+        e.stopPropagation();
 
-    document.body.style.overflow = "hidden";
+        galleryImages =
+        card.dataset.images
+        .split(",")
+        .map(img => img.trim());
+
+        currentImage = 0;
+
+        updateGallery();
+
+        gallery.classList.add("active");
+
+        document.body.style.overflow = "hidden";
+
+    });
+
+});
+
+/* ===== UPDATE ===== */
+
+function updateGallery(){
+
+    galleryImage.src = galleryImages[currentImage];
+
+    galleryCounter.innerHTML =
+    `${currentImage + 1} / ${galleryImages.length}`;
 }
 
 /* ===== CLOSE ===== */
@@ -1566,16 +1323,6 @@ function closeGallery(){
     document.body.style.overflow = "";
 
     galleryImage.classList.remove("zoomed");
-}
-
-/* ===== UPDATE ===== */
-
-function updateGallery(){
-
-    galleryImage.src = galleryImages[currentImage];
-
-    galleryCounter.innerHTML =
-    `${currentImage + 1} / ${galleryImages.length}`;
 }
 
 /* ===== NEXT ===== */
@@ -1631,7 +1378,7 @@ galleryImage.addEventListener("click", () => {
 
 });
 
-/* ===== SWIPE MOBILE ===== */
+/* ===== MOBILE SWIPE ===== */
 
 let touchStartX = 0;
 
@@ -1663,3 +1410,4 @@ gallery.addEventListener("touchend", e => {
 
 </body>
 </html>
+```

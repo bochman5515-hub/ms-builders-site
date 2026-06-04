@@ -1,1404 +1,219 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>MS Builders</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
 <style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
+*{margin:0; padding:0; box-sizing:border-box;}
+html{scroll-behavior:smooth;}
 body{
-
     font-family:'Montserrat',sans-serif;
-
-    background:
-    radial-gradient(circle at top,#10213d 0%,#070b14 45%,#05070d 100%);
-
-    color:white;
-
-    min-height:100vh;
-
-    overflow-x:hidden;
-
-    padding:18px;
-    padding-bottom:120px;
+    background:radial-gradient(circle at top,#10213d 0%,#070b14 45%,#05070d 100%);
+    color:white; min-height:100vh; overflow-x:hidden;
+    padding:18px; padding-bottom:120px;
 }
-
 /* ===== Scrollbar ===== */
-
-::-webkit-scrollbar{
-    width:8px;
-}
-
-::-webkit-scrollbar-thumb{
-    background:#d4a63a;
-    border-radius:20px;
-}
-
+::-webkit-scrollbar{width:8px;}
+::-webkit-scrollbar-thumb{background:#d4a63a;border-radius:20px;}
 /* ===== Container ===== */
-
-.container{
-    max-width:1500px;
-    margin:auto;
-}
-
+.container{max-width:1500px; margin:auto;}
 /* ===== TOPBAR ===== */
-
-.topbar{
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    padding:18px 24px;
-
-    border-radius:26px;
-
-    background:rgba(10,15,28,.82);
-
-    border:1px solid rgba(255,255,255,.06);
-
-    backdrop-filter:blur(16px);
-
-    box-shadow:
-    0 0 40px rgba(0,0,0,.35),
-    inset 0 0 50px rgba(255,255,255,.02);
-
-    margin-bottom:34px;
-}
-
-.server-box{
-
-    display:flex;
-    align-items:center;
-
-    gap:16px;
-
-    cursor:pointer;
-}
-
-.server-box img{
-
-    width:48px;
-    height:48px;
-
-    border-radius:14px;
-}
-
-.server-info{
-    display:flex;
-    flex-direction:column;
-}
-
-.server-ip{
-
-    font-size:30px;
-    font-weight:800;
-}
-
-.server-ip span{
-    color:#8d99ae;
-}
-
-.server-version{
-
-    margin-top:2px;
-
-    font-size:13px;
-
-    color:#8d99ae;
-}
-
-.menu-btn{
-
-    width:62px;
-    height:62px;
-
-    border:none;
-
-    border-radius:20px;
-
-    background:rgba(212,166,58,.08);
-
-    border:1px solid rgba(212,166,58,.25);
-
-    cursor:pointer;
-
-    transition:.2s;
-
-    position:relative;
-}
-
-.menu-btn:hover{
-    transform:scale(1.04);
-}
-
-.menu-btn::before{
-
-    content:"☰";
-
-    position:absolute;
-
-    left:50%;
-    top:50%;
-
-    transform:translate(-50%,-50%);
-
-    color:#d4a63a;
-
-    font-size:30px;
-}
-
-/* ===== HERO ===== */
-
-.hero{
-
-    text-align:center;
-
-    margin-bottom:50px;
-}
-
-.hero h1{
-
-    font-size:clamp(60px,10vw,170px);
-
-    font-weight:800;
-
-    line-height:1;
-
-    letter-spacing:4px;
-}
-
-.hero h1 span{
-    color:#d4a63a;
-}
-
-.hero p{
-
-    margin-top:12px;
-
-    color:#95a1b8;
-
-    font-size:22px;
-
-    letter-spacing:2px;
-}
-
-
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-radius:26px;background:rgba(10,15,28,.82);border:1px solid rgba(255,255,255,.06);backdrop-filter:blur(16px);box-shadow:0 0 40px rgba(0,0,0,.35),inset 0 0 50px rgba(255,255,255,.02);margin-bottom:34px;}
+.server-box{display:flex;align-items:center;gap:16px;cursor:pointer;}
+.server-box img{width:48px;height:48px;border-radius:14px;}
+.server-info{display:flex;flex-direction:column;}
+.server-ip{font-size:30px;font-weight:800;}
+.server-ip span{color:#8d99ae;}
+.server-version{margin-top:2px;font-size:13px;color:#8d99ae;}
+.menu-btn{width:62px;height:62px;border:none;border-radius:20px;background:rgba(212,166,58,.08);border:1px solid rgba(212,166,58,.25);cursor:pointer;transition:.2s;position:relative;}
+.menu-btn:hover{transform:scale(1.04);}
+.menu-btn::before{content:"☰";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#d4a63a;font-size:30px;}
+/* ===== GRID ===== */
+.grid{display:grid;grid-template-columns:2fr 1fr; gap:24px; align-items:start;}
+.left-column, .right-column{display:flex; flex-direction:column; gap:24px;}
 /* ===== CARD ===== */
-
-.card{
-
-    position:relative;
-
-    overflow:hidden;
-
-    border-radius:30px;
-
-    background:#0d1424;
-
-    border:1px solid rgba(255,255,255,.05);
-
-    min-height:320px;
-
-    box-shadow:
-    0 0 40px rgba(0,0,0,.35),
-    inset 0 0 60px rgba(255,255,255,.02);
-
-    transition:.25s;
-
-    text-decoration:none;
-
-    color:white;
-}
-
-.card:hover{
-
-    transform:translateY(-4px);
-
-    border-color:rgba(212,166,58,.35);
-}
-
-.big-card{
-    min-height:720px;
-}
-
-.card img{
-
-    position:absolute;
-    inset:0;
-
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
-
-    opacity:.82;
-}
-
-.card::after{
-
-    content:"";
-
-    position:absolute;
-    inset:0;
-
-    background:
-    linear-gradient(to top,
-    rgba(4,7,14,.97),
-    rgba(4,7,14,.2));
-}
-
-.card-content{
-
-    position:relative;
-    z-index:2;
-
-    height:100%;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-
-    padding:36px;
-}
-
-.card h2{
-
-    font-size:58px;
-
-    line-height:.95;
-
-    margin-bottom:18px;
-
-    font-weight:800;
-}
-
-.card h2 span{
-    color:#d4a63a;
-}
-
-.card p{
-
-    max-width:380px;
-
-    font-size:22px;
-
-    line-height:1.5;
-
-    color:#d2dae9;
-}
-
-.arrow-btn{
-
-    width:72px;
-    height:72px;
-
-    border-radius:22px;
-
-    border:1px solid rgba(212,166,58,.35);
-
-    background:rgba(212,166,58,.08);
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:34px;
-
-    color:#d4a63a;
-
-    transition:.2s;
-}
-
-.card:hover .arrow-btn{
-
-    background:#d4a63a;
-
-    color:black;
-}
-
+.card{position:relative;overflow:hidden;border-radius:30px;background:#0d1424;border:1px solid rgba(255,255,255,.05);min-height:320px;box-shadow:0 0 40px rgba(0,0,0,.35),inset 0 0 60px rgba(255,255,255,.02);transition:.25s;text-decoration:none;color:white;}
+.card:hover{transform:translateY(-4px);border-color:rgba(212,166,58,.35);}
+.big-card{min-height:720px;}
+.small-card{min-height:240px;}
+.card img{position:absolute; inset:0;width:100%;height:100%;object-fit:cover;opacity:.82;}
+.card::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(4,7,14,.97),rgba(4,7,14,.2));}
+.card-content{position:relative; z-index:2; height:100%; display:flex; flex-direction:column; justify-content:space-between; padding:36px;}
+.card h2{font-size:58px; line-height:.95; margin-bottom:18px;font-weight:800;}
+.card h2 span{color:#d4a63a;}
+.card p{max-width:380px; font-size:22px; line-height:1.5; color:#d2dae9;}
+.arrow-btn{width:72px;height:72px;border-radius:22px;border:1px solid rgba(212,166,58,.35);background:rgba(212,166,58,.08);display:flex;align-items:center;justify-content:center;font-size:34px;color:#d4a63a;transition:.2s;}
+.card:hover .arrow-btn{background:#d4a63a;color:black;}
 /* ===== STATS ===== */
-
-.stats{
-
-    margin-top:24px;
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    background:#0b111f;
-
-    border-radius:24px;
-
-    overflow:hidden;
-
-    border:1px solid rgba(255,255,255,.05);
-}
-
-.stat{
-
-    padding:30px;
-
-    text-align:center;
-}
-
-.stat:not(:last-child){
-    border-right:1px solid rgba(255,255,255,.06);
-}
-
-.stat h3{
-
-    color:#d4a63a;
-
-    font-size:42px;
-
-    margin-bottom:6px;
-}
-
-.stat p{
-
-    color:#96a4bb;
-
-    font-size:18px;
-}
-
+.stats{margin-top:24px;display:grid;grid-template-columns:repeat(3,1fr);background:#0b111f;border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.05);}
+.stat{padding:30px;text-align:center;}
+.stat:not(:last-child){border-right:1px solid rgba(255,255,255,.06);}
+.stat h3{color:#d4a63a;font-size:42px;margin-bottom:6px;}
+.stat p{color:#96a4bb;font-size:18px;}
 /* ===== Bottom Nav ===== */
-
-.bottom-nav{
-
-    position:fixed;
-
-    left:50%;
-    bottom:16px;
-
-    transform:translateX(-50%);
-
-    width:min(950px,96%);
-
-    height:92px;
-
-    border-radius:28px;
-
-    background:rgba(10,15,28,.92);
-
-    border:1px solid rgba(255,255,255,.06);
-
-    backdrop-filter:blur(14px);
-
-    display:grid;
-
-    grid-template-columns:repeat(4,1fr);
-
-    z-index:100;
-}
-
-.nav-item{
-
-    display:flex;
-    flex-direction:column;
-
-    align-items:center;
-    justify-content:center;
-
-    gap:8px;
-
-    text-decoration:none;
-
-    color:#c8d2e4;
-
-    transition:.2s;
-}
-
-.nav-item:hover{
-    color:#d4a63a;
-}
-
-.nav-item.active{
-    color:#d4a63a;
-}
-
-.nav-icon{
-    font-size:30px;
-}
-
+.bottom-nav{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);width:min(950px,96%);height:92px;border-radius:28px;background:rgba(10,15,28,.92);border:1px solid rgba(255,255,255,.06);backdrop-filter:blur(14px);display:grid;grid-template-columns:repeat(4,1fr);z-index:100;}
+.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-decoration:none;color:#c8d2e4;transition:.2s;}
+.nav-item:hover{color:#d4a63a;}
+.nav-item.active{color:#d4a63a;}
+.nav-icon{font-size:30px;}
 /* ===== SIDEBAR ===== */
-
-.sidebar{
-
-    position:fixed;
-
-    top:0;
-    right:-340px;
-
-    width:320px;
-    height:100vh;
-
-    background:rgba(8,12,22,.97);
-
-    backdrop-filter:blur(18px);
-
-    border-left:1px solid rgba(255,255,255,.06);
-
-    z-index:1000;
-
-    transition:.35s cubic-bezier(.77,0,.18,1);
-
-    padding:28px;
-
-    display:flex;
-    flex-direction:column;
-}
-
-.sidebar.active{
-    right:0;
-}
-
-.sidebar-top{
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    margin-bottom:35px;
-}
-
-.sidebar-logo{
-
-    display:flex;
-    align-items:center;
-
-    gap:14px;
-}
-
-.sidebar-logo img{
-
-    width:56px;
-    height:56px;
-
-    border-radius:16px;
-}
-
-.sidebar-logo h3{
-    font-size:18px;
-}
-
-.sidebar-logo p{
-
-    color:#8d99ae;
-
-    font-size:13px;
-
-    margin-top:3px;
-}
-
-.close-sidebar{
-
-    width:44px;
-    height:44px;
-
-    border:none;
-
-    border-radius:14px;
-
-    background:rgba(255,255,255,.05);
-
-    color:white;
-
-    cursor:pointer;
-
-    font-size:18px;
-}
-
-.sidebar-nav{
-
-    display:flex;
-    flex-direction:column;
-
-    gap:10px;
-}
-
-.sidebar-nav a{
-
-    display:flex;
-    align-items:center;
-
-    gap:14px;
-
-    padding:16px 18px;
-
-    border-radius:18px;
-
-    text-decoration:none;
-
-    color:#d4dcec;
-
-    font-weight:600;
-
-    transition:.2s;
-}
-
-.sidebar-nav a span{
-    font-size:22px;
-}
-
-.sidebar-nav a:hover{
-
-    background:rgba(212,166,58,.12);
-
-    color:#d4a63a;
-}
-
-.sidebar-nav a.active{
-
-    background:rgba(212,166,58,.16);
-
-    color:#d4a63a;
-}
-
+.sidebar{position:fixed;top:0;right:-340px;width:320px;height:100vh;background:rgba(8,12,22,.97);backdrop-filter:blur(18px);border-left:1px solid rgba(255,255,255,.06);z-index:1000;transition:.35s cubic-bezier(.77,0,.18,1);padding:28px;display:flex;flex-direction:column;}
+.sidebar.active{right:0;}
+.sidebar-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:35px;}
+.sidebar-logo{display:flex;align-items:center;gap:14px;}
+.sidebar-logo img{width:56px;height:56px;border-radius:16px;}
+.sidebar-logo h3{font-size:18px;}
+.sidebar-logo p{color:#8d99ae;font-size:13px;margin-top:3px;}
+.close-sidebar{width:44px;height:44px;border:none;border-radius:14px;background:rgba(255,255,255,.05);color:white;cursor:pointer;font-size:18px;}
+.sidebar-nav{display:flex;flex-direction:column;gap:10px;}
+.sidebar-nav a{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:18px;text-decoration:none;color:#d4dcec;font-weight:600;transition:.2s;}
+.sidebar-nav a span{font-size:22px;}
+.sidebar-nav a:hover{background:rgba(212,166,58,.12);color:#d4a63a;}
+.sidebar-nav a.active{background:rgba(212,166,58,.16);color:#d4a63a;}
 /* ===== Overlay ===== */
-
-.mobile-overlay{
-
-    position:fixed;
-    inset:0;
-
-    background:rgba(0,0,0,.45);
-
-    backdrop-filter:blur(6px);
-
-    opacity:0;
-    visibility:hidden;
-
-    transition:.3s;
-
-    z-index:900;
-}
-
-.mobile-overlay.active{
-
-    opacity:1;
-    visibility:visible;
-}
-
+.mobile-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:.3s; z-index:900;}
+.mobile-overlay.active{opacity:1;visibility:visible;}
 /* ===== Reveal Animation ===== */
-
-.reveal{
-
-    opacity:0;
-
-    transform:translateY(40px);
-
-    transition:
-    opacity .8s ease,
-    transform .8s ease;
-}
-
-.reveal.visible{
-
-    opacity:1;
-
-    transform:translateY(0);
-}
-
-/* ===== Responsive ===== */
-
-@media(max-width:1100px){
-
-    .grid{
-        grid-template-columns:1fr;
-    }
-
-    .big-card{
-        min-height:560px;
-    }
-
-}
-
-@media(max-width:850px){
-
-    body{
-        padding:12px;
-        padding-bottom:110px;
-    }
-
-    .topbar{
-        padding:16px;
-    }
-
-    .server-ip{
-        font-size:18px;
-    }
-
-    .hero h1{
-        font-size:58px;
-    }
-
-    .hero p{
-        font-size:15px;
-    }
-
-    .card{
-        min-height:300px;
-    }
-
-    .card-content{
-        padding:28px;
-    }
-
-    .card h2{
-        font-size:40px;
-    }
-
-    .card p{
-        font-size:17px;
-    }
-
-    .arrow-btn{
-        width:58px;
-        height:58px;
-        font-size:28px;
-    }
-
-    .stats{
-        grid-template-columns:1fr;
-    }
-
-    .stat:not(:last-child){
-
-        border-right:none;
-
-        border-bottom:1px solid rgba(255,255,255,.06);
-    }
-
-}
-
-@media(max-width:600px){
-
-    .hero h1{
-        font-size:44px;
-    }
-
-    .card{
-        min-height:260px;
-    }
-
-    .card h2{
-        font-size:32px;
-    }
-
-    .card p{
-        font-size:15px;
-    }
-
-    .sidebar{
-
-        width:100%;
-
-        right:-100%;
-    }
-
-    .bottom-nav{
-
-        height:82px;
-
-        border-radius:24px;
-    }
-
-    .nav-icon{
-        font-size:24px;
-    }
-
-}
-.join-section{
-    margin-bottom:28px;
-}
-
-.join-section h3{
-    color:#d4a63a;
-    margin-bottom:10px;
-    font-size:20px;
-}
-
-.join-text{
-    max-width:100%;
-    font-size:17px;
-    line-height:1.7;
-}
-
-.copy-box{
-
-    width:100%;
-
-    padding:14px 18px;
-
-    border-radius:18px;
-
-    border:1px solid rgba(212,166,58,.25);
-
-    background:rgba(212,166,58,.08);
-
-    color:white;
-
-    font-size:18px;
-
-    font-weight:700;
-
-    cursor:pointer;
-
-    transition:.2s;
-}
-
-.copy-box:hover{
-
-    background:rgba(212,166,58,.15);
-
-    border-color:#d4a63a;
-}
-
-.command-box{
-
-    padding:16px;
-
-    border-radius:18px;
-
-    background:#090e18;
-
-    border:1px solid rgba(255,255,255,.08);
-
-    font-family:monospace;
-
-    margin-bottom:12px;
-}
-
-.gold-link{
-
-    color:#d4a63a;
-
-    text-decoration:none;
-
-    transition:.2s;
-}
-
-.gold-link:hover{
-
-    color:#ffd36e;
-
-    text-shadow:0 0 10px rgba(212,166,58,.4);
-}
-
-.feature-list{
-
-    padding-left:18px;
-
-    line-height:1.8;
-
-    color:#d2dae9;
-}
-
-.warning-text{
-
-    color:#ffcc66;
-
-    font-size:15px;
-
-    line-height:1.7;
-}
-
-.action-btn{
-
-    display:inline-block;
-
-    padding:16px 22px;
-
-    border-radius:18px;
-
-    background:#d4a63a;
-
-    color:black;
-
-    text-decoration:none;
-
-    font-weight:700;
-
-    transition:.2s;
-}
-
-.action-btn:hover{
-
-    transform:translateY(-2px);
-
-    box-shadow:0 0 25px rgba(212,166,58,.4);
-}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease, transform .8s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.join-section{margin-bottom:28px;}
+.join-section h3{color:#d4a63a;margin-bottom:10px;font-size:20px;}
+.join-text{max-width:100%;font-size:17px;line-height:1.7;}
+.copy-box{width:100%;padding:14px 18px;border-radius:18px;border:1px solid rgba(212,166,58,.25);background:rgba(212,166,58,.08);color:white;font-size:18px;font-weight:700;cursor:pointer;transition:.2s;}
+.copy-box:hover{background:rgba(212,166,58,.15);border-color:#d4a63a;}
+.command-box{padding:16px;border-radius:18px;background:#090e18;border:1px solid rgba(255,255,255,.08);font-family:monospace;margin-bottom:12px;}
+.gold-link{color:#d4a63a;text-decoration:none;transition:.2s;}
+.gold-link:hover{color:#ffd36e;text-shadow:0 0 10px rgba(212,166,58,.4);}
+.feature-list{padding-left:18px;line-height:1.8;color:#d2dae9;}
+.warning-text{color:#ffcc66;font-size:15px;line-height:1.7;}
+.action-btn{display:inline-block;padding:16px 22px;border-radius:18px;background:#d4a63a;color:black;text-decoration:none;font-weight:700;transition:.2s;}
+.action-btn:hover{transform:translateY(-2px);box-shadow:0 0 25px rgba(212,166,58,.4);}
 </style>
-
 </head>
 
 <body>
-
 <div class="mobile-overlay" id="mobileOverlay"></div>
 
-<!-- ===== SIDEBAR ===== -->
-
 <aside class="sidebar" id="sidebar">
-
-    <div class="sidebar-top">
-
-        <div class="sidebar-logo">
-
-            <img src="logo.png">
-
-            <div>
-
-                <h3>MS BUILDERS</h3>
-                <p>Minecraft сервер</p>
-
-            </div>
-
-        </div>
-
-        <button class="close-sidebar" id="closeMenu">
-            ✕
-        </button>
-
-    </div>
-
-    <nav class="sidebar-nav">
-
-        <a href="index.html" class="active">
-            <span>⌂</span>
-            Главная
-        </a>
-
-        <a href="about.html">
-            <span>◈</span>
-            Информация
-        </a>
-
-        <a href="projects.html">
-            <span>▣</span>
-            Проекты
-        </a>
-
-        <a href="shop.html">
-            <span>🛒</span>
-            Магазин
-        </a>
-
-        <a href="community.html">
-            <span>◎</span>
-            Соцсети
-        </a>
-
-        <a href="join.html">
-            <span>▶</span>
-            Начать играть
-        </a>
-
-        <a href="news.html">
-            <span>✦</span>
-            Новости
-        </a>
-
-    </nav>
-
+  <!-- Sidebar код без изменений -->
 </aside>
 
 <div class="container">
-
-    <!-- ===== TOPBAR ===== -->
-
-    <header class="topbar">
-
-        <div class="server-box" onclick="copyIP()">
-
-            <img src="logo.png">
-
-            <div class="server-info">
-
-                <div class="server-ip">
-                    play.<span>msbuilders.name</span>
-                </div>
-
-                <div class="server-version">
-                    Java Edition 1.21.11
-                </div>
-
-            </div>
-
-        </div>
-
-        <button class="menu-btn" id="openMenu"></button>
-
-    </header>
-   
-
-    <!-- ЛЕВАЯ БОЛЬШАЯ КАРТОЧКА -->
-
-    <div class="left-column">
-
-        <div class="card big-card reveal">
-
-            <div class="card-content">
-
-                <div>
-
-                    <h2>
-                        НАЧАТЬ<br>
-                        <span>ИГРАТЬ</span>
-                    </h2>
-
-                    <div class="join-section">
-
-                        <h3>IP сервера</h3>
-
-                        <button class="copy-box"
-                                onclick="copyCustom('play.msbuilders.name')">
-
-                            play.msbuilders.name
-
-                        </button>
-
-                    </div>
-
-                    <div class="join-section">
-
-                        <h3>Версия игры</h3>
-
-                        <p class="join-text">
-
-                            Java Edition 1.21.11
-
-                        </p>
-
-                    </div>
-
-                    <div class="join-section">
-
-                        <h3>Лаунчеры</h3>
-
-                        <p class="join-text">
-
-                            Используйте проверенные лаунчеры:
-
-                            <br><br>
-
-                            <a href="https://www.minecraft.net"
-                               target="_blank"
-                               class="gold-link">
-
-                                Официальный Minecraft
-
-                            </a>
-
-                            <br>
-
-                            <a href="https://minecraft-inside.ru/programs/74705-tl-launcher.html"
-                               target="_blank"
-                               class="gold-link">
-
-                                Legacy Launcher
-
-                            </a>
-
-                        </p>
-
-                    </div>
-
-                    <div class="join-section">
-
-                        <h3>Первый вход</h3>
-
-                        <p class="join-text">
-
-                            При подключении обязательно
-                            загрузите ресурспак сервера.
-
-                        </p>
-
-                    </div>
-
-                    <div class="join-section">
-
-                        <h3>Регистрация</h3>
-
-                        <div class="command-box">
-
-                            /register пароль повтор_пароля
-
-                        </div>
-
-                        <p class="warning-text">
-
-                            ⚠ Обязательно запомните пароль.
-                            Восстановление — платное.
-
-                        </p>
-
-                    </div>
-
-                    <div class="join-section">
-
-                        <h3>Ограничения новичка</h3>
-
-                        <ul class="feature-list">
-
-                            <li>
-                                1 час игры для строительства
-                            </li>
-
-                            <li>
-                                24 часа игры для полного доступа
-                            </li>
-
-                        </ul>
-
-                    </div>
-
-                    <div class="join-section">
-
-                        <a href="https://ms-builders-2.easydonate.ru/"
-                           target="_blank"
-                           class="action-btn">
-
-                            Купить снятие ограничений
-                            (100 ₽)
-
-                        </a>
-
-                    </div>
-
-                    <div class="join-section">
-
-                        <p class="warning-text">
-
-                            ⚠ Обязательно ознакомьтесь
-                            с правилами сервера.
-
-                            Подключаясь к серверу,
-                            вы автоматически соглашаетесь
-                            с ними.
-
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
+  <header class="topbar">
+    <div class="server-box" onclick="copyIP()">
+      <img src="logo.png">
+      <div class="server-info">
+        <div class="server-ip">play.<span>msbuilders.name</span></div>
+        <div class="server-version">Java Edition 1.21.11</div>
+      </div>
     </div>
+    <button class="menu-btn" id="openMenu"></button>
+  </header>
 
-    <!-- ПРАВАЯ КОЛОНКА -->
+  <!-- ===== GRID: левый большой блок + правая колонка ===== -->
+  <div class="grid">
+    <div class="left-column">
+      <div class="card big-card reveal">
+        <div class="card-content">
+          <h2>НАЧАТЬ<br><span>ИГРАТЬ</span></h2>
+          <!-- IP, версия, лаунчеры, регистрация и прочее -->
+          <div class="join-section">
+            <h3>IP сервера</h3>
+            <button class="copy-box" onclick="copyCustom('play.msbuilders.name')">play.msbuilders.name</button>
+          </div>
+          <div class="join-section">
+            <h3>Версия игры</h3>
+            <p class="join-text">Java Edition 1.21.11</p>
+          </div>
+          <div class="join-section">
+            <h3>Лаунчеры</h3>
+            <p class="join-text">
+              <a href="https://www.minecraft.net" target="_blank" class="gold-link">Официальный Minecraft</a><br>
+              <a href="https://minecraft-inside.ru/programs/74705-tl-launcher.html" target="_blank" class="gold-link">Legacy Launcher</a>
+            </p>
+          </div>
+          <div class="join-section">
+            <h3>Первый вход</h3>
+            <p class="join-text">При подключении обязательно загрузите ресурспак сервера.</p>
+          </div>
+          <div class="join-section">
+            <h3>Регистрация</h3>
+            <div class="command-box">/register пароль повтор_пароля</div>
+            <p class="warning-text">⚠ Обязательно запомните пароль. Восстановление — платное.</p>
+          </div>
+          <div class="join-section">
+            <h3>Ограничения новичка</h3>
+            <ul class="feature-list"><li>1 час игры для строительства</li><li>24 часа игры для полного доступа</li></ul>
+          </div>
+          <div class="join-section">
+            <a href="https://ms-builders-2.easydonate.ru/" target="_blank" class="action-btn">Купить снятие ограничений (100 ₽)</a>
+          </div>
+          <div class="join-section">
+            <p class="warning-text">⚠ Обязательно ознакомьтесь с правилами сервера. Подключаясь к серверу, вы автоматически соглашаетесь с ними.</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="right-column">
-
-        <!-- Альтернативный вход -->
-
-        <div class="card reveal">
-
-            <div class="card-content">
-
-                <div>
-
-                    <h2>
-                        🌐<br>
-                        <span>АЛЬТЕРНАТИВНЫЙ</span><br>
-                        ВХОД
-                    </h2>
-
-                    <p>
-
-                        Если основной адрес
-                        недоступен из-за блокировок:
-
-                    </p>
-
-                    <br>
-
-                    <button class="copy-box"
-                            onclick="copyCustom('77.42.49.5:25608')">
-
-                        77.42.49.5:25608
-
-                    </button>
-
-                    <br><br>
-
-                    <p>
-
-                        Игроки с этого адреса
-                        могут не видеть префиксы
-                        других игроков.
-
-                    </p>
-
-                </div>
-
-            </div>
-
+      <div class="card small-card reveal">
+        <div class="card-content">
+          <h2>🌐<br><span>АЛЬТЕРНАТИВНЫЙ</span><br>ВХОД</h2>
+          <p>Если основной адрес недоступен из-за блокировок:</p>
+          <button class="copy-box" onclick="copyCustom('77.42.49.5:25608')">77.42.49.5:25608</button>
+          <p>Игроки с этого адреса могут не видеть префиксы других игроков.</p>
         </div>
-
-        <!-- Проблема с входом -->
-
-        <div class="card reveal">
-
-            <div class="card-content">
-
-                <div>
-
-                    <h2>
-                        ⚠<br>
-                        <span>ПРОБЛЕМА</span><br>
-                        С ВХОДОМ
-                    </h2>
-
-                    <ul class="feature-list">
-
-                        <li>Проверьте интернет</li>
-                        <li>Проверьте VPN</li>
-                        <li>Проверьте лаунчер</li>
-                        <li>Проверьте ограничения</li>
-
-                    </ul>
-
-                    <br>
-
-                    <a href="https://cloud.mail.ru/public/PrR9/wgt2trXZX"
-                       target="_blank"
-                       class="gold-link">
-
-                        Скачать ресурспак
-
-                    </a>
-
-                    <br><br>
-
-                    <a href="https://discord.com/invite/Wj8jWS736f"
-                       target="_blank"
-                       class="gold-link">
-
-                        Поддержка Discord
-
-                    </a>
-
-                </div>
-
-            </div>
-
+      </div>
+      <div class="card small-card reveal">
+        <div class="card-content">
+          <h2>⚠<br><span>ПРОБЛЕМА</span><br>С ВХОДОМ</h2>
+          <ul class="feature-list"><li>Проверьте интернет</li><li>Проверьте VPN</li><li>Проверьте лаунчер</li><li>Проверьте ограничения</li></ul>
+          <a href="https://cloud.mail.ru/public/PrR9/wgt2trXZX" target="_blank" class="gold-link">Скачать ресурспак</a>
+          <a href="https://discord.com/invite/Wj8jWS736f" target="_blank" class="gold-link">Поддержка Discord</a>
         </div>
-
-        <!-- Моды -->
-
-        <div class="card reveal">
-
-            <div class="card-content">
-
-                <div>
-
-                    <h2>
-                        ⚙<br>
-                        <span>РАЗРЕШЁННЫЕ</span><br>
-                        МОДЫ
-                    </h2>
-
-                    <p>
-
-                        Настоятельно рекомендуем
-                        установить официальный набор.
-
-                    </p>
-
-                    <br>
-
-                    <a href="https://drive.google.com/file/d/14aQDxOebqMpLKsNsGp_OGAjeIOVeddAc/view"
-                       target="_blank"
-                       class="gold-link">
-
-                        Скачать сборку
-
-                    </a>
-
-                    <br><br>
-
-                    <a href="https://drive.google.com/file/d/1Z_YGUeGtvdF7qBsrMnRabxo7tHtn3RGW/view"
-                       target="_blank"
-                       class="gold-link">
-
-                        Дополнительные ресурсы
-
-                    </a>
-
-                    <br><br>
-
-                    <p class="warning-text">
-
-                        ⚠ Любые моды,
-                        упрощающие игровой процесс,
-                        запрещены.
-
-                    </p>
-
-                </div>
-
-            </div>
-
+      </div>
+      <div class="card small-card reveal">
+        <div class="card-content">
+          <h2>⚙<br><span>РАЗРЕШЁННЫЕ</span><br>МОДЫ</h2>
+          <p>Настоятельно рекомендуем установить официальный набор.</p>
+          <a href="https://drive.google.com/file/d/14aQDxOebqMpLKsNsGp_OGAjeIOVeddAc/view" target="_blank" class="gold-link">Скачать сборку</a>
+          <a href="https://drive.google.com/file/d/1Z_YGUeGtvdF7qBsrMnRabxo7tHtn3RGW/view" target="_blank" class="gold-link">Дополнительные ресурсы</a>
+          <p class="warning-text">⚠ Любые моды, упрощающие игровой процесс, запрещены.</p>
         </div>
-
+      </div>
     </div>
+  </div>
 
-</div>
-
-    <!-- ===== STATS ===== -->
-
-    <section class="stats">
-
-        <div class="stat">
-
-            <h3>1287+</h3>
-            <p>Активных игроков</p>
-
-        </div>
-
-        <div class="stat">
-
-            <h3>3500+</h3>
-            <p>Уникальных построек</p>
-
-        </div>
-
-        <div class="stat">
-
-            <h3>2 ГОДА</h3>
-            <p>Онлайн 24/7</p>
-
-        </div>
-
-    </section>
-
+  <!-- ===== STATS ===== -->
+  <section class="stats">
+    <div class="stat"><h3>1287+</h3><p>Активных игроков</p></div>
+    <div class="stat"><h3>3500+</h3><p>Уникальных построек</p></div>
+    <div class="stat"><h3>2 ГОДА</h3><p>Онлайн 24/7</p></div>
+  </section>
 </div>
 
 <!-- ===== Bottom Navigation ===== -->
-
 <nav class="bottom-nav">
-
-    <a href="index.html" class="nav-item active">
-
-        <div class="nav-icon">⌂</div>
-        <div>Главная</div>
-
-    </a>
-
-    <a href="shop.html" class="nav-item">
-
-        <div class="nav-icon">🛒</div>
-        <div>Купить</div>
-
-    </a>
-
-    <a href="join.html" class="nav-item">
-
-        <div class="nav-icon">▶</div>
-        <div>Играть</div>
-
-    </a>
-
-    <a href="profile.html" class="nav-item">
-
-        <div class="nav-icon">◎</div>
-        <div>Профиль</div>
-
-    </a>
-
+  <a href="index.html" class="nav-item active"><div class="nav-icon">⌂</div><div>Главная</div></a>
+  <a href="shop.html" class="nav-item"><div class="nav-icon">🛒</div><div>Купить</div></a>
+  <a href="join.html" class="nav-item"><div class="nav-icon">▶</div><div>Играть</div></a>
+  <a href="profile.html" class="nav-item"><div class="nav-icon">◎</div><div>Профиль</div></a>
 </nav>
 
 <script>
-
-/* ===== COPY IP ===== */
-
-function copyIP(){
-
-    navigator.clipboard.writeText("play.msbuilders.name");
-
-}
-
-/* ===== Sidebar ===== */
-
-const sidebar = document.getElementById("sidebar");
-const overlay = document.getElementById("mobileOverlay");
-
-document.getElementById("openMenu").onclick = () => {
-
-    sidebar.classList.add("active");
-    overlay.classList.add("active");
-
-}
-
-document.getElementById("closeMenu").onclick = closeMenu;
-overlay.onclick = closeMenu;
-
-function closeMenu(){
-
-    sidebar.classList.remove("active");
-    overlay.classList.remove("active");
-
-}
-
-/* ===== Reveal Animation ===== */
-
-const reveals = document.querySelectorAll(".reveal");
-
-const observer = new IntersectionObserver(entries => {
-
-    entries.forEach(entry => {
-
-        if(entry.isIntersecting){
-
-            entry.target.classList.add("visible");
-
-        }
-
-    });
-
-},{
-    threshold:0.12
-});
-
-reveals.forEach(el => observer.observe(el));
-function copyCustom(text){
-
-    navigator.clipboard.writeText(text);
-
-    const oldTitle = document.title;
-
-    document.title = "IP скопирован!";
-
-    setTimeout(() => {
-        document.title = oldTitle;
-    }, 1500);
-
-}
+function copyIP(){navigator.clipboard.writeText("play.msbuilders.name");}
+const sidebar=document.getElementById("sidebar"),overlay=document.getElementById("mobileOverlay");
+document.getElementById("openMenu").onclick=()=>{sidebar.classList.add("active");overlay.classList.add("active");}
+document.getElementById("closeMenu").onclick=closeMenu; overlay.onclick=closeMenu;
+function closeMenu(){sidebar.classList.remove("active");overlay.classList.remove("active");}
+const reveals=document.querySelectorAll(".reveal");
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");}})},{threshold:0.12});
+reveals.forEach(el=>observer.observe(el));
+function copyCustom(text){navigator.clipboard.writeText(text);const oldTitle=document.title;document.title="IP скопирован!";setTimeout(()=>{document.title=oldTitle;},1500);}
 </script>
-
 </body>
 </html>

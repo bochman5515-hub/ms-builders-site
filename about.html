@@ -1,112 +1,390 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <title>О сервере — MS Builders</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Подключаем шрифт Montserrat, как на главной -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* Базовые стили */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Montserrat', sans-serif; background: #01020f; color: #d2dae9; }
-    a { text-decoration: none; color: inherit; }
+<section class="about-layout">
 
-    /* Контейнер */
-    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+<div class="about-left">
 
-    /* Заголовок страницы */
-    h1 { font-size: 36px; margin-bottom: 24px; color: #d4a63a; }
+<h2>Контент</h2>
 
-    /* Сетка карточек */
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-    }
+<a href="enchants.html" class="content-card">
+    <div class="content-image">
+        <img src="images/enchants.png" alt="">
+    </div>
+    <span>Чары</span>
+</a>
 
-    /* Карточка */
-    .card {
-      position: relative;
-      overflow: hidden;
-      border-radius: 20px;
-      background: #0d1424;
-      border: 1px solid rgba(212,166,58,0.3);
-      transition: transform 0.2s;
-    }
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(212,166,58,0.7);
-    }
+<a href="crafts.html" class="content-card">
+    <div class="content-image">
+        <img src="images/crafts.png" alt="">
+    </div>
+    <span>Крафты</span>
+</a>
 
-    /* Изображение внутри карточки */
-    .card img {
-      display: block;
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
+<a href="story.html" class="content-card">
+    <div class="content-image">
+        <img src="images/story.png" alt="">
+    </div>
+    <span>Сюжет</span>
+</a>
 
-    /* Содержимое карточки */
-    .card-content {
-      padding: 16px;
-    }
-    .card-content h2 {
-      font-size: 24px;
-      margin-bottom: 8px;
-      line-height: 1.2;
-      color: #d4a63a;
-    }
-    .card-content p {
-      font-size: 16px;
-      line-height: 1.5;
-      color: #d2dae9;
-    }
-  </style>
-</head>
-<body>
+<a href="features.html" class="content-card">
+    <div class="content-image">
+        <img src="images/features.png" alt="">
+    </div>
+    <span>Уникальные фичи</span>
+</a>
 
-<div class="container">
-  <h1>Информация о сервере</h1>
-  <div class="cards-grid">
-    <a href="desc.html" class="card">
-      <img src="server_info.png" alt="Описание сервера (500×500)">
-      <div class="card-content">
-        <h2>Описание</h2>
-        <p>Узнайте всё о нашем сервере: его правилах, возможностях, механиках и истории.</p>
-      </div>
-    </a>
-    <a href="rules.html" class="card">
-      <img src="rules.png" alt="Правила сервера (500×500)">
-      <div class="card-content">
-        <h2>Правила</h2>
-        <p>Ознакомьтесь с правилами и нормами поведения на сервере.</p>
-      </div>
-    </a>
-    <a href="commands.html" class="card">
-      <img src="commands.png" alt="Команды сервера (500×500)">
-      <div class="card-content">
-        <h2>Команды</h2>
-        <p>Полный список команд, доступных игрокам на сервере.</p>
-      </div>
-    </a>
-    <a href="links.html" class="card">
-      <img src="links.png" alt="Полезные ссылки (500×500)">
-      <div class="card-content">
-        <h2>Ссылки</h2>
-        <p>Важные ссылки: Discord, донат, GitBook и другие ресурсы.</p>
-      </div>
-    </a>
-    <a href="join.html" class="card">
-      <img src="invite.png" alt="Приглашение на сервер (500×500)">
-      <div class="card-content">
-        <h2>Приглашение</h2>
-        <p>Информация о том, как присоединиться к нашему серверу и сообществу.</p>
-      </div>
-    </a>
-  </div>
+<a href="activities.html" class="content-card">
+    <div class="content-image">
+        <img src="images/activity.png" alt="">
+    </div>
+    <span>Чем заняться</span>
+</a>
+
 </div>
 
-</body>
+<div class="about-right">
+
+<div class="server-info">
+
+<div class="server-ip" onclick="copyIP()">
+play.msbuilders.name
+</div>
+
+<div class="server-version">
+Java Edition 1.21.11
+</div>
+
+</div>
+
+<div class="news-box">
+
+<h3>Последние новости</h3>
+
+<div class="news-content">
+
+<p>
+Обновлена система питомцев.<br>
+Добавлены новые крафты.<br>
+Стартует конкурс построек.
+</p>
+
+</div>
+
+</div>
+
+<div class="buttons-row">
+
+<a href="rules.html" class="action-btn">
+Правила
+</a>
+
+<a href="commands.html" class="action-btn">
+Команды
+</a>
+
+</div>
+
+<div class="project-box">
+
+<h3>MS Game</h3>
+
+<p>
+Новый сервер с уникальными мини-играми.
+Сейчас находится в активной разработке.
+</p>
+
+</div>
+
+</div>
+
+</section>
+.about-layout{
+
+display:grid;
+grid-template-columns:380px 1fr;
+gap:24px;
+
+margin-top:30px;
+
+}
+
+.about-left,
+.about-right{
+
+background:#0d1424;
+
+border-radius:30px;
+
+border:1px solid rgba(255,255,255,.05);
+
+padding:24px;
+
+}
+
+.about-left h2{
+
+font-size:34px;
+font-weight:800;
+
+margin-bottom:24px;
+
+text-align:center;
+
+color:#d4a63a;
+
+}
+
+.content-card{
+
+display:flex;
+align-items:center;
+
+gap:16px;
+
+padding:14px;
+
+margin-bottom:16px;
+
+border-radius:22px;
+
+background:rgba(255,255,255,.03);
+
+border:1px solid rgba(255,255,255,.05);
+
+text-decoration:none;
+
+color:white;
+
+transition:.2s;
+
+}
+
+.content-card:hover{
+
+transform:translateY(-3px);
+
+border-color:rgba(212,166,58,.4);
+
+}
+
+.content-card span{
+
+font-size:22px;
+font-weight:700;
+
+}
+
+.content-image{
+
+width:80px;
+height:80px;
+
+border-radius:18px;
+
+overflow:hidden;
+
+flex-shrink:0;
+
+background:#111;
+
+}
+
+.content-image img{
+
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+display:block;
+
+}
+
+.server-info{
+
+padding:18px;
+
+border-radius:24px;
+
+background:#101a30;
+
+margin-bottom:20px;
+
+text-align:center;
+
+cursor:pointer;
+
+}
+
+.server-ip{
+
+font-size:28px;
+font-weight:800;
+
+color:#d4a63a;
+
+}
+
+.server-version{
+
+margin-top:6px;
+
+color:#9ba6bd;
+
+}
+
+.news-box{
+
+background:#101a30;
+
+border-radius:24px;
+
+padding:20px;
+
+margin-bottom:20px;
+
+}
+
+.news-box h3{
+
+font-size:24px;
+
+margin-bottom:15px;
+
+}
+
+.news-content{
+
+min-height:220px;
+
+border-radius:20px;
+
+background:#0b111f;
+
+padding:20px;
+
+color:#d2dae9;
+
+}
+
+.buttons-row{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:16px;
+
+margin-bottom:20px;
+
+}
+
+.action-btn{
+
+display:flex;
+
+justify-content:center;
+align-items:center;
+
+height:70px;
+
+border-radius:20px;
+
+background:#101a30;
+
+text-decoration:none;
+
+color:white;
+
+font-weight:700;
+
+transition:.2s;
+
+}
+
+.action-btn:hover{
+
+background:#d4a63a;
+
+color:black;
+
+}
+
+.project-box{
+
+background:#101a30;
+
+border-radius:24px;
+
+padding:20px;
+
+}
+
+.project-box h3{
+
+font-size:28px;
+
+margin-bottom:10px;
+
+color:#d4a63a;
+
+}
+
+.project-box p{
+
+line-height:1.6;
+
+color:#d2dae9;
+
+}
+
+@media(max-width:900px){
+
+.about-layout{
+
+grid-template-columns:1fr;
+
+}
+
+.about-left{
+
+order:2;
+
+}
+
+.about-right{
+
+order:1;
+
+}
+
+.content-card span{
+
+font-size:18px;
+
+}
+
+.server-ip{
+
+font-size:20px;
+
+}
+
+.buttons-row{
+
+grid-template-columns:1fr;
+
+}
+
+}  
+<script>
+
+function copyIP(){
+
+navigator.clipboard.writeText("play.msbuilders.name");
+
+}
+
+</script>
 </html>

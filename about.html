@@ -164,7 +164,85 @@ body{
   line-height:1.6;
   color:#d2dae9;
 }
+.hero{
+text-align:center;
+margin-bottom:30px;
+padding:40px;
+border-radius:30px;
+background:rgba(2,6,23,.75);
+border:1px solid rgba(212,166,58,.25);
+backdrop-filter:blur(10px);}
+  
+.hero h1{
+font-size:clamp(40px,6vw,90px);
+font-weight:800;
+margin-bottom:20px;
+color:#d4a63a;}
 
+.hero-text{
+max-width:900px;
+margin:auto;
+font-size:18px;
+line-height:1.8;
+color:#d2dae9;}
+  
+.reveal{
+opacity:0;
+transform:translateY(40px);
+transition:
+opacity .8s ease,
+transform .8s ease;}
+  
+.reveal.visible{
+opacity:1;
+transform:translateY(0);}
+  
+.sidebar{
+position:fixed;
+top:0;
+right:-320px;
+width:320px;
+height:100vh;
+background:rgba(8,12,22,.98);
+backdrop-filter:blur(20px);
+transition:.35s;
+z-index:1000;
+padding:25px;}
+
+.sidebar.active{
+right:0;}
+
+.sidebar-nav{
+display:flex;
+flex-direction:column;
+gap:10px;
+margin-top:30px;}
+
+.sidebar-nav a{
+padding:16px;
+border-radius:16px;
+color:white;
+text-decoration:none;
+background:rgba(255,255,255,.03);}
+
+.sidebar-nav a:hover{
+background:rgba(212,166,58,.15);
+color:#d4a63a;}
+  
+.mobile-overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.5);
+opacity:0;
+visibility:hidden;
+transition:.3s;
+z-index:900;}
+  
+.mobile-overlay.active{
+opacity:1;
+visibility:visible;
+}
+  
 /* Responsive */
 @media(max-width:900px){
   .about-layout{
@@ -189,12 +267,52 @@ body{
 </style>
 </head>
 <body>
-
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<aside class="sidebar" id="sidebar">
+<div class="sidebar-top">
+<h3>MS BUILDERS</h3>
+<button class="close-sidebar" id="closeMenu">
+✕
+</button>
+  
+<button class="menu-btn" id="openMenu">
+☰
+</button>
+  
+</div>
+<nav class="sidebar-nav">
+<a href="index.html">Главная</a>
+<a href="about.html">О сервере</a>
+<a href="news.html">Новости</a>
+<a href="crafts.html">Крафты</a>
+<a href="enchants.html">Чары</a>
+<a href="story.html">Сюжет</a>
+<a href="join.html">Начать играть</a>
+</nav>
+</aside>
 <div class="container">
+  <section class="hero reveal">
+
+<h1>MS BUILDERS</h1>
+
+<p class="hero-text">
+
+MSBUILDERS — это ванила+ сервер с собственным сюжетом, городами, кланами,
+судебной системой и уникальными механиками.
+
+На сервере отсутствуют приваты, телепортации на спавн, киты и другие
+упрощающие команды, сохраняя дух настоящего выживания.
+
+Для полного погружения доступны дополнительные моды, которые не являются
+обязательными, но значительно улучшают игровой опыт.
+
+</p>
+
+</section>
   <section class="about-layout">
 
     <!-- Left Column: Контент -->
-    <div class="about-left">
+    <div class="about-left reveal">
       <h2>Контент</h2>
       <a href="enchants.html" class="content-card">
         <div class="content-image"><img src="images/enchants.png" alt=""></div>
@@ -219,7 +337,7 @@ body{
     </div>
 
     <!-- Right Column -->
-    <div class="about-right">
+    <div class="about-right reveal">
 
       <div class="server-info" onclick="copyIP()">
         <div class="server-ip">play.msbuilders.name</div>
@@ -242,7 +360,7 @@ body{
         <a href="commands.html" class="action-btn">Команды</a>
       </div>
 
-      <div class="project-box">
+      <div class="project-box reveal">
         <h3>MS Game</h3>
         <p>Новый сервер с уникальными мини-играми. Сейчас находится в активной разработке.</p>
       </div>
@@ -255,8 +373,29 @@ body{
 function copyIP(){
   navigator.clipboard.writeText("play.msbuilders.name");
   alert("IP скопирован");
-}
+}  
 </script>
+<script>
+const reveals=document.querySelectorAll(".reveal");
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("visible");}});},{threshold:0.15});
+reveals.forEach(el=>observer.observe(el));
+</script>
+<script>
 
+const sidebar=document.getElementById("sidebar");
+const overlay=document.getElementById("mobileOverlay");
+document.getElementById("openMenu").onclick=()=>{
+sidebar.classList.add("active");
+overlay.classList.add("active");};
+document.getElementById("closeMenu").onclick=closeMenu;
+overlay.onclick=closeMenu;
+function closeMenu(){
+sidebar.classList.remove("active");
+overlay.classList.remove("active");}
+
+</script>  
 </body>
 </html>

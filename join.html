@@ -1,578 +1,165 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>Как начать игру — MS Builders</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Шрифты как на сайте -->
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
-
-  <style>
-    * { box-sizing: border-box; }
-
-    body{
-      margin:0;
-      font-family:"Montserrat",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
-      background-color:#0b0f19;
-      color:#e5e7eb;
-    }
-
-    .layout{
-      display:flex;
-      min-height:100vh;
-    }
-
-    /* ===== ЛЕВАЯ ПАНЕЛЬ ===== */
-    .sidebar{
-      width:260px;
-      background:#020617;
-      padding:24px 20px;
-      display:flex;
-      flex-direction:column;
-      gap:18px;
-      transition:width .2s ease,padding .2s ease;
-      border-right:1px solid rgba(148,163,184,.12);
-      overflow:hidden;
-    }
-
-    .logo-box{
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-
-    .logo-box img{
-      width:96px;
-      height:96px;
-      border-radius:10px;
-      object-fit:cover;
-    }
-
-    .sidebar-title{
-      font-size:16px;
-      font-weight:600;
-      line-height:1.3;
-    }
-
-    .sidebar-title span{
-      display:block;
-      font-size:12px;
-      color:#9ca3af;
-      font-weight:400;
-    }
-
-    .server-copy{
-      margin-top:8px;
-      width:100%;
-      text-align:left;
-      border:1px solid rgba(148,163,184,.22);
-      background:rgba(15,23,42,.55);
-      color:#e5e7eb;
-      border-radius:14px;
-      padding:10px 12px;
-      cursor:pointer;
-      transition:.15s;
-      position:relative;
-    }
-
-    .server-copy:hover{
-      border-color:#38bdf8;
-      background:rgba(15,23,42,.7);
-    }
-
-    .server-ip{
-      display:block;
-      font-weight:700;
-      letter-spacing:.02em;
-    }
-
-    .server-ver{
-      display:block;
-      margin-top:2px;
-      font-size:12px;
-      color:#9ca3af;
-    }
-
-    .server-tip{
-      position:absolute;
-      right:10px;
-      top:10px;
-      font-size:11px;
-      color:#a5b4fc;
-      opacity:0;
-      transform:translateY(-2px);
-      transition:.18s;
-      pointer-events:none;
-    }
-
-    .server-copy.copied .server-tip{
-      opacity:1;
-      transform:translateY(0);
-    }
-
-    .sidebar-nav{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      margin-top:6px;
-    }
-
-    .sidebar-nav a{
-      color:#e5e7eb;
-      text-decoration:none;
-      font-size:14px;
-      padding:6px 0;
-      border-left:3px solid transparent;
-      padding-left:10px;
-      transition:.15s;
-    }
-
-    .sidebar-nav a:hover{
-      color:#38bdf8;
-      border-color:#38bdf8;
-    }
-
-    .sidebar-nav a.active{
-      color:#38bdf8;
-      border-color:#38bdf8;
-      font-weight:600;
-    }
-
-    .sidebar-collapsed .sidebar{
-      width:0;
-      padding:0;
-      border-right:none;
-    }
-
-    /* ===== ПРАВАЯ ЧАСТЬ ===== */
-    .content{
-      flex:1;
-      background:
-        linear-gradient(to bottom, rgba(15,23,42,0.9), rgba(15,23,42,1)),
-        url("bg-stone.png");
-      background-size:auto,128px 128px;
-      background-repeat:repeat;
-      padding-bottom:40px;
-    }
-
-    /* ===== БАННЕР ===== */
-    .hero{
-      position:relative;
-      height:240px;
-      overflow:hidden;
-    }
-
-    .hero img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
-
-    .hero-overlay{
-      position:absolute;
-      inset:0;
-      background:linear-gradient(to right, rgba(15,23,42,0.75), transparent);
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      padding-left:40px;
-      gap:10px;
-    }
-
-    .hero-title{
-      font-family:"Press Start 2P",system-ui;
-      font-size:18px;
-      text-transform:uppercase;
-      color:#f9fafb;
-      text-shadow:0 0 10px rgba(15,23,42,0.9);
-    }
-
-    .hero-subtitle{
-      font-size:14px;
-      max-width:600px;
-      color:#e5e7eb;
-      line-height:1.45;
-    }
-
-    .hero-tags{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:6px;
-    }
-
-    .hero-tag{
-      font-size:11px;
-      padding:4px 8px;
-      border-radius:999px;
-      background:rgba(15,23,42,0.7);
-      border:1px solid rgba(148,163,184,0.4);
-    }
-
-    .page-section{
-      margin:32px auto 0;
-      max-width:1200px;
-      padding:0 24px;
-    }
-
-    .section-title{
-      font-family:"Press Start 2P",system-ui;
-      font-size:16px;
-      text-transform:uppercase;
-      text-align:center;
-      padding:12px 16px;
-      margin:0 0 18px;
-      background:linear-gradient(90deg,#7c3aed,#ec4899);
-      color:#0b1120;
-      border-radius:999px;
-      letter-spacing:.08em;
-    }
-
-    /* ===== КАРТОЧКИ / БЛОКИ ===== */
-    .grid{
-      display:grid;
-      gap:18px;
-      grid-template-columns:repeat(2, minmax(0, 1fr));
-    }
-
-    @media (max-width: 980px){
-      .grid{ grid-template-columns:1fr; }
-    }
-
-    .card{
-      background:rgba(15,23,42,0.92);
-      border-radius:16px;
-      overflow:hidden;
-      border:1px solid rgba(148,163,184,0.35);
-      box-shadow:0 10px 24px rgba(15,23,42,0.55);
-      padding:16px;
-    }
-
-    .card-title{
-      margin:0 0 10px;
-      font-family:"Press Start 2P",system-ui;
-      font-size:11px;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-      color:#e0f2fe;
-      line-height:1.45;
-    }
-
-    .card-text{
-      margin:0;
-      font-size:13px;
-      color:#cbd5f5;
-      line-height:1.5;
-    }
-
-    .list{
-      margin:10px 0 0;
-      padding-left:18px;
-      color:#cbd5f5;
-      font-size:13px;
-      line-height:1.6;
-    }
-
-    .steps{
-      margin:10px 0 0;
-      padding-left:18px;
-      color:#cbd5f5;
-      font-size:13px;
-      line-height:1.65;
-    }
-
-    .pill-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top:12px;
-    }
-
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,0.25);
-      background:rgba(2,6,23,0.55);
-      color:#e5e7eb;
-      font-weight:700;
-      font-size:13px;
-      text-decoration:none;
-      transition:.15s;
-    }
-
-    .pill:hover{
-      border-color:#38bdf8;
-      color:#e0f2fe;
-      transform:translateY(-1px);
-    }
-
-    .pill.primary{
-      color:#0b1120;
-      background:linear-gradient(90deg,#0ea5e9,#38bdf8);
-    }
-
-    .pill.primary:hover{
-      filter:brightness(1.05);
-    }
-
-    .note{
-      margin-top:12px;
-      padding:12px 12px;
-      border-radius:14px;
-      background:rgba(2,6,23,0.55);
-      border:1px solid rgba(148,163,184,0.22);
-      color:#cbd5f5;
-      font-size:13px;
-      line-height:1.5;
-    }
-
-    .note b{ color:#e0f2fe; }
-
-    /* ===== КНОПКА < > СНИЗУ СЛЕВА ===== */
-    .sidebar-fab{
-      position:fixed;
-      left:14px;
-      bottom:14px;
-      z-index:95;
-      width:44px;
-      height:44px;
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,0.35);
-      background:rgba(2,6,23,0.78);
-      backdrop-filter:blur(8px);
-      color:#e5e7eb;
-      cursor:pointer;
-      display:grid;
-      place-items:center;
-      transition:.15s;
-      box-shadow:0 10px 22px rgba(0,0,0,0.25);
-    }
-
-    .sidebar-fab:hover{
-      border-color:#38bdf8;
-      color:#e0f2fe;
-    }
-
-    .sidebar-fab span{
-      font-size:18px;
-      line-height:1;
-      transform:translateY(-1px);
-    }
-
-    /* ===== АДАПТИВ ===== */
-    @media (max-width:900px){
-      .layout{ flex-direction:column; }
-      .sidebar-fab{ display:none; }
-      .hero-overlay{ padding-left:20px; }
-      .hero-title{ font-size:14px; }
-      .hero{ height:220px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Как начать игру — MS Builders</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Montserrat",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;background:#0b0f19;color:#e5e7eb;}
+.layout{display:flex;min-height:100vh;}
+.sidebar{width:260px;background:#020617;padding:24px 20px;display:flex;flex-direction:column;gap:18px;transition:width .2s ease,padding .2s ease;border-right:1px solid rgba(148,163,184,.12);overflow:hidden;}
+.logo-box{display:flex;align-items:center;gap:12px;}
+.logo-box img{width:96px;height:96px;border-radius:10px;object-fit:cover;}
+.sidebar-title{font-size:16px;font-weight:600;line-height:1.3;}
+.sidebar-title span{display:block;font-size:12px;color:#9ca3af;font-weight:400;}
+.server-copy{margin-top:8px;width:100%;text-align:left;border:1px solid rgba(148,163,184,.22);background:rgba(15,23,42,.55);color:#e5e7eb;border-radius:14px;padding:10px 12px;cursor:pointer;position:relative;transition:.15s;}
+.server-copy:hover{border-color:#38bdf8;background:rgba(15,23,42,.7);}
+.server-ip{display:block;font-weight:700;letter-spacing:.02em;}
+.server-ver{display:block;margin-top:2px;font-size:12px;color:#9ca3af;}
+.server-tip{position:absolute;right:10px;top:10px;font-size:11px;color:#a5b4fc;opacity:0;transform:translateY(-2px);transition:.18s;pointer-events:none;}
+.server-copy.copied .server-tip{opacity:1;transform:translateY(0);}
+.sidebar-nav{display:flex;flex-direction:column;gap:8px;margin-top:6px;}
+.sidebar-nav a{color:#e5e7eb;text-decoration:none;font-size:14px;padding:6px 0;border-left:3px solid transparent;padding-left:10px;transition:.15s;}
+.sidebar-nav a:hover{color:#38bdf8;border-color:#38bdf8;}
+.sidebar-nav a.active{color:#38bdf8;border-color:#38bdf8;font-weight:600;}
+.sidebar-collapsed .sidebar{width:0;padding:0;border-right:none;}
+.content{flex:1;background:linear-gradient(to bottom, rgba(15,23,42,0.9), rgba(15,23,42,1)),url("bg-stone.png");background-size:auto,128px 128px;background-repeat:repeat;padding:20px;}
+.hero{position:relative;height:240px;overflow:hidden;}
+.hero img{width:100%;height:100%;object-fit:cover;display:block;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to right, rgba(15,23,42,0.75), transparent);display:flex;flex-direction:column;justify-content:center;padding-left:40px;gap:10px;}
+.hero-title{font-family:"Press Start 2P",system-ui;font-size:18px;text-transform:uppercase;color:#f9fafb;text-shadow:0 0 10px rgba(15,23,42,0.9);}
+.hero-subtitle{font-size:14px;max-width:600px;color:#e5e7eb;line-height:1.45;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+.hero-tag{font-size:11px;padding:4px 8px;border-radius:999px;background:rgba(15,23,42,0.7);border:1px solid rgba(148,163,184,0.4);}
+.page-section{margin:32px auto 0;max-width:1200px;padding:0 24px;}
+.section-title{font-family:"Press Start 2P",system-ui;font-size:16px;text-transform:uppercase;text-align:center;padding:12px 16px;margin:0 0 18px;background:linear-gradient(90deg,#7c3aed,#ec4899);color:#0b1120;border-radius:999px;letter-spacing:.08em;}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(2,minmax(0,1fr));margin-bottom:40px;}
+@media(max-width:980px){.grid{grid-template-columns:1fr;}}
+.card{background:rgba(15,23,42,0.92);border-radius:16px;overflow:hidden;border:1px solid rgba(148,163,184,0.35);box-shadow:0 10px 24px rgba(15,23,42,0.55);padding:16px;}
+.card-title{margin:0 0 10px;font-family:"Press Start 2P",system-ui;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#e0f2fe;line-height:1.45;}
+.card-text{margin:0;font-size:13px;color:#cbd5f5;line-height:1.5;}
+.list{margin:10px 0 0;padding-left:18px;color:#cbd5f5;font-size:13px;line-height:1.6;}
+.steps{margin:10px 0 0;padding-left:18px;color:#cbd5f5;font-size:13px;line-height:1.65;}
+.pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;border:1px solid rgba(148,163,184,0.25);background:rgba(2,6,23,0.55);color:#e5e7eb;font-weight:700;font-size:13px;text-decoration:none;transition:.15s;}
+.pill:hover{border-color:#38bdf8;color:#e0f2fe;transform:translateY(-1px);}
+.pill.primary{color:#0b1120;background:linear-gradient(90deg,#0ea5e9,#38bdf8);}
+.pill.primary:hover{filter:brightness(1.05);}
+.note{margin-top:12px;padding:12px 12px;border-radius:14px;background:rgba(2,6,23,0.55);border:1px solid rgba(148,163,184,0.22);color:#cbd5f5;font-size:13px;line-height:1.5;}
+.note b{color:#e0f2fe;}
+.sidebar-fab{position:fixed;left:14px;bottom:14px;z-index:95;width:44px;height:44px;border-radius:999px;border:1px solid rgba(148,163,184,0.35);background:rgba(2,6,23,0.78);backdrop-filter:blur(8px);color:#e5e7eb;cursor:pointer;display:grid;place-items:center;transition:.15s;box-shadow:0 10px 22px rgba(0,0,0,0.25);}
+.sidebar-fab:hover{border-color:#38bdf8;color:#e0f2fe;}
+.sidebar-fab span{font-size:18px;line-height:1;transform:translateY(-1px);}
+@media (max-width:900px){.layout{flex-direction:column;}.sidebar-fab{display:none;}.hero-overlay{padding-left:20px;}.hero-title{font-size:14px;}.hero{height:220px;}}
+</style>
 </head>
-
 <body>
-  <button class="sidebar-fab" id="toggleSidebar" type="button" aria-label="Показать/скрыть панель">
-    <span id="sidebarIcon">&lt;</span>
-  </button>
-
-  <div class="layout">
-    <!-- ЛЕВАЯ ПАНЕЛЬ -->
-    <aside class="sidebar">
-      <div>
-        <div class="logo-box">
-          <img src="logo.png" alt="Логотип MS Builders" />
-          <div class="sidebar-title">
-            MS Builders
-            <span>Minecraft сервер</span>
-          </div>
-        </div>
-
-        <button class="server-copy" id="copyIp" type="button" title="Нажмите, чтобы скопировать IP">
-          <span class="server-ip">play.msbuilders.name</span>
-          <span class="server-ver">Версия: 1.21.10</span>
-          <span class="server-tip">Скопировано!</span>
-        </button>
+<button class="sidebar-fab" id="toggleSidebar"><span id="sidebarIcon">&lt;</span></button>
+<div class="layout">
+  <aside class="sidebar">
+    <div>
+      <div class="logo-box">
+        <img src="logo.png" alt="Логотип MS Builders" />
+        <div class="sidebar-title">MS Builders<span>Minecraft сервер</span></div>
       </div>
+      <button class="server-copy" id="copyIp" title="Нажмите, чтобы скопировать IP">
+        <span class="server-ip">play.msbuilders.name</span>
+        <span class="server-ver">Версия: 1.21.11</span>
+        <span class="server-tip">Скопировано!</span>
+      </button>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="index.html">Главная</a>
+      <a href="projects.html">Наши проекты</a>
+      <a href="join.html" class="active">Начало игры</a>
+      <a href="rules.html">Правила</a>
+      <a href="community.html">Discord</a>
+    </nav>
+  </aside>
 
-      <nav class="sidebar-nav">
-        <a href="index.html">Главная</a>
-        <a href="news.html">Новости</a>
-        <a href="extra.html">Плагины и датапаки</a>
-        <a href="enchants.html">Чары</a>
-        <a href="projects.html">Наши проекты</a>
-        <a href="builds.html">Постройки</a>
-        <a href="crafts.html">Крафты</a>
-        <a href="join.html" class="active">Начало игры</a>
-        <a href="rules.html">Правила</a>
-        <a href="story.html">Сюжет</a>
-      </nav>
-    </aside>
+  <main class="content">
+    <section class="hero">
+      <img src="join-banner.png" alt="Как начать игру">
+      <div class="hero-overlay">
+        <div class="hero-title">Старт игры</div>
+        <div class="hero-subtitle">Подробная инструкция, как зайти на сервер и зарегистрироваться.</div>
+      </div>
+    </section>
 
-    <!-- ПРАВАЯ ЧАСТЬ -->
-    <main class="content">
-      <!-- БАННЕР -->
-      <section class="hero">
-        <!-- можешь заменить на свой баннер -->
-        <img src="join-banner.png" alt="Как начать игру на MS Builders" />
-
-        <div class="hero-overlay">
-          <div class="hero-title">как начать игру</div>
-          <div class="hero-subtitle">
-            Подключайся к хабу без заявки, общайся с игроками и смотри сервер.
-            А чтобы играть в мире и сохранять постройки — подай заявку в Discord (Whitelist).
-          </div>
-
-          <div class="hero-tags">
-            <span class="hero-tag">Whitelist</span>
-            <span class="hero-tag">Хаб без заявки</span>
-            <span class="hero-tag">Discord</span>
-            <span class="hero-tag">1.21.8</span>
-          </div>
+    <section class="page-section">
+      <h2 class="section-title">Начало</h2>
+      <div class="grid">
+        <div class="card">
+          <h3 class="card-title">IP и игра</h3>
+          <p class="card-text">
+            IP сервера: <b>play.msbuilders.name</b> (клик для копирования)<br>
+            Версия: <b>1.21.11</b><br>
+            Издание: <b>Java Edition</b>
+          </p>
+          <p>Рекомендуемые лаунчеры:
+            <a href="https://www.minecraft.net" target="_blank" style="color:#38bdf8;">Официальный</a>,
+            <a href="https://minecraft-inside.ru/programs/74705-tl-launcher.html" target="_blank" style="color:#38bdf8;">Legacy</a>
+          </p>
+          <ul class="list">
+            <li>Загрузите ресурспак при первом входе</li>
+            <li>Зарегистрируйтесь: <b>/register &lt;пароль&gt; &lt;повтор_пароля&gt;</b> и запомните пароль</li>
+            <li>Отыграть 1 час — возможность строить и взаимодействовать с миром</li>
+            <li>Отыграть 24 часа — полный доступ ко всем функциям</li>
+            <li>Можно купить снятие ограничений на сайте за 100₽: <a href="https://ms-builders-2.easydonate.ru/" target="_blank" style="color:#38bdf8;">EasyDonate</a></li>
+          </ul>
+          <div class="note">Обязательно ознакомьтесь с правилами сервера!</div>
         </div>
-      </section>
 
-      <section class="page-section">
-        <h2 class="section-title">БЫСТРЫЙ СТАРТ</h2>
-
-        <div class="grid">
-          <div class="card">
-            <h3 class="card-title">🎮 Требования</h3>
-            <p class="card-text">
-              Чтобы зайти на сервер, тебе нужен Minecraft Java Edition.
-            </p>
-            <ul class="list">
-              <li>Игра: <b>Minecraft Java Edition</b></li>
-              <li>Версия сервера: <b>1.21.8</b></li>
-              <li>Ник: проверь правильность написания</li>
-              <li>Верификация в Discord: <b>не обязательна</b></li>
-            </ul>
-          </div>
-
-          <div class="card">
-            <h3 class="card-title">🌍 Данные для входа</h3>
-            <p class="card-text">
-              IP можно скопировать кликом по блоку слева (под логотипом).
-            </p>
-            <div class="note">
-              <b>IP:</b> play.msbuilders.name<br />
-              <b>Версия:</b> 1.21.10
-            </div>
-
-            <div class="pill-row">
-              <a class="pill primary" href="https://discord.com/invite/Wj8jWS736f" target="_blank" rel="noopener">
-                💬 Discord — подать заявку
-              </a>
-              <a class="pill" href="https://ms-builders-2.easydonate.ru/" target="_blank" rel="noopener">
-                🧾 Платный проход (50₽)
-              </a>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3 class="card-title">🧭 Можно зайти без заявки</h3>
-            <p class="card-text">
-              В <b>хаб</b> можно зайти без заявки — чтобы просто пообщаться с игроками, посмотреть атмосферу и узнать правила.
-              Для полноценной игры (мир / сохранение построек) нужен Whitelist.
-            </p>
-            <div class="note">
-              Если что-то не получилось — пиши в Discord в тех-поддержку (<b>#ТЕХ-ПОДДЕРЖКА</b>).
-            </div>
-          </div>
-
-          <div class="card">
-            <h3 class="card-title">✅ Как попасть в Whitelist (бесплатно)</h3>
-            <ol class="steps">
-              <li>Зайди в наш Discord: <b>discord.gg/Wj8jWS736f</b></li>
-              <li>Открой канал <b>#Заявки-и-проход</b></li>
-              <li>Заполни заявку и дождись ответа администратора</li>
-              <li>Обычно ожидание: <b>от 5 минут до 4–5 часов</b></li>
-              <li>Ответь администратору — тебе всё расскажут и добавят на сервер</li>
-            </ol>
-            <div class="pill-row">
-              <a class="pill primary" href="https://discord.com/invite/Wj8jWS736f" target="_blank" rel="noopener">
-                💬 Перейти в Discord
-              </a>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3 class="card-title">⚡ Платный проход (без ожидания)</h3>
-            <p class="card-text">
-              Если не хочешь ждать ответа — можно купить проход на сервер за <b>50₽</b>.
-            </p>
-            <div class="pill-row">
-              <a class="pill primary" href="https://ms-builders-2.easydonate.ru/" target="_blank" rel="noopener">
-                🧾 Купить проход
-              </a>
-            </div>
-            <div class="note">
-              После покупки ты сможешь быстрее начать игру — подробности допишешь здесь, если нужно.
-            </div>
-          </div>
-
-          <div class="card">
-            <h3 class="card-title">🔐 Первый вход и регистрация</h3>
-            <p class="card-text">
-              После входа на сервер, если у вас система регистрации:
-            </p>
-            <div class="note">
-              <b>/register &lt;пароль&gt; &lt;повтор_пароля&gt;</b><br />
-              <b>ОБЯЗАТЕЛЬНО запомните пароль!</b> Восстановление — платное.
-            </div>
-            <div class="note">
-              <b>Важно:</b> следите за уведомлениями и сообщениями в заявке/Discord.
-            </div>
-          </div>
+        <div class="card">
+          <h3 class="card-title">Альтернативный вход</h3>
+          <p class="card-text">Финский IP: <b>77.42.49.5:25608</b></p>
+          <div class="note">Игроки с этого IP могут не видеть префиксы других игроков.</div>
         </div>
-      </section>
-    </main>
-  </div>
 
-  <script>
-    const root = document.documentElement;
+        <div class="card">
+          <h3 class="card-title">Проблемы с входом</h3>
+          <ul class="list">
+            <li>Проверьте интернет и VPN</li>
+            <li>Если ресурспак не грузится, скачать отдельно: <a href="https://cloud.mail.ru/public/PrR9/wgt2trXZX" target="_blank" style="color:#38bdf8;">ссылка</a></li>
+            <li>Проверьте лаунчер и версию</li>
+            <li>Обратитесь в поддержку в Discord: <a href="https://discord.com/invite/Wj8jWS736f" target="_blank" style="color:#38bdf8;">ссылка</a></li>
+          </ul>
+        </div>
 
-    // ===== САЙДБАР < > =====
-    const btnSidebar = document.getElementById("toggleSidebar");
-    const sidebarIcon = document.getElementById("sidebarIcon");
+        <div class="card">
+          <h3 class="card-title">Разрешённые моды и ресурспаки</h3>
+          <ul class="list">
+            <li><a href="https://drive.google.com/file/d/14aQDxOebqMpLKsNsGp_OGAjeIOVeddAc/view" target="_blank" style="color:#38bdf8;">Сборка разрешённых модов</a></li>
+            <li><a href="https://drive.google.com/file/d/1Z_YGUeGtvdF7qBsrMnRabxo7tHtn3RGW/view?usp=sharing" target="_blank" style="color:#38bdf8;">Дополнительные наборы</a></li>
+          </ul>
+          <div class="note">Моды и ресурсы вне сборки запрещены!</div>
+        </div>
+      </div>
+    </section>
 
-    const sidebarOff = localStorage.getItem("ms_sidebar") === "off";
-    if (sidebarOff) root.classList.add("sidebar-collapsed");
+  </main>
+</div>
 
-    function syncSidebarIcon(){
-      sidebarIcon.textContent = root.classList.contains("sidebar-collapsed") ? ">" : "<";
-    }
-    syncSidebarIcon();
+<script>
+const root = document.documentElement;
+const btnSidebar = document.getElementById("toggleSidebar");
+const sidebarIcon = document.getElementById("sidebarIcon");
 
-    btnSidebar.addEventListener("click", () => {
-      root.classList.toggle("sidebar-collapsed");
-      localStorage.setItem("ms_sidebar", root.classList.contains("sidebar-collapsed") ? "off" : "on");
-      syncSidebarIcon();
-    });
+btnSidebar.addEventListener("click",()=>{
+  root.classList.toggle("sidebar-collapsed");
+  sidebarIcon.textContent=root.classList.contains("sidebar-collapsed")?">":"<";
+});
 
-    // ===== КОПИРОВАНИЕ IP =====
-    const copyBtn = document.getElementById("copyIp");
-    if (copyBtn){
-      copyBtn.addEventListener("click", async () => {
-        const ip = "play.msbuilders.name";
-        try{
-          await navigator.clipboard.writeText(ip);
-        }catch(e){
-          const ta = document.createElement("textarea");
-          ta.value = ip;
-          document.body.appendChild(ta);
-          ta.select();
-          document.execCommand("copy");
-          document.body.removeChild(ta);
-        }
-        copyBtn.classList.add("copied");
-        setTimeout(() => copyBtn.classList.remove("copied"), 1200);
-      });
-    }
-  </script>
+const copyBtn=document.getElementById("copyIp");
+copyBtn.addEventListener("click",async()=>{
+  const ip="play.msbuilders.name";
+  try{await navigator.clipboard.writeText(ip);}catch(e){const ta=document.createElement("textarea");ta.value=ip;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);}
+  copyBtn.classList.add("copied");
+  setTimeout(()=>copyBtn.classList.remove("copied"),1200);
+});
+</script>
+
 </body>
 </html>

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,20 +7,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{margin:0; padding:0; box-sizing:border-box;}
+*{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{
-    font-family:'Montserrat',sans-serif;
-    background:radial-gradient(circle at top,#10213d 0%,#070b14 45%,#05070d 100%);
-    color:white; min-height:100vh; overflow-x:hidden;
-    padding:18px; padding-bottom:120px;
-}
-/* ===== Scrollbar ===== */
+body{font-family:'Montserrat',sans-serif;background:radial-gradient(circle at top,#10213d 0%,#070b14 45%,#05070d 100%);color:white;min-height:100vh;overflow-x:hidden;padding:18px;padding-bottom:120px;}
+/* Scrollbar */
 ::-webkit-scrollbar{width:8px;}
 ::-webkit-scrollbar-thumb{background:#d4a63a;border-radius:20px;}
-/* ===== Container ===== */
-.container{max-width:1500px; margin:auto;}
-/* ===== TOPBAR ===== */
+/* Container */
+.container{max-width:1500px;margin:auto;}
+/* Topbar */
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-radius:26px;background:rgba(10,15,28,.82);border:1px solid rgba(255,255,255,.06);backdrop-filter:blur(16px);box-shadow:0 0 40px rgba(0,0,0,.35),inset 0 0 50px rgba(255,255,255,.02);margin-bottom:34px;}
 .server-box{display:flex;align-items:center;gap:16px;cursor:pointer;}
 .server-box img{width:48px;height:48px;border-radius:14px;}
@@ -32,57 +26,18 @@ body{
 .menu-btn{width:62px;height:62px;border:none;border-radius:20px;background:rgba(212,166,58,.08);border:1px solid rgba(212,166,58,.25);cursor:pointer;transition:.2s;position:relative;}
 .menu-btn:hover{transform:scale(1.04);}
 .menu-btn::before{content:"☰";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#d4a63a;font-size:30px;}
-/* ===== GRID ===== */
-.grid{display:grid;grid-template-columns:2fr 1fr; gap:24px; align-items:start;}
-.left-column, .right-column{display:flex; flex-direction:column; gap:24px;}
-/* ===== CARD ===== */
+/* Grid */
+.grid{display:grid;grid-template-columns:2fr 1fr;gap:24px;align-items:start;}
+.left-column,.right-column{display:flex;flex-direction:column;gap:24px;}
+/* Card */
 .card{position:relative;overflow:hidden;border-radius:30px;background:#0d1424;border:1px solid rgba(255,255,255,.05);min-height:320px;box-shadow:0 0 40px rgba(0,0,0,.35),inset 0 0 60px rgba(255,255,255,.02);transition:.25s;text-decoration:none;color:white;}
 .card:hover{transform:translateY(-4px);border-color:rgba(212,166,58,.35);}
 .big-card{min-height:720px;}
 .small-card{min-height:240px;}
-.card img{position:absolute; inset:0;width:100%;height:100%;object-fit:cover;opacity:.82;}
-.card::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(4,7,14,.97),rgba(4,7,14,.2));}
 .card-content{position:relative; z-index:2; height:100%; display:flex; flex-direction:column; justify-content:space-between; padding:36px;}
-.card h2{font-size:58px; line-height:.95; margin-bottom:18px;font-weight:800;}
+.card h2{font-size:58px;line-height:.95;margin-bottom:18px;font-weight:800;}
 .card h2 span{color:#d4a63a;}
-.card p{max-width:380px; font-size:22px; line-height:1.5; color:#d2dae9;}
-.arrow-btn{width:72px;height:72px;border-radius:22px;border:1px solid rgba(212,166,58,.35);background:rgba(212,166,58,.08);display:flex;align-items:center;justify-content:center;font-size:34px;color:#d4a63a;transition:.2s;}
-.card:hover .arrow-btn{background:#d4a63a;color:black;}
-/* ===== STATS ===== */
-.stats{margin-top:24px;display:grid;grid-template-columns:repeat(3,1fr);background:#0b111f;border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.05);}
-.stat{padding:30px;text-align:center;}
-.stat:not(:last-child){border-right:1px solid rgba(255,255,255,.06);}
-.stat h3{color:#d4a63a;font-size:42px;margin-bottom:6px;}
-.stat p{color:#96a4bb;font-size:18px;}
-/* ===== Bottom Nav ===== */
-.bottom-nav{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);width:min(950px,96%);height:92px;border-radius:28px;background:rgba(10,15,28,.92);border:1px solid rgba(255,255,255,.06);backdrop-filter:blur(14px);display:grid;grid-template-columns:repeat(4,1fr);z-index:100;}
-.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-decoration:none;color:#c8d2e4;transition:.2s;}
-.nav-item:hover{color:#d4a63a;}
-.nav-item.active{color:#d4a63a;}
-.nav-icon{font-size:30px;}
-/* ===== SIDEBAR ===== */
-.sidebar{position:fixed;top:0;right:-340px;width:320px;height:100vh;background:rgba(8,12,22,.97);backdrop-filter:blur(18px);border-left:1px solid rgba(255,255,255,.06);z-index:1000;transition:.35s cubic-bezier(.77,0,.18,1);padding:28px;display:flex;flex-direction:column;}
-.sidebar.active{right:0;}
-.sidebar-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:35px;}
-.sidebar-logo{display:flex;align-items:center;gap:14px;}
-.sidebar-logo img{width:56px;height:56px;border-radius:16px;}
-.sidebar-logo h3{font-size:18px;}
-.sidebar-logo p{color:#8d99ae;font-size:13px;margin-top:3px;}
-.close-sidebar{width:44px;height:44px;border:none;border-radius:14px;background:rgba(255,255,255,.05);color:white;cursor:pointer;font-size:18px;}
-.sidebar-nav{display:flex;flex-direction:column;gap:10px;}
-.sidebar-nav a{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:18px;text-decoration:none;color:#d4dcec;font-weight:600;transition:.2s;}
-.sidebar-nav a span{font-size:22px;}
-.sidebar-nav a:hover{background:rgba(212,166,58,.12);color:#d4a63a;}
-.sidebar-nav a.active{background:rgba(212,166,58,.16);color:#d4a63a;}
-/* ===== Overlay ===== */
-.mobile-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:.3s; z-index:900;}
-.mobile-overlay.active{opacity:1;visibility:visible;}
-/* ===== Reveal Animation ===== */
-.reveal{
-    opacity:1;
-    transform:none;
-}
-.reveal.visible{opacity:1;transform:translateY(0);}
+.card p{max-width:380px;font-size:22px;line-height:1.5;color:#d2dae9;}
 .join-section{margin-bottom:28px;}
 .join-section h3{color:#d4a63a;margin-bottom:10px;font-size:20px;}
 .join-text{max-width:100%;font-size:17px;line-height:1.7;}
@@ -95,31 +50,22 @@ body{
 .warning-text{color:#ffcc66;font-size:15px;line-height:1.7;}
 .action-btn{display:inline-block;padding:16px 22px;border-radius:18px;background:#d4a63a;color:black;text-decoration:none;font-weight:700;transition:.2s;}
 .action-btn:hover{transform:translateY(-2px);box-shadow:0 0 25px rgba(212,166,58,.4);}
-.grid{
-    display:grid;
-    grid-template-columns:2fr 1fr;
-    gap:24px;
-    align-items:start;
-}
-
-.left-column,
-.right-column{
-    display:flex;
-    flex-direction:column;
-    gap:24px;
-}
-
-.small-card{
-    min-height:240px;
-}    
+/* Mobile */
+@media(max-width:1100px){.grid{grid-template-columns:1fr;}.right-column{margin-top:0;}}
+@media(max-width:768px){body{padding:12px;padding-bottom:110px;}.card-content{padding:22px;}.card h2{font-size:34px;}.card p{font-size:15px;max-width:100%;}.big-card{min-height:auto;}.small-card{min-height:auto;}.server-ip{font-size:18px;}.copy-box{font-size:15px;}.join-text{font-size:15px;}.stats{grid-template-columns:1fr;}.stat:not(:last-child){border-right:none;border-bottom:1px solid rgba(255,255,255,.06);}}
+@media(max-width:600px){.topbar{padding:14px;}.menu-btn{width:54px;height:54px;}.card h2{font-size:28px;}.bottom-nav{height:82px;}}
+.reveal{opacity:1;transform:none;}
+.reveal.visible{opacity:1;transform:translateY(0);}
 </style>
 </head>
-
 <body>
 <div class="mobile-overlay" id="mobileOverlay"></div>
 
 <aside class="sidebar" id="sidebar">
-  <!-- Sidebar код без изменений -->
+  <div class="sidebar-top">
+    <h3>MS BUILDERS</h3>
+    <button class="close-sidebar" id="closeMenu">✕</button>
+  </div>
 </aside>
 
 <div class="container">
@@ -133,14 +79,13 @@ body{
     </div>
     <button class="menu-btn" id="openMenu"></button>
   </header>
-    
-  <!-- ===== GRID: левый большой блок + правая колонка ===== -->
+
+  <!-- GRID: левый и правый блок -->
   <div class="grid">
     <div class="left-column">
       <div class="card big-card reveal">
         <div class="card-content">
           <h2>НАЧАТЬ<br><span>ИГРАТЬ</span></h2>
-          <!-- IP, версия, лаунчеры, регистрация и прочее -->
           <div class="join-section">
             <h3>IP сервера</h3>
             <button class="copy-box" onclick="copyCustom('play.msbuilders.name')">play.msbuilders.name</button>
@@ -152,7 +97,7 @@ body{
           <div class="join-section">
             <h3>Лаунчеры</h3>
             <p class="join-text">
-              <a href="https://www.minecraft.net" target="_blank" class="gold-link">Официальный Minecraft</a><br>
+              <a href="https://www.minecraft.net" target="_blank" class="gold-link">Официальный Minecraft</a><br><br>
               <a href="https://minecraft-inside.ru/programs/74705-tl-launcher.html" target="_blank" class="gold-link">Legacy Launcher</a>
             </p>
           </div>
@@ -167,7 +112,10 @@ body{
           </div>
           <div class="join-section">
             <h3>Ограничения новичка</h3>
-            <ul class="feature-list"><li>1 час игры для строительства</li><li>24 часа игры для полного доступа</li></ul>
+            <ul class="feature-list">
+              <li>1 час игры для строительства</li>
+              <li>24 часа игры для полного доступа</li>
+            </ul>
           </div>
           <div class="join-section">
             <a href="https://ms-builders-2.easydonate.ru/" target="_blank" class="action-btn">Купить снятие ограничений (100 ₽)</a>
@@ -191,7 +139,12 @@ body{
       <div class="card small-card reveal">
         <div class="card-content">
           <h2>⚠<br><span>ПРОБЛЕМА</span><br>С ВХОДОМ</h2>
-          <ul class="feature-list"><li>Проверьте интернет</li><li>Проверьте VPN</li><li>Проверьте лаунчер</li><li>Проверьте ограничения</li></ul>
+          <ul class="feature-list">
+            <li>Проверьте интернет</li>
+            <li>Проверьте VPN</li>
+            <li>Проверьте лаунчер</li>
+            <li>Проверьте ограничения</li>
+          </ul>
           <a href="https://cloud.mail.ru/public/PrR9/wgt2trXZX" target="_blank" class="gold-link">Скачать ресурспак</a>
           <a href="https://discord.com/invite/Wj8jWS736f" target="_blank" class="gold-link">Поддержка Discord</a>
         </div>
@@ -208,7 +161,7 @@ body{
     </div>
   </div>
 
-  <!-- ===== STATS ===== -->
+  <!-- STATS -->
   <section class="stats">
     <div class="stat"><h3>1287+</h3><p>Активных игроков</p></div>
     <div class="stat"><h3>3500+</h3><p>Уникальных построек</p></div>
@@ -216,7 +169,7 @@ body{
   </section>
 </div>
 
-<!-- ===== Bottom Navigation ===== -->
+<!-- Bottom Nav -->
 <nav class="bottom-nav">
   <a href="index.html" class="nav-item active"><div class="nav-icon">⌂</div><div>Главная</div></a>
   <a href="shop.html" class="nav-item"><div class="nav-icon">🛒</div><div>Купить</div></a>
@@ -230,9 +183,6 @@ const sidebar=document.getElementById("sidebar"),overlay=document.getElementById
 document.getElementById("openMenu").onclick=()=>{sidebar.classList.add("active");overlay.classList.add("active");}
 document.getElementById("closeMenu").onclick=closeMenu; overlay.onclick=closeMenu;
 function closeMenu(){sidebar.classList.remove("active");overlay.classList.remove("active");}
-const reveals=document.querySelectorAll(".reveal");
-const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");}})},{threshold:0.12});
-reveals.forEach(el=>observer.observe(el));
 function copyCustom(text){navigator.clipboard.writeText(text);const oldTitle=document.title;document.title="IP скопирован!";setTimeout(()=>{document.title=oldTitle;},1500);}
 </script>
 </body>

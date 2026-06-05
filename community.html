@@ -67,6 +67,61 @@ background:rgba(10,15,28,.82);border:1px solid rgba(255,255,255,.06);border-radi
 
 /* ===== ПЛАСТЫ КОНТЕНТА ===== */
 /* Здесь будут вставляться блоки для Правил, Команд, Ссылок и др. */
+/* ===== СТРАНИЦА ССЫЛОК ===== */
+
+.links-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:24px;
+margin-bottom:24px;
+}
+
+.link-panel{
+background:rgba(10,15,28,.82);
+border:1px solid rgba(255,255,255,.06);
+backdrop-filter:blur(16px);
+border-radius:30px;
+padding:24px;
+}
+
+.link-card{
+display:block;
+padding:18px;
+margin-bottom:14px;
+border-radius:20px;
+text-decoration:none;
+background:#0d1424;
+border:1px solid rgba(255,255,255,.05);
+transition:.25s;
+}
+
+.link-card:hover{
+transform:translateY(-4px);
+border-color:#d4a63a;
+background:rgba(212,166,58,.05);
+}
+
+.link-card span{
+display:block;
+font-size:18px;
+font-weight:700;
+color:#d4a63a;
+margin-bottom:6px;
+}
+
+.link-card p{
+font-size:14px;
+line-height:1.5;
+color:#c8d2e4;
+}
+
+@media(max-width:900px){
+
+.links-grid{
+grid-template-columns:1fr;
+}
+
+} 
 </style>
 </head>
 <body>
@@ -111,8 +166,11 @@ background:rgba(10,15,28,.82);border:1px solid rgba(255,255,255,.06);border-radi
 
 <!-- ===== HERO БЛОК (ЗАГОЛОВОК СТРАНИЦЫ И КРАТКОЕ ОПИСАНИЕ) ===== -->
 <section class="hero reveal">
-<h1>Название страницы</h1>
-<p>Краткое описание страницы или инструкции для игрока.</p>
+<h1>Полезные ссылки</h1>
+<p>
+Все важные ресурсы MS Builders в одном месте:
+карта мира, голосование, модификации, социальные сети и документация проекта.
+</p>
 </section>
 
 <!-- ===== ОСНОВНОЙ КОНТЕНТ СТРАНИЦЫ ===== -->

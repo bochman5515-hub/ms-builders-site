@@ -1,801 +1,285 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>Постройки — MS Builders</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Постройки игроков — MS Builders</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+<!-- Миниатюра вкладки -->
+<link rel="icon" type="image/png" href="images/msb6.png">
 
-  <style>
-    * { box-sizing: border-box; }
+<!-- Подключение шрифта -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    body {
-      margin: 0;
-      font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: #0b0f19;
-      color: #e5e7eb;
-    }
+<style>
+/* ===== ОБЩИЕ СТИЛИ ===== */
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Montserrat',sans-serif;background:radial-gradient(circle at top,#10213d 0%,#070b14 45%,#05070d 100%);color:white;min-height:100vh;padding:18px;padding-bottom:120px;overflow-x:hidden}
+.container{max-width:1200px;margin:auto}
 
-    .layout {
-      display: flex;
-      min-height: 100vh;
-    }
+/* ===== HERO БЛОК ===== */
+.hero{
+padding:40px;text-align:center;margin-bottom:24px;
+background:rgba(10,15,28,.82);border:1px solid rgba(255,255,255,.06);border-radius:30px;backdrop-filter:blur(16px);
+}
+.hero h1{font-size:56px;font-weight:800;color:#d4a63a;margin-bottom:12px;}
+.hero p{max-width:800px;margin:auto;line-height:1.7;color:#d2dae9;}
 
-    /* ===== ЛЕВАЯ ПАНЕЛЬ ===== */
-    .sidebar {
-      width: 260px;
-      background: #020617;
-      padding: 24px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      transition: width 0.2s ease, padding 0.2s ease;
-      border-right: 1px solid rgba(148, 163, 184, 0.12);
-      overflow: hidden;
-    }
+/* ===== БОКОВОЕ МЕНЮ ===== */
+.sidebar{position:fixed;top:0;right:-340px;width:320px;height:100vh;background:rgba(8,12,22,.97);backdrop-filter:blur(18px);border-left:1px solid rgba(255,255,255,.06);z-index:1000;transition:.35s;display:flex;flex-direction:column;padding:28px}
+.sidebar.active{right:0}
+.sidebar-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:35px}
+.sidebar-logo{display:flex;align-items:center;gap:14px}
+.sidebar-logo img{width:56px;height:56px;border-radius:16px}
+.sidebar-logo h3{font-size:18px}
+.sidebar-logo p{color:#8d99ae;font-size:13px;margin-top:3px}
+.close-sidebar{width:44px;height:44px;border:none;border-radius:14px;background:rgba(255,255,255,.05);color:white;cursor:pointer;font-size:18px}
+.sidebar-nav{display:flex;flex-direction:column;gap:10px}
+.sidebar-nav a{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:18px;text-decoration:none;color:#d4dcec;font-weight:600;transition:.2s}
+.sidebar-nav a span{font-size:22px}
+.sidebar-nav a:hover{background:rgba(212,166,58,.12);color:#d4a63a}
+.sidebar-nav a.active{background:rgba(212,166,58,.16);color:#d4a63a}
 
-    .logo-box {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+/* ===== ВЕРХНЯЯ ПАНЕЛЬ ===== */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-radius:26px;background:rgba(10,15,28,.82);border:1px solid rgba(255,255,255,.06);backdrop-filter:blur(16px);margin-bottom:24px}
+.server-box{display:flex;align-items:center;gap:16px;cursor:pointer}
+.server-box img{width:48px;height:48px;border-radius:14px}
+.server-info{display:flex;flex-direction:column}
+.server-ip{font-size:30px;font-weight:800;color:#d4a63a}
+.server-version{font-size:13px;color:#8d99ae;margin-top:2px}
+.menu-btn{width:62px;height:62px;border:none;border-radius:20px;background:rgba(212,166,58,.08);border:1px solid rgba(212,166,58,.25);cursor:pointer;position:relative;transition:.2s}
+.menu-btn::before{content:"☰";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#d4a63a;font-size:30px}
 
-    .logo-box img {
-      width: 96px;
-      height: 96px;
-      border-radius: 10px;
-      object-fit: cover;
-    }
+/* ===== НИЖНЯЯ НАВИГАЦИЯ ===== */
+.bottom-nav{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);width:min(950px,96%);height:92px;border-radius:28px;background:rgba(10,15,28,.92);border:1px solid rgba(255,255,255,.06);backdrop-filter:blur(14px);display:grid;grid-template-columns:repeat(4,1fr);z-index:100}
+.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-decoration:none;color:#c8d2e4;transition:.2s}
+.nav-item:hover{color:#d4a63a}
+.nav-item.active{color:#d4a63a}
+.nav-icon{font-size:30px}
 
-    .sidebar-title {
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 1.3;
-    }
+/* ===== АНИМАЦИИ REVEAL ===== */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
 
-    .sidebar-title span {
-      display: block;
-      font-size: 12px;
-      color: #9ca3af;
-      font-weight: 400;
-    }
+/* ===== OVERLAY ===== */
+.mobile-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);opacity:0;visibility:hidden;transition:.3s;z-index:900;}
+.mobile-overlay.active{opacity:1;visibility:visible;}
+.featured-build{
 
-    .server-copy {
-      margin-top: 8px;
-      width: 100%;
-      text-align: left;
-      border: 1px solid rgba(148, 163, 184, 0.22);
-      background: rgba(15, 23, 42, 0.55);
-      color: #e5e7eb;
-      border-radius: 14px;
-      padding: 10px 12px;
-      cursor: pointer;
-      transition: 0.15s;
-      position: relative;
-    }
+border:1px solid rgba(212,166,58,.4);
 
-    .server-copy:hover {
-      border-color: #38bdf8;
-      background: rgba(15, 23, 42, 0.7);
-    }
+box-shadow:
+0 0 30px rgba(212,166,58,.15),
+0 0 60px rgba(212,166,58,.08);
 
-    .server-ip {
-      display: block;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
+}
+.featured-badge{
+display:inline-block;
+padding:6px 12px;
+border-radius:12px;
+background:rgba(212,166,58,.12);
+border:1px solid rgba(212,166,58,.3);
+color:#d4a63a;
+font-size:12px;
+font-weight:700;
+margin-bottom:10px;
+}
 
-    .server-ver {
-      display: block;
-      margin-top: 2px;
-      font-size: 12px;
-      color: #9ca3af;
-    }
+   
+/* ===== ПЛАСТЫ КОНТЕНТА1 ===== */
 
-    .server-tip {
-      position: absolute;
-      right: 10px;
-      top: 10px;
-      font-size: 11px;
-      color: #a5b4fc;
-      opacity: 0;
-      transform: translateY(-2px);
-      transition: 0.18s;
-      pointer-events: none;
-    }
+.build-grid{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:20px;
+margin-bottom:24px;
+}
 
-    .server-copy.copied .server-tip {
-      opacity: 1;
-      transform: translateY(0);
-    }
+.build-card{
+background:rgba(10,15,28,.82);
+border:1px solid rgba(255,255,255,.06);
+border-radius:24px;
+overflow:hidden;
+transition:.25s;
+}
 
-    .sidebar-nav {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 6px;
-    }
+.build-card:hover{
+transform:translateY(-4px);
+border-color:rgba(212,166,58,.35);
+box-shadow:
+0 0 25px rgba(212,166,58,.08);
+}
 
-    .sidebar-nav a {
-      color: #e5e7eb;
-      text-decoration: none;
-      font-size: 14px;
-      padding: 6px 0;
-      border-left: 3px solid transparent;
-      padding-left: 10px;
-      transition: 0.15s;
-    }
+.build-slider img{
+width:100%;
+aspect-ratio:1/1;
+object-fit:cover;
+display:block;
+}
 
-    .sidebar-nav a:hover {
-      color: #38bdf8;
-      border-color: #38bdf8;
-    }
+.build-info{
+padding:16px;
+}
 
-    .sidebar-nav a.active {
-      color: #38bdf8;
-      border-color: #38bdf8;
-      font-weight: 600;
-    }
+.build-info h3{
+font-size:18px;
+margin-bottom:8px;
+color:#fff;
+}
 
-    .sidebar-collapsed .sidebar {
-      width: 0;
-      padding: 0;
-      border-right: none;
-    }
+.build-author{
+color:#d4a63a;
+font-size:14px;
+margin-bottom:10px;
+}
 
-    /* ===== ПРАВАЯ ЧАСТЬ ===== */
-    .content {
-      flex: 1;
-      background:
-        linear-gradient(to bottom, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 1)),
-        url("bg-stone.png");
-      background-size: auto, 128px 128px;
-      background-repeat: repeat;
-      padding-bottom: 40px;
-    }
+.build-info p{
+font-size:14px;
+line-height:1.5;
+color:#c8d2e4;
+}
 
-    /* ===== БАННЕР ===== */
-    .hero {
-      position: relative;
-      height: 240px;
-      overflow: hidden;
-    }
+@media(max-width:600px){
 
-    .hero img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+.build-grid{
+grid-template-columns:1fr;
+}
 
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to right, rgba(15, 23, 42, 0.7), transparent);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding-left: 40px;
-      gap: 10px;
-    }
-
-    .hero-title {
-      font-family: "Press Start 2P", system-ui;
-      font-size: 18px;
-      text-transform: uppercase;
-      color: #f9fafb;
-      text-shadow: 0 0 10px rgba(15, 23, 42, 0.9);
-    }
-
-    .hero-subtitle {
-      font-size: 14px;
-      max-width: 520px;
-      color: #e5e7eb;
-    }
-
-    .hero-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 6px;
-    }
-
-    .hero-tag {
-      font-size: 11px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.7);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-    }
-
-    .page-section {
-      margin: 32px auto 0;
-      max-width: 1200px;
-      padding: 0 24px;
-    }
-
-    .section-title {
-      font-family: "Press Start 2P", system-ui;
-      font-size: 16px;
-      text-transform: uppercase;
-      text-align: center;
-      padding: 12px 16px;
-      margin: 0 0 24px;
-      background: linear-gradient(90deg, #7c3aed, #ec4899);
-      color: #0b1120;
-      border-radius: 999px;
-      letter-spacing: 0.08em;
-    }
-
-    /* ===== СЕТКА ===== */
-    .build-grid {
-      display: grid;
-      gap: 18px;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-    }
-
-    @media (max-width: 1400px) { .build-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-    @media (max-width: 1100px) { .build-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-    @media (max-width: 700px)  { .build-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (max-width: 420px)  { .build-grid { grid-template-columns: 1fr; } }
-
-    /* ===== КАРТОЧКА ===== */
-    .build-card {
-      background: rgba(15, 23, 42, 0.9);
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      cursor: pointer;
-      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s;
-    }
-
-    .build-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.8);
-      border-color: #38bdf8;
-    }
-
-    .build-thumb {
-      width: 100%;
-      height: 170px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .build-info {
-      padding: 12px 14px 14px;
-    }
-
-    .build-name {
-      font-family: "Press Start 2P", system-ui;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #e0f2fe;
-      margin: 0 0 8px;
-    }
-
-    .build-desc {
-      margin: 0 0 10px;
-      font-size: 13px;
-      color: #cbd5f5;
-      line-height: 1.35;
-    }
-
-    .build-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .tag {
-      display: inline-block;
-      font-size: 11px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: rgba(2, 6, 23, 0.65);
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      color: #9ca3af;
-    }
-
-    /* ===== СЛАЙДЕР ВНУТРИ КАРТОЧКИ ===== */
-    .build-slider {
-      position: relative;
-      width: 100%;
-      height: 170px;
-      overflow: hidden;
-      background: rgba(2, 6, 23, 0.35);
-    }
-
-    .build-slider img {
-      width: 100%;
-      height: 170px;
-      object-fit: cover;
-      display: none;
-    }
-
-    .build-slider img.active {
-      display: block;
-    }
-
-    /* ===== СТРЕЛКИ ЛИСТАНИЯ ===== */
-    .slider-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-
-      width: 34px;
-      height: 34px;
-
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      background: rgba(2, 6, 23, 0.75);
-
-      color: #e5e7eb;
-      font-size: 18px;
-
-      cursor: pointer;
-
-      display: grid;
-      place-items: center;
-
-      opacity: 0;
-      transition: 0.15s;
-
-      z-index: 2;
-      pointer-events: auto;
-
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
-    }
-
-    .build-card:hover .slider-btn {
-      opacity: 1;
-    }
-
-    .slider-btn:hover {
-      border-color: #38bdf8;
-      color: #e0f2fe;
-    }
-
-    .slider-prev { left: 8px; }
-    .slider-next { right: 8px; }
-
-    /* ===== МОДАЛКА ===== */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: rgba(0, 0, 0, 0.75);
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-
-    .modal.open { display: flex; }
-
-    .modal-content {
-      max-width: 92vw;
-      max-height: 88vh;
-      border-radius: 14px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      overflow: hidden;
-      background: rgba(2, 6, 23, 0.9);
-    }
-
-    .modal-content img {
-      display: block;
-      max-width: 92vw;
-      max-height: 88vh;
-      object-fit: contain;
-    }
-
-    /* ===== КНОПКА < > СНИЗУ СЛЕВА ===== */
-    .sidebar-fab {
-      position: fixed;
-      left: 14px;
-      bottom: 14px;
-      z-index: 95;
-      width: 44px;
-      height: 44px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      background: rgba(2, 6, 23, 0.78);
-      backdrop-filter: blur(8px);
-      color: #e5e7eb;
-      cursor: pointer;
-      display: grid;
-      place-items: center;
-      transition: 0.15s;
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
-    }
-
-    .sidebar-fab:hover {
-      border-color: #38bdf8;
-      color: #e0f2fe;
-    }
-
-    .sidebar-fab span {
-      font-size: 18px;
-      line-height: 1;
-      transform: translateY(-1px);
-    }
-
-    @media (max-width: 900px) {
-      .layout { flex-direction: column; }
-      .sidebar-fab { display: none; }
-      .hero-overlay { padding-left: 20px; }
-      .hero-title { font-size: 14px; }
-      .hero { height: 220px; }
-    }
-  </style>
+} 
+</style>
 </head>
-
 <body>
-  <button class="sidebar-fab" id="toggleSidebar" type="button" aria-label="Показать/скрыть панель">
-    <span id="sidebarIcon">&lt;</span>
-  </button>
+  
 
-  <div class="layout">
-    <aside class="sidebar">
-      <div>
-        <div class="logo-box">
-          <img src="logo.png" alt="Логотип MS Builders" />
-          <div class="sidebar-title">
-            MS Builders
-            <span>Minecraft сервер</span>
-          </div>
-        </div>
+<!-- ===== OVERLAY ДЛЯ БОКОВОГО МЕНЮ ===== -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
 
-        <button class="server-copy" id="copyIp" type="button" title="Нажмите, чтобы скопировать IP">
-          <span class="server-ip">play.msbuilders.name</span>
-          <span class="server-ver">Версия: 1.21.10</span>
-          <span class="server-tip">Скопировано!</span>
-        </button>
-      </div>
+<!-- ===== БОКОВОЕ МЕНЮ ===== -->
+<aside class="sidebar" id="sidebar">
+<div class="sidebar-top">
+<div class="sidebar-logo">
+<img src="images/msb5.png">
+<div><h3>MS BUILDERS</h3><p>Minecraft сервер</p></div>
+</div>
+<button class="close-sidebar" id="closeMenu">✕</button>
+</div>
+<nav class="sidebar-nav">
+<a href="index.html"><span>⌂</span>Главная</a>
+<a href="about.html"><span>◈</span>Информация</a>
+<a href="projects.html"><span>▣</span>Проекты</a>
+<a href="shop.html"><span>🛒</span>Магазин</a>
+<a href="community.html"><span>◎</span>Соцсети</a>
+<a href="join.html"><span>▶</span>Начать играть</a>
+<a href="news.html"><span>✦</span>Новости</a>
+</nav>
+</aside>
 
-      <nav class="sidebar-nav">
-        <a href="index.html">Главная</a>
-        <a href="news.html">Новости</a>
-        <a href="extra.html">Плагины и датапаки</a>
-        <a href="enchants.html">Чары</a>
-        <a href="projects.html">Наши проекты</a>
-        <a href="builds.html" class="active">Постройки</a>
-        <a href="crafts.html">Крафты</a>
-        <a href="story.html">Сюжет</a>
-        <a href="about.html">О сервере</a>
-      </nav>
-    </aside>
+<!-- ===== ОСНОВНОЙ КОНТЕЙНЕР ===== -->
+<div class="container">
 
-    <main class="content">
-      <section class="hero">
-        <img src="builds-banner.png" alt="Постройки MS Builders" />
-        <div class="hero-overlay">
-          <div class="hero-title">постройки сервера</div>
-          <div class="hero-subtitle">
-            Галерея билдов игроков. Открывай карточки, листай фото и вдохновляйся!
-          </div>
-          <div class="hero-tags">
-            <span class="hero-tag">Архитектура</span>
-            <span class="hero-tag">Хабы</span>
-            <span class="hero-tag">Дома</span>
-            <span class="hero-tag">Проекты</span>
-          </div>
-        </div>
-      </section>
+<!-- ===== ВЕРХНЯЯ ПАНЕЛЬ С IP СЕРВЕРА И КНОПКОЙ МЕНЮ ===== -->
+<header class="topbar">
+<div class="server-box" onclick="copyIP()">
+<img src="images/msb5.png">
+<div class="server-info">
+<div class="server-ip">play.msbuilders.name</div>
+<div class="server-version">Java Edition 1.21.11</div>
+</div>
+</div>
+<button class="menu-btn" id="openMenu"></button>
+</header>
 
-      <section class="page-section">
-        <h2 class="section-title">ПОСТРОЙКИ</h2>
+<!-- ===== HERO БЛОК (ЗАГОЛОВОК СТРАНИЦЫ И КРАТКОЕ ОПИСАНИЕ) ===== -->
+<section class="hero reveal">
+<h1>Постройки игроков</h1>
+<p>
+Лучшие проекты, города и достопримечательности мира MS Builders.
+</p>
+</section>
 
-        <div class="build-grid">
+<!-- ===== ОСНОВНОЙ КОНТЕНТ СТРАНИЦЫ ===== -->
+<!-- Сюда вставляются блоки (правила, команды, ссылки и т.д.) -->
+<div class="build-grid">
+  
 
-          <!-- ОБЪЕДИНЁННЫЙ SPAWN: spawn1 + spawn2 + spawn3 -->
-          <article class="build-card">
-            <div class="build-slider">
-              <img src="images/images/builds/spawn1.png" class="active" alt="spawn 1">
-              <img src="images/images/builds/spawn2.png" alt="spawn 2">
-              <img src="images/images/builds/spawn3.png" alt="spawn 3">
+<div class="build-card reveal">
+<div class="build-slider">
+<img src="images/builds/fiera1.jpg">
+  
+</div>
+<div class="build-info">
+<h3>Город Фиера</h3>
+<div class="build-author">
+Автор: bobr1188
+</div>
+<p>
+Город в итальянском стиле.
+</p>
+</div>
+</div>
 
-              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
-              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
-            </div>
+<div class="build-card featured-build reveal">
+<div class="build-slider">
+<img src="images/builds/metro1.jpg">
+</div>
 
-            <div class="build-info">
-              <h4 class="build-name">SPAWN</h4>
-              <p class="build-desc">Скриншоты спавна (описание можно дописать позже).</p>
-              <div class="build-tags">
-                <span class="tag">Спавн</span>
-                <span class="tag">Хаб</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- ОСТАЛЬНЫЕ -->
-          <article class="build-card" data-full="images/images/builds/homB.png">
-            <img class="build-thumb" src="images/images/builds/homB.png" alt="homB" />
-            <div class="build-info">
-              <h4 class="build-name">HOMEB</h4>
-              <p class="build-desc">Скриншот постройки (описание можно дописать позже).</p>
-              <div class="build-tags">
-                <span class="tag">Дом</span>
-                <span class="tag">Проект</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="build-card">
-            <div class="build-slider">
-              <img src="images/images/builds/rix1.png" class="active" alt="rix build 1">
-              <img src="images/images/builds/rix2.png" alt="rix build 2">
-
-              <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
-              <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
-            </div>
-
-            <div class="build-info">
-              <h4 class="build-name">RIX BUILD</h4>
-              <p class="build-desc">Скриншоты постройки (описание можно дописать позже).</p>
-              <div class="build-tags">
-                <span class="tag">Проект</span>
-                <span class="tag">Архитектура</span>
-              </div>
-            </div>
-          </article>
-        <!-- FIERA (2 фото) -->
-        <article class="build-card">
-          <div class="build-slider">
-            <img src="images/images/builds/fiera1.png" class="active" alt="fiera 1">
-            <img src="images/images/builds/fiera2.png" alt="fiera 2">
-            <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
-            <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
-          </div>
-
-          <div class="build-info">
-            <h4 class="build-name">ГОРОД ФИЕРА</h4>
-            <p class="build-desc">Город от игрока bobr1188 в итальянском стиле.</p>
-            <div class="build-tags">
-              <span class="tag">#город</span>
-              <span class="tag">#итальянский_стиль</span>
-              <span class="tag">#bobr1188</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- HOME (1 фото) -->
-        <article class="build-card" data-full="images/images/builds/home.png">
-          <img class="build-thumb" src="images/images/builds/home.png" alt="home" />
-          <div class="build-info">
-            <h4 class="build-name">ДОМИК</h4>
-            <p class="build-desc">Домик игрока freshbread.</p>
-            <div class="build-tags">
-              <span class="tag">#дом</span>
-              <span class="tag">#freshbread</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- ICE (2 фото) -->
-        <article class="build-card">
-          <div class="build-slider">
-            <img src="images/images/builds/ice1.png" class="active" alt="ice 1">
-            <img src="images/images/builds/ice2.png" alt="ice 2">
-            <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
-            <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
-          </div>
-
-          <div class="build-info">
-            <h4 class="build-name">ЛЕДЯНОЙ ЗАМОК</h4>
-            <p class="build-desc">Строители: freshbread, IQMoнстер и demo66684.</p>
-            <div class="build-tags">
-              <span class="tag">#замок</span>
-              <span class="tag">#ледяной_стиль</span>
-              <span class="tag">#freshbread</span>
-              <span class="tag">#IQMoнстер</span>
-              <span class="tag">#demo66684</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- ZADROT (1 фото) -->
-        <article class="build-card" data-full="images/images/builds/zadrot.png">
-          <img class="build-thumb" src="images/images/builds/zadrot.png" alt="zadrot" />
-          <div class="build-info">
-            <h4 class="build-name">ДЕРЕВНЯ ZADROTA</h4>
-            <p class="build-desc">Деревня игрока zadrot523.</p>
-            <div class="build-tags">
-              <span class="tag">#деревня</span>
-              <span class="tag">#zadrot523</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- TVG (1 фото) -->
-        <article class="build-card" data-full="images/images/builds/tvg.png">
-          <img class="build-thumb" src="images/images/builds/tvg.png" alt="tvg" />
-          <div class="build-info">
-            <h4 class="build-name">ОСТРОВ ДРУЗЕЙ</h4>
-            <p class="build-desc">Город с разными постройками от игроков TVGood5211, scarlet_song и freshbread.</p>
-            <div class="build-tags">
-              <span class="tag">#остров</span>
-              <span class="tag">#город</span>
-              <span class="tag">#TVGood5211</span>
-              <span class="tag">#scarlet_song</span>
-              <span class="tag">#freshbread</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- LISA (2 фото) -->
-        <article class="build-card">
-          <div class="build-slider">
-            <img src="images/images/builds/lisa1.png" class="active" alt="lisa 1">
-            <img src="images/images/builds/lisa2.png" alt="lisa 2">
-            <button class="slider-btn slider-prev" type="button" aria-label="Предыдущее фото">‹</button>
-            <button class="slider-btn slider-next" type="button" aria-label="Следующее фото">›</button>
-          </div>
-
-          <div class="build-info">
-            <h4 class="build-name">ДЕРЕВНЯ LISA И SLEEPING</h4>
-            <p class="build-desc">Строят чёрный корабль и парящий замок.</p>
-            <div class="build-tags">
-              <span class="tag">#деревня</span>
-              <span class="tag">#корабль</span>
-              <span class="tag">#парящий_замок</span>
-              <span class="tag">#Lisa</span>
-              <span class="tag">#Sleeping</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- KOT (1 фото) -->
-        <article class="build-card" data-full="images/images/builds/kot.png">
-          <img class="build-thumb" src="images/images/builds/kot.png" alt="kot" />
-          <div class="build-info">
-            <h4 class="build-name">ДОМ КОТА</h4>
-            <p class="build-desc">Дом в японском стиле от игрока Kotetsu271.</p>
-            <div class="build-tags">
-              <span class="tag">#дом</span>
-              <span class="tag">#японский_стиль</span>
-              <span class="tag">#Kotetsu271</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- BAZA (1 фото) -->
-        <article class="build-card" data-full="images/images/builds/baza.png">
-          <img class="build-thumb" src="images/images/builds/baza.png" alt="baza" />
-          <div class="build-info">
-            <h4 class="build-name">БАЗА MENMA_BE</h4>
-            <p class="build-desc">Парящая стимпанк база-город вдали от спавна.</p>
-            <div class="build-tags">
-              <span class="tag">#база</span>
-              <span class="tag">#город</span>
-              <span class="tag">#стимпанк</span>
-              <span class="tag">#парящая</span>
-              <span class="tag">#MENMA_be</span>
-              <span class="tag">#далеко_от_спавна</span>
-            </div>
-          </div>
-        </article>
+<div class="build-info">
+<div class="featured-badge">
+★ Особая постройка
+</div>
+<h3>Адское метро</h3>
+<div class="build-author">
+Автор: Vurg
+</div>
+<p>
+Глобальная транспортная система между городами сервера.
+</p>
+</div>
+</div>
 
 
-        </div>
-      </section>
-    </main>
-  </div>
 
-  <div class="modal" id="imgModal" aria-hidden="true">
-    <div class="modal-content">
-      <img id="modalImg" src="" alt="Просмотр постройки" />
-    </div>
-  </div>
+  
+</div>
 
-  <script>
-    const root = document.documentElement;
 
-    // ===== САЙДБАР =====
-    const btnSidebar = document.getElementById("toggleSidebar");
-    const sidebarIcon = document.getElementById("sidebarIcon");
 
-    const sidebarOff = localStorage.getItem("ms_sidebar") === "off";
-    if (sidebarOff) root.classList.add("sidebar-collapsed");
 
-    function syncSidebarIcon() {
-      sidebarIcon.textContent = root.classList.contains("sidebar-collapsed") ? ">" : "<";
-    }
-    syncSidebarIcon();
 
-    btnSidebar.addEventListener("click", () => {
-      root.classList.toggle("sidebar-collapsed");
-      localStorage.setItem("ms_sidebar", root.classList.contains("sidebar-collapsed") ? "off" : "on");
-      syncSidebarIcon();
-    });
 
-    // ===== КОПИРОВАНИЕ IP =====
-    const copyBtn = document.getElementById("copyIp");
-    if (copyBtn) {
-      copyBtn.addEventListener("click", async () => {
-        const ip = "play.msbuilders.name";
-        try {
-          await navigator.clipboard.writeText(ip);
-        } catch (e) {
-          const ta = document.createElement("textarea");
-          ta.value = ip;
-          document.body.appendChild(ta);
-          ta.select();
-          document.execCommand("copy");
-          document.body.removeChild(ta);
-        }
-        copyBtn.classList.add("copied");
-        setTimeout(() => copyBtn.classList.remove("copied"), 1200);
-      });
-    }
+  
+</div>
 
-    // ===== МОДАЛКА =====
-    const modal = document.getElementById("imgModal");
-    const modalImg = document.getElementById("modalImg");
+</div>
 
-    function openModal(src) {
-      if (!src) return;
-      modalImg.src = src;
-      modal.classList.add("open");
-      modal.setAttribute("aria-hidden", "false");
-    }
+<!-- ===== НИЖНЯЯ НАВИГАЦИЯ ===== -->
+<nav class="bottom-nav">
+<a href="index.html" class="nav-item"><div class="nav-icon">⌂</div><div>Главная</div></a>
+<a href="shop.html" class="nav-item"><div class="nav-icon">🛒</div><div>Купить</div></a>
+<a href="join.html" class="nav-item"><div class="nav-icon">▶</div><div>Играть</div></a>
+<a href="profile.html" class="nav-item"><div class="nav-icon">◎</div><div>Профиль</div></a>
+</nav>
 
-    function closeModal() {
-      modal.classList.remove("open");
-      modal.setAttribute("aria-hidden", "true");
-      modalImg.src = "";
-    }
+<!-- ===== JS ДЛЯ COPY IP, SIDEBAR И ANIMATION ===== -->
+<script>
+function copyIP(){navigator.clipboard.writeText("play.msbuilders.name");alert("IP скопирован")}
 
-    modal.addEventListener("click", closeModal);
+const sidebar=document.getElementById("sidebar");
+const overlay=document.getElementById("mobileOverlay");
 
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && modal.classList.contains("open")) {
-        closeModal();
-      }
-    });
+document.getElementById("openMenu").onclick=()=>{sidebar.classList.add("active");overlay.classList.add("active");};
+document.getElementById("closeMenu").onclick=closeMenu;
+overlay.onclick=closeMenu;
+function closeMenu(){sidebar.classList.remove("active");overlay.classList.remove("active");}
 
-    // ===== СЛАЙДЕРЫ =====
-    document.querySelectorAll(".build-slider").forEach((slider) => {
-      const images = Array.from(slider.querySelectorAll("img"));
-      const prev = slider.querySelector(".slider-prev");
-      const next = slider.querySelector(".slider-next");
-      let index = 0;
+// Анимация появления блоков
+const reveals=document.querySelectorAll(".reveal");
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){entry.target.classList.add("visible");}
+});},{threshold:.12});
+reveals.forEach(el=>observer.observe(el));
+</script>
 
-      function show(i) {
-        images.forEach(img => img.classList.remove("active"));
-        images[i].classList.add("active");
-      }
-
-      prev.addEventListener("click", (e) => {
-        e.stopPropagation();
-        index = (index - 1 + images.length) % images.length;
-        show(index);
-      });
-
-      next.addEventListener("click", (e) => {
-        e.stopPropagation();
-        index = (index + 1) % images.length;
-        show(index);
-      });
-    });
-
-    // ===== КЛИК ПО КАРТОЧКЕ =====
-    document.querySelectorAll(".build-card").forEach((card) => {
-      card.addEventListener("click", () => {
-        const slider = card.querySelector(".build-slider");
-        if (slider) {
-          const active = slider.querySelector("img.active");
-          openModal(active?.src);
-          return;
-        }
-        const src = card.getAttribute("data-full") || card.querySelector("img")?.src;
-        openModal(src);
-      });
-    });
-  </script>
 </body>
 </html>

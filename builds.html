@@ -175,7 +175,47 @@ right:10px;
 .build-grid{
 grid-template-columns:1fr;
 }} 
+.image-viewer{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.92);
+display:flex;
+justify-content:center;
+align-items:center;
+opacity:0;
+visibility:hidden;
+transition:.3s;
+z-index:9999;
+}
 
+.image-viewer.active{
+opacity:1;
+visibility:visible;
+}
+
+.image-viewer img{
+max-width:95%;
+max-height:95%;
+border-radius:20px;
+box-shadow:0 0 50px rgba(212,166,58,.2);
+}
+
+.viewer-close{
+position:absolute;
+top:25px;
+right:35px;
+font-size:50px;
+color:white;
+cursor:pointer;
+line-height:1;
+}
+
+.viewer-close:hover{
+color:#d4a63a;
+}
+.build-slider img{
+cursor:pointer;
+}   
    
 </style>
 </head>
@@ -325,27 +365,17 @@ reveals.forEach(el=>observer.observe(el));
 <script>
 
 document.querySelectorAll(".build-slider").forEach(slider=>{
-
 const images=slider.querySelectorAll("img");
-
 let current=0;
-
 slider.querySelector(".next").addEventListener("click",()=>{
-
 images[current].classList.remove("active");
-
 current=(current+1)%images.length;
-
 images[current].classList.add("active");
-
 });
 
 slider.querySelector(".prev").addEventListener("click",()=>{
-
 images[current].classList.remove("active");
-
 current=(current-1+images.length)%images.length;
-
 images[current].classList.add("active");
 
 });
@@ -353,5 +383,30 @@ images[current].classList.add("active");
 });
 
 </script>
+<script>
+const viewer=document.getElementById("imageViewer");
+const viewerImg=document.getElementById("viewerImage");
+document.querySelectorAll(".build-slider img").forEach(img=>{
+img.addEventListener("click",()=>{
+viewer.classList.add("active");
+viewerImg.src=img.src;
+});
+});
+document.querySelector(".viewer-close").addEventListener("click",()=>{
+viewer.classList.remove("active");
+});
+viewer.addEventListener("click",(e)=>{
+if(e.target===viewer){
+viewer.classList.remove("active");
+}
+});
+</script>   
+<!-- ===== ПРОСМОТР ИЗОБРАЖЕНИЯ ===== -->
+
+<div class="image-viewer" id="imageViewer">
+<span class="viewer-close">&times;</span>
+<img id="viewerImage">
+</div>
+   
 </body>
 </html>

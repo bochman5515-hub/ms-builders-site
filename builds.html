@@ -383,6 +383,13 @@ images[current].classList.add("active");
 });
 
 </script>
+<!-- ===== ПРОСМОТР ИЗОБРАЖЕНИЯ ===== -->
+
+<div class="image-viewer" id="imageViewer">
+<span class="viewer-close">&times;</span>
+<img id="viewerImage">
+</div>   
+   
 <script>
 const viewer=document.getElementById("imageViewer");
 const viewerImg=document.getElementById("viewerImage");
@@ -401,12 +408,7 @@ viewer.classList.remove("active");
 }
 });
 </script>   
-<!-- ===== ПРОСМОТР ИЗОБРАЖЕНИЯ ===== -->
 
-<div class="image-viewer" id="imageViewer">
-<span class="viewer-close">&times;</span>
-<img id="viewerImage">
-</div>
    
 </body>
 </html>

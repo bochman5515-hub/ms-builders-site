@@ -219,84 +219,116 @@
       border-color: #facc15;
       box-shadow: 0 0 18px rgba(250,204,21,0.35);
     }
+
+    .enchant-card{
+    transition:.25s;
+}
+
+.enchant-card:hover{
+    transform:translateY(-6px);
+}
+
+    .enchant-card:hover{
+    box-shadow:
+    0 15px 35px rgba(0,0,0,.4);
+}
   </style>
 </head>
 <body>
 
-<div class="layout">
-  <aside class="sidebar">
-    <div class="logo-box">
-      <img src="logo.png" alt="Логотип MS Builders" />
-      <div class="sidebar-title">
-        MS Builders
-        <span>Minecraft сервер</span>
-      </div>
-    </div>
+<main class="content">
 
-    <nav class="sidebar-nav">
-        <a href="index.html">Главная</a>
-        <a href="news.html">Новости</a>
-        <a href="extra.html">Плагины и датапаки</a>
-        <a href="enchants.html" class="active">Чары</a>
-        <a href="projects.html">Наши проекты</a>
-        <a href="builds.html">Постройки</a>
-        <a href="crafts.html">Крафты</a>
-        <a href="story.html">Сюжет</a>
-        <a href="about.html">О сервере</a>
-    </nav>
-
-    <div class="sidebar-footer">
-      IP: <span class="ip">play.msbuilders.name</span><br />
-      Версия: 1.21.10
-    </div>
-  </aside>
-
-  <main class="content">
-    <section class="hero">
-      <img src="enchants-banner.png" alt="Чары MS Builders" />
-      <div class="hero-overlay">
-        <div class="hero-title">чары ms builders</div>
-        <div class="hero-subtitle">
-          Уникальные зачарования для строителей, исследователей и игроков,
-          которые хотят больше, чем ванильный Minecraft.
+<section class="hero">
+    <img src="enchants-banner.png" alt="Чары MS Builders">
+    <div class="hero-overlay">
+        <div class="hero-title">
+            ЧАРЫ MS BUILDERS
         </div>
-      </div>
-    </section>
 
-    <section class="page-section">
-      <h2 class="section-title">ЧАРЫ СЕРВЕРА</h2>
+        <div class="hero-subtitle">
+            Более 150 уникальных зачарований для строителей,
+            исследователей и искателей приключений.
+        </div>
 
-      
+        <div class="hero-tags">
+            <span class="hero-tag">⚔ Бой</span>
+            <span class="hero-tag">⛏ Инструменты</span>
+            <span class="hero-tag">🛡 Броня</span>
+            <span class="hero-tag">✨ Уникальные эффекты</span>
+        </div>
+    </div>
+</section>
 
-      <div class="filter-bar">
+<div class="stats-grid">
+    <div class="stat-card">
+        <span>154</span>
+        зачарования
+    </div>
 
-        <label>
-          Поиск:
-          <input id="enchant-search" class="filter-input" type="text" placeholder="Введите название..." />
-        </label>
+    <div class="stat-card">
+        <span>3</span>
+        категории
+    </div>
 
-        <label>
-          Тип:
-          <select id="enchant-type" class="filter-select">
-            <option value="all">Все</option>
-            <option value="sword">Меч</option>
-            <option value="armor">Броня</option>
-            <option value="tool">Инструменты</option>
-          </select>
-        </label>
+    <div class="stat-card">
+        <span>2</span>
+        набора чар
+    </div>
+</div>
 
-        <label>
-          Получение:
-          <select id="enchant-obtain" class="filter-select">
-            <option value="all">Все</option>
-            <option value="table">Чародейский стол</option>
-            <option value="loot">Сундуки</option>
-            <option value="villager">Жители</option>
-            <option value="mob">Мобы</option>
-          </select>
-        </label>
-      </div>
-      <div class="enchant-grid">
+<section class="page-section">
+
+    <h2 class="section-title">
+        ЧАРЫ СЕРВЕРА
+    </h2>
+
+    <div class="filter-card">
+
+        <h3>Поиск чар</h3>
+
+        <div class="filter-grid">
+
+            <input
+                id="enchant-search"
+                class="filter-input"
+                type="text"
+                placeholder="Введите название зачарования">
+
+            <select id="enchant-type" class="filter-select">
+                <option value="all">Все предметы</option>
+                <option value="sword">Меч</option>
+                <option value="axe">Топор</option>
+                <option value="bow">Лук</option>
+                <option value="crossbow">Арбалет</option>
+                <option value="trident">Трезубец</option>
+                <option value="pickaxe">Кирка</option>
+                <option value="shovel">Лопата</option>
+                <option value="hoe">Мотыга</option>
+                <option value="helmet">Шлем</option>
+                <option value="chestplate">Нагрудник</option>
+                <option value="leggings">Поножи</option>
+                <option value="boots">Ботинки</option>
+                <option value="elytra">Элитры</option>
+                <option value="armor">Броня</option>
+                <option value="tool">Инструменты</option>
+                <option value="other">Другое</option>
+            </select>
+
+            <select id="enchant-obtain" class="filter-select">
+                <option value="all">Все способы получения</option>
+                <option value="table">Чародейский стол</option>
+                <option value="loot">Сундуки</option>
+                <option value="villager">Жители</option>
+                <option value="mob">Мобы</option>
+            </select>
+
+        </div>
+
+    </div>
+
+    <div class="enchant-grid">
+
+        <!-- ====== Enchantments Encore (новые чары) ====== -->
         
         <!-- ====== Enchantments Encore (новые чары) ====== -->
         <div class="enchant-card" data-type="tool" data-pack="encore" data-obtain="table villager" data-name="плуг">
@@ -2098,16 +2130,53 @@
         <div class="enchant-source">Пак: NeoEnchant</div>
         </div>
 
+
         
         
+        <section class="page-section">
+    <div class="info-card">
+        <h3>Как получить уникальные чары?</h3>
+        <p>
+            Некоторые зачарования доступны через
+            жителей, некоторые встречаются в мире,
+            а самые редкие можно получить только
+            на ивентах сервера.
+        </p>
+
+    </div>
+
+</section>
       </div>  
-      </div>
-    </section>
   </main>
 </div>
 
   
+<nav class="bottom-nav">
+
+    <a href="index.html" class="nav-item">
+        <div class="nav-icon">⌂</div>
+        <div>Главная</div>
+    </a>
+
+    <a href="shop.html" class="nav-item">
+        <div class="nav-icon">🛒</div>
+        <div>Купить</div>
+    </a>
+
+    <a href="join.html" class="nav-item">
+        <div class="nav-icon">▶</div>
+        <div>Играть</div>
+    </a>
+
+    <a href="profile.html" class="nav-item">
+        <div class="nav-icon">◎</div>
+        <div>Профиль</div>
+    </a>
+
+</nav>
+
 <script>
+
 const search = document.getElementById("enchant-search");
 const type = document.getElementById("enchant-type");
 const obtain = document.getElementById("enchant-obtain");
@@ -2115,28 +2184,32 @@ const obtain = document.getElementById("enchant-obtain");
 const cards = document.querySelectorAll(".enchant-card");
 
 function filter() {
-  const s = search.value.toLowerCase();
-  const t = type.value;
-  const o = obtain.value;
 
-  cards.forEach(card => {
-    const name = card.dataset.name || "";
-    const cardType = card.dataset.type;
-    const cardObtain = card.dataset.obtain;
+    const s = search.value.toLowerCase();
+    const t = type.value;
+    const o = obtain.value;
 
-    let visible = true;
+    cards.forEach(card => {
 
-    if (s && !name.includes(s)) visible = false;
-    if (t !== "all" && cardType !== t) visible = false;
-    if (o !== "all" && !cardObtain.includes(o)) visible = false;
+        const name = card.dataset.name || "";
+        const cardType = card.dataset.type;
+        const cardObtain = card.dataset.obtain || "";
 
-    card.style.display = visible ? "block" : "none";
-  });
+        let visible = true;
+
+        if (s && !name.includes(s)) visible = false;
+        if (t !== "all" && cardType !== t) visible = false;
+        if (o !== "all" && !cardObtain.includes(o)) visible = false;
+
+        card.style.display = visible ? "block" : "none";
+    });
 }
 
-search.oninput = filter;
-type.onchange = filter;
-obtain.onchange = filter;
+search.addEventListener("input", filter);
+type.addEventListener("change", filter);
+obtain.addEventListener("change", filter);
+
 </script>
+
 </body>
 </html>
